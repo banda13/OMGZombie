@@ -1,0 +1,50 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public abstract class PathFollower : MonoBehaviour {
+
+    public GameObject path;
+
+    public float speed = 1;
+
+    protected List<Transform> waypoints;
+    protected int currentWaypoint = 0;
+
+    public bool Wait { get; set; }
+
+    public void init()
+    {
+        waypoints = new List<Transform>();
+        foreach (Transform waypoint in path.transform)
+        {
+            waypoints.Add(waypoint.transform);
+        }
+    }
+
+    public void move()
+    {
+        if (!Wait && currentWaypoint < waypoints.Count)
+        {
+            if (transform.position != waypoints[currentWaypoint].position)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, waypoints[currentWaypoint].position, speed * Time.deltaTime);
+            }
+            else
+            {
+                currentWaypoint++;
+            }
+        }
+    }
+
+    public void rotate()
+    {
+        if (!Wait && currentWaypoint < waypoints.Count)
+        {
+            if (transform.position != waypoints[currentWaypoint].position)
+            {
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, waypoints[currentWaypoint].rotation, speed * 2 * Time.deltaTime);
+            }
+        }
+    }
+}
