@@ -80,7 +80,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4449207366141428}
   - component: {fileID: 95836943416859382}
-  - component: {fileID: 114586417653728438}
+  - component: {fileID: 114303643885885700}
   m_Layer: 0
   m_Name: survivor_a_lusth
   m_TagString: Untagged
@@ -1996,7 +1996,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114586417653728438
+--- !u!114 &114303643885885700
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -2004,16 +2004,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 1131334245577082}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ffdb3ed1c79f524494775fa2665210b, type: 3}
+  m_Script: {fileID: 11500000, guid: a137c915ce5a6f241a3a7dd64b9d4cff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 0}
-  animator: {fileID: 0}
-  number: 15
-  speed: 0
-  damage: 10
+  animator: {fileID: 95836943416859382}
+  player: {fileID: 0}
   sphere: {fileID: 0}
-  spawned: 0
+  speed: 0
+  directionChange: 4
+  maxRotation: 90
+  healt: 100
+  attackDamage: 10
+  attackRange: 1.4
+  attackSpeed: 0.5
+  eyeShot: 10
 --- !u!137 &137835745490926074
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

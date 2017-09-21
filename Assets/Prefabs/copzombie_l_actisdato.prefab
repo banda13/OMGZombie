@@ -834,7 +834,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4219888588449556}
   - component: {fileID: 95402532886894330}
-  - component: {fileID: 114784339594514112}
+  - component: {fileID: 114010333133136686}
   m_Layer: 0
   m_Name: copzombie_l_actisdato
   m_TagString: Untagged
@@ -2078,7 +2078,7 @@ Animator:
   m_GameObject: {fileID: 1777826578526890}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: c7fbd94de9fadc2488be2f7fecaff78f, type: 3}
-  m_Controller: {fileID: 9100000, guid: a88b020eb10c52a499ba02ca80dd4069, type: 2}
+  m_Controller: {fileID: 9100000, guid: d44aa66638498f045b5a94b226a16880, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -2086,7 +2086,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114784339594514112
+--- !u!114 &114010333133136686
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -2094,16 +2094,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 1777826578526890}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ffdb3ed1c79f524494775fa2665210b, type: 3}
+  m_Script: {fileID: 11500000, guid: a137c915ce5a6f241a3a7dd64b9d4cff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 0}
   animator: {fileID: 95402532886894330}
-  number: 7
-  speed: 0
-  damage: 10
+  player: {fileID: 0}
   sphere: {fileID: 0}
-  spawned: 0
+  speed: 0
+  directionChange: 4
+  maxRotation: 90
+  healt: 100
+  attackDamage: 10
+  attackRange: 1.4
+  attackSpeed: 0.5
+  eyeShot: 10
 --- !u!137 &137061099540552764
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

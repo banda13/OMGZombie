@@ -1,18 +1,44 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ZombieController : BaseZombieController
+public class ZombieController : MonoBehaviour
 {
-    void Start () {
-       
-    }
-	
-	// Update is called once per frame
-	void Update () {
 
-        if (!spawned || dead)
+    private bool spawned = false;
+    private bool dead = false;
+    private int zombieIndex;
+
+    public Animator animator;
+    public GameObject player;
+    private Vector3 previousPosition;
+    private Vector3 destination;
+    private CharacterController controller;
+    public GameObject sphere;
+
+    public float speed = 0;
+    public float directionChange = 4;
+    public float maxRotation = 90;
+    public int healt = 100;
+    public int attackDamage = 10;
+    public float attackRange = 1.4f;
+    public float attackSpeed = 0.5f;
+    public float eyeShot = 10;
+    
+    private bool targetReached = true;
+    private float attackTimer;
+
+
+    void Start()
+    {
+        animator = GetComponent<Animator>();
+        controller = GetComponent<CharacterController>();
+        attackTimer = 0;
+    }
+    
+    void Update () {
+        
+        if (!Spawned() || dead)
         {
             return;
         }
@@ -20,36 +46,164 @@ public class ZombieController : BaseZombieController
         {
             Attack();
         }
-        else if (canMove())
-        {
-            Move();
-        }
-        
-	}
+        Move();
 
-    protected override void Attack()
-    {
-        throw new NotImplementedException();
+        attackTimer += Time.deltaTime;
     }
 
-    protected override void Die()
+
+    //interaction with the zombie= die, and spawn
+    public void Die()
     {
         dead = true;
         animator.SetInteger("Die", 1);
     }
 
-    protected override void Move()
+    private bool Spawned()
     {
-        throw new NotImplementedException();
-    }
-
-    protected override bool canAttack()
-    {
+        if (spawned)
+        {
+            return true;
+        }
+        else if (animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
+        { 
+            animator.runtimeAnimatorController = Resources.Load(Paths.normalBehaviorController) as RuntimeAnimatorController;
+            //StartCoroutine(NewHeading());
+            spawned = true;
+        }
         return false;
     }
 
-    protected override bool canMove()
+    public void Spawn(int index)
     {
-        throw new NotImplementedException();
+        zombieIndex = index;
+        targetReached = true;
+    }
+
+    //zombie interactions
+    private void Attack()
+    {
+        Debug.Log("Zombie" + zombieIndex + " is attacking!");
+        player.GetComponent<PlayerController>().TakeDamage(attackDamage);
+    }
+
+    private void Move()
+    {
+        if (detectPlayer() && rotateToDestination(300, new Vector3(player.transform.position.x, 0, player.transform.position.z)))
+        {
+            speed = 0.9f;
+        }
+        else if (targetReached || zombieStuck())
+        {
+            changeDestination();
+        }
+        else if (rotateToDestination(100, destination))
+        {
+            speed = 0.5f;
+        }
+
+        animator.SetFloat("Speed", speed);
+        transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+        controller.Move(transform.forward * speed * 0.01f);
+
+        //positioning fixes to avoid flying zombies!
+
+        if (isDistanceSmaller(transform.position, destination, 0.1f))
+        {
+            Debug.Log("Target reached: " + destination);
+            targetReached = true;
+        }
+    }
+
+    private void changeDestination()
+    {
+        destination = transform.position + new Vector3(Random.Range(-5, 5), 0, Random.Range(-3, 3));
+        targetReached = false;
+        if (sphere != null)
+        {
+            Instantiate(sphere, destination, Quaternion.identity);
+        }
+        //StopCoroutine(NewHeading());
+        //StartCoroutine(NewHeading());
+        Debug.Log("Zombie " + zombieIndex + " choosed new destination: " + destination);
+    }
+
+    IEnumerator NewHeading()
+    {
+        while (true)
+        {
+            changeDestination();
+            yield return new WaitForSeconds(directionChange);
+        }
+    }
+    
+    private bool canAttack()
+    {
+        if(isDistanceSmaller(transform.position, player.transform.position, attackRange) && attackTimer >= attackSpeed)
+        {
+            animator.SetBool("Attack", true);
+            Debug.Log("Zombie" + zombieIndex + "is attacking");
+            attackTimer = 0;
+            return true;
+        }
+        else
+        {
+            animator.SetBool("Attack", false);
+            return false;
+        }
+    }
+    
+    //helpers to the zombie interactions
+    private bool isDistanceSmaller(Vector3 a, Vector3 b, float distance)
+    {
+        if (Vector3.Distance(a, b) < distance)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    //rotationSpeed based on the zombie state(attacking or just wandering)
+    private bool rotateToDestination(float rotationSpeed, Vector3 destination)
+    {
+        Vector3 degree = Vector3.Cross(transform.forward, destination - transform.position);
+        if (Mathf.Abs(degree.y) < 0.1)
+        {
+            return true;
+        }
+        else
+        {
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(destination- transform.position), rotationSpeed * Time.deltaTime);
+            return false;
+        }
+    }
+
+    private bool playerBeforeZombie()
+    {
+        Debug.DrawRay(transform.position, transform.forward, Color.red, eyeShot);
+        return false;
+    }
+
+    private bool zombieStuck()
+    {
+        //have we move since our last know destination? 
+        //is there any obstacle before us?
+        return false;
+    }
+
+    private bool detectPlayer()
+    {
+        if(isDistanceSmaller(player.transform.position, transform.position, 5.0f) || playerBeforeZombie())
+        {
+            Debug.Log("Zombie" + zombieIndex + " detect the player!");
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 }
