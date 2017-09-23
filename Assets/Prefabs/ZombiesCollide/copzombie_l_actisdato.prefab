@@ -866,7 +866,7 @@ GameObject:
   - component: {fileID: 114749338784847050}
   m_Layer: 0
   m_Name: copzombie_l_actisdato
-  m_TagString: Untagged
+  m_TagString: Zombie
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

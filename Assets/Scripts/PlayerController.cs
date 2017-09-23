@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour {
 
     private bool isDead;                                                
     public bool damaged;
+    public float attackRange = 20;
 
     private CamaraController movement;
     public GameObject weapon;
@@ -23,6 +24,20 @@ public class PlayerController : MonoBehaviour {
 	}
 	
 	void Update () {
+
+        if (Input.GetMouseButtonDown(0) && weapon != null)
+        {
+            RaycastHit hit;
+            Ray weaponRay = new Ray(weapon.transform.GetChild(3).transform.position, transform.GetChild(0).forward);
+            if(Physics.Raycast(weaponRay, out hit, attackRange))
+            {
+                if (hit.collider.tag.Equals("Zombie"))
+                {
+                    hit.collider.gameObject.GetComponent<ZombieController>().Die();
+                }
+            }
+        }
+
         if (damaged)
         {
             damageImage.color = flashColour;

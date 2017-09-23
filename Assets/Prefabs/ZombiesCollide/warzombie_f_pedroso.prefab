@@ -444,7 +444,7 @@ GameObject:
   - component: {fileID: 114785565499030232}
   m_Layer: 0
   m_Name: warzombie_f_pedroso
-  m_TagString: Untagged
+  m_TagString: Zombie
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

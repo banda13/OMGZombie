@@ -18719,7 +18719,7 @@ MonoBehaviour:
   player: {fileID: 1967630002}
   particles: {fileID: 284074668}
   item: {fileID: 424540871}
-  weapon: {fileID: 1439963106706548, guid: f57b011168aab8b42a5be54d8b934c59, type: 2}
+  weapon: {fileID: 1733956629260386, guid: d1a267b66f44bd94f8b9fe4c035f99eb, type: 2}
 --- !u!1001 &1187392912
 Prefab:
   m_ObjectHideFlags: 0
@@ -18874,6 +18874,87 @@ Prefab:
       propertyPath: player
       value: 
       objectReference: {fileID: 1967630002}
+    - target: {fileID: 4760042156476494, guid: 93b8d6b19e6bc904b91707364d18c5b8, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 175.842
+      objectReference: {fileID: 0}
+    - target: {fileID: 4892995021291794, guid: 93b8d6b19e6bc904b91707364d18c5b8, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 189.454
+      objectReference: {fileID: 0}
+    - target: {fileID: 4170335438218440, guid: 93b8d6b19e6bc904b91707364d18c5b8, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 187.43799
+      objectReference: {fileID: 0}
+    - target: {fileID: 4071658918172838, guid: 93b8d6b19e6bc904b91707364d18c5b8, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 199.711
+      objectReference: {fileID: 0}
+    - target: {fileID: 4393731950233494, guid: 93b8d6b19e6bc904b91707364d18c5b8, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 197.898
+      objectReference: {fileID: 0}
+    - target: {fileID: 4078672050640296, guid: 93b8d6b19e6bc904b91707364d18c5b8, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 196.538
+      objectReference: {fileID: 0}
+    - target: {fileID: 4688513632400532, guid: 93b8d6b19e6bc904b91707364d18c5b8, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 181.881
+      objectReference: {fileID: 0}
+    - target: {fileID: 4630444548197286, guid: 93b8d6b19e6bc904b91707364d18c5b8, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 178.68706
+      objectReference: {fileID: 0}
+    - target: {fileID: 4380178722013374, guid: 93b8d6b19e6bc904b91707364d18c5b8, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 202.685
+      objectReference: {fileID: 0}
+    - target: {fileID: 4144354942926418, guid: 93b8d6b19e6bc904b91707364d18c5b8, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 186.20099
+      objectReference: {fileID: 0}
+    - target: {fileID: 4184609653764772, guid: 93b8d6b19e6bc904b91707364d18c5b8, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 194.275
+      objectReference: {fileID: 0}
+    - target: {fileID: 4033485422685722, guid: 93b8d6b19e6bc904b91707364d18c5b8, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 171.61299
+      objectReference: {fileID: 0}
+    - target: {fileID: 4665712591048448, guid: 93b8d6b19e6bc904b91707364d18c5b8, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 172.358
+      objectReference: {fileID: 0}
+    - target: {fileID: 4430259520392834, guid: 93b8d6b19e6bc904b91707364d18c5b8, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 173.18799
+      objectReference: {fileID: 0}
+    - target: {fileID: 4581215654135368, guid: 93b8d6b19e6bc904b91707364d18c5b8, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 187.728
+      objectReference: {fileID: 0}
+    - target: {fileID: 4144834795874250, guid: 93b8d6b19e6bc904b91707364d18c5b8, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 172.358
+      objectReference: {fileID: 0}
+    - target: {fileID: 4657408253797174, guid: 93b8d6b19e6bc904b91707364d18c5b8, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 208.111
+      objectReference: {fileID: 0}
+    - target: {fileID: 4437762609511874, guid: 93b8d6b19e6bc904b91707364d18c5b8, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 185.392
+      objectReference: {fileID: 0}
+    - target: {fileID: 4982471365030330, guid: 93b8d6b19e6bc904b91707364d18c5b8, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 173.12799
+      objectReference: {fileID: 0}
+    - target: {fileID: 114313748585088312, guid: 93b8d6b19e6bc904b91707364d18c5b8,
+        type: 2}
+      propertyPath: spawningAnimations
+      value: 
+      objectReference: {fileID: 9100000, guid: a88b020eb10c52a499ba02ca80dd4069, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 93b8d6b19e6bc904b91707364d18c5b8, type: 2}
   m_IsPrefabParent: 0
@@ -28037,6 +28118,7 @@ MonoBehaviour:
   flashSpeed: 5
   flashColour: {r: 1, g: 0, b: 0, a: 0.1}
   damaged: 0
+  attackRange: 20
   weapon: {fileID: 0}
 --- !u!136 &1967630006
 CapsuleCollider:

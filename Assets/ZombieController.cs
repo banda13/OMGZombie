@@ -86,7 +86,7 @@ public class ZombieController : MonoBehaviour
     //zombie interactions
     private void Attack()
     {
-        Debug.Log("Zombie" + zombieIndex + " is attacking!");
+        //Debug.Log("Zombie" + zombieIndex + " is attacking!");
         player.GetComponent<PlayerController>().TakeDamage(attackDamage);
     }
 
@@ -130,7 +130,7 @@ public class ZombieController : MonoBehaviour
         }
         //StopCoroutine(NewHeading());
         //StartCoroutine(NewHeading());
-        Debug.Log("Zombie " + zombieIndex + " choosed new destination: " + destination);
+        //Debug.Log("Zombie " + zombieIndex + " choosed new destination: " + destination);
     }
 
     IEnumerator NewHeading()
@@ -147,7 +147,7 @@ public class ZombieController : MonoBehaviour
         if(isDistanceSmaller(transform.position, player.transform.position, attackRange) && attackTimer >= attackSpeed)
         {
             animator.SetBool("Attack", true);
-            Debug.Log("Zombie" + zombieIndex + "is attacking");
+            //Debug.Log("Zombie" + zombieIndex + "is attacking");
             attackTimer = 0;
             return true;
         }
