@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour {
     public bool damaged;
 
     private CamaraController movement;
+    public GameObject weapon;
     
     void Start () {
         currentHealth = startingHealth;
