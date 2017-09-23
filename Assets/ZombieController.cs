@@ -21,8 +21,8 @@ public class ZombieController : MonoBehaviour
     public float maxRotation = 90;
     public int healt = 100;
     public int attackDamage = 10;
-    public float attackRange = 1.4f;
-    public float attackSpeed = 0.5f;
+    public float attackRange = 1.8f;
+    public float attackSpeed = 1;
     public float eyeShot = 10;
     
     private bool targetReached = true;
@@ -68,6 +68,9 @@ public class ZombieController : MonoBehaviour
         else if (animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
         { 
             animator.runtimeAnimatorController = Resources.Load(Paths.normalBehaviorController) as RuntimeAnimatorController;
+            controller = transform.gameObject.AddComponent(typeof(CharacterController)) as CharacterController;
+            controller.center = new Vector3(0, 1, 0);
+            controller.radius = 0.4f;
             //StartCoroutine(NewHeading());
             spawned = true;
         }
@@ -99,9 +102,11 @@ public class ZombieController : MonoBehaviour
         }
         else if (rotateToDestination(100, destination))
         {
-            speed = 0.5f;
+            speed = 0.6f;
         }
 
+
+        animator.SetBool("Attack", false);
         animator.SetFloat("Speed", speed);
         transform.position = new Vector3(transform.position.x, 0, transform.position.z);
         controller.Move(transform.forward * speed * 0.01f);
@@ -148,7 +153,6 @@ public class ZombieController : MonoBehaviour
         }
         else
         {
-            animator.SetBool("Attack", false);
             return false;
         }
     }
@@ -183,7 +187,7 @@ public class ZombieController : MonoBehaviour
 
     private bool playerBeforeZombie()
     {
-        Debug.DrawRay(transform.position, transform.forward, Color.red, eyeShot);
+        //Debug.DrawRay(transform.position, transform.forward, Color.red, eyeShot);
         return false;
     }
 
@@ -196,9 +200,8 @@ public class ZombieController : MonoBehaviour
 
     private bool detectPlayer()
     {
-        if(isDistanceSmaller(player.transform.position, transform.position, 5.0f) || playerBeforeZombie())
+        if(isDistanceSmaller(player.transform.position, transform.position, 8.0f) || playerBeforeZombie())
         {
-            Debug.Log("Zombie" + zombieIndex + " detect the player!");
             return true;
         }
         else
