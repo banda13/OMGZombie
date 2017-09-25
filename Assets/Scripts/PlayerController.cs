@@ -18,6 +18,9 @@ public class PlayerController : MonoBehaviour {
 
     private CamaraController movement;
     public GameObject weapon;
+    public ParticleSystem dust;
+
+    private LineRenderer laser;
     
     void Start () {
         currentHealth = startingHealth;
@@ -27,6 +30,7 @@ public class PlayerController : MonoBehaviour {
 
         if (Input.GetMouseButtonDown(0) && weapon != null)
         {
+            weapon.GetComponent<GunController>().Shoot();
             RaycastHit hit;
             Ray weaponRay = new Ray(weapon.transform.GetChild(3).transform.position, transform.GetChild(0).forward);
             if(Physics.Raycast(weaponRay, out hit, attackRange))
@@ -34,6 +38,10 @@ public class PlayerController : MonoBehaviour {
                 if (hit.collider.tag.Equals("Zombie"))
                 {
                     hit.collider.gameObject.GetComponent<ZombieController>().Die();
+                }
+                else
+                {
+                    Instantiate(dust, hit.point, Quaternion.identity);
                 }
             }
         }
