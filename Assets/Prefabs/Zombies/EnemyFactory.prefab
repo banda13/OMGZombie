@@ -803,7 +803,7 @@ MonoBehaviour:
   - {fileID: 1131334245577082, guid: 9fe3b7f7a26d0d24ba24e4bbd4162983, type: 2}
   - {fileID: 1980324363985706, guid: b0369c3425926f74f83881f80fdafe57, type: 2}
   - {fileID: 1822761402183394, guid: 58df8ad35cf61684b915ab661f710be5, type: 2}
-  - {fileID: 1201380670359872, guid: 71b9c63841b0edf45b43233480185399, type: 2}
+  - {fileID: 0}
   maxTime: 15
   minTime: 5
   player: {fileID: 0}

@@ -4445,7 +4445,7 @@ GameObject:
   m_Component:
   - component: {fileID: 188712847}
   m_Layer: 0
-  m_Name: Waypoint 5.5
+  m_Name: Waypoint 5.5_finalBattle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -18720,7 +18720,7 @@ MonoBehaviour:
   player: {fileID: 1967630002}
   particles: {fileID: 284074668}
   item: {fileID: 424540871}
-  weapon: {fileID: 1733956629260386, guid: d1a267b66f44bd94f8b9fe4c035f99eb, type: 2}
+  weapon: {fileID: 1382008185122164, guid: d973d018b461fb843b4165ce24a9cf0c, type: 2}
 --- !u!1001 &1187392912
 Prefab:
   m_ObjectHideFlags: 0
@@ -21500,74 +21500,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 55ca6ab794171c44698858b5f9e8c883, type: 2}
   m_IsPrefabParent: 0
---- !u!1001 &1511173780
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4156389301948228, guid: f57b011168aab8b42a5be54d8b934c59, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4156389301948228, guid: f57b011168aab8b42a5be54d8b934c59, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: -0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4156389301948228, guid: f57b011168aab8b42a5be54d8b934c59, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4156389301948228, guid: f57b011168aab8b42a5be54d8b934c59, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: -0.08715578
-      objectReference: {fileID: 0}
-    - target: {fileID: 4156389301948228, guid: f57b011168aab8b42a5be54d8b934c59, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4156389301948228, guid: f57b011168aab8b42a5be54d8b934c59, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4156389301948228, guid: f57b011168aab8b42a5be54d8b934c59, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 0.9961947
-      objectReference: {fileID: 0}
-    - target: {fileID: 4156389301948228, guid: f57b011168aab8b42a5be54d8b934c59, type: 2}
-      propertyPath: m_RootOrder
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 4156389301948228, guid: f57b011168aab8b42a5be54d8b934c59, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: -10
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: f57b011168aab8b42a5be54d8b934c59, type: 2}
-  m_IsPrefabParent: 0
---- !u!1 &1511173781 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1439963106706548, guid: f57b011168aab8b42a5be54d8b934c59,
-    type: 2}
-  m_PrefabInternal: {fileID: 1511173780}
---- !u!95 &1511173782
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1511173781}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 4ba6bc992ddae8042ba99dc7f2bda6a9, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1 &1517682396
 GameObject:
   m_ObjectHideFlags: 0
@@ -28173,6 +28105,7 @@ MonoBehaviour:
   damaged: 0
   attackRange: 20
   weapon: {fileID: 0}
+  dust: {fileID: 198110534788076834, guid: 4dccceea7c84abf4281bbee548e5224a, type: 2}
 --- !u!136 &1967630006
 CapsuleCollider:
   m_ObjectHideFlags: 0

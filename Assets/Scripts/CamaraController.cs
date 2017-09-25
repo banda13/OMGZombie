@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class CamaraController : PathFollower  {
 
+    private bool finalBattle = false;
+
     void Start () {
         init();
     }
@@ -14,7 +16,24 @@ public class CamaraController : PathFollower  {
         move();
         if(currentWaypoint == waypoints.Count)
         {
-            //SceneManager.LoadScene("mine", LoadSceneMode.Single);
+            SceneManager.LoadScene("mine", LoadSceneMode.Single);
         }
+
+        if (waypoints[currentWaypoint].name.Contains("finalBattle") && !finalBattle){
+            startEpicFinalBattle();
+        }
+    }
+
+
+    private void startEpicFinalBattle()
+    {
+        finalBattle = true;
+        Wait = true;
+    }
+
+    private void stopEpicFinalBattle()
+    {
+        finalBattle = false;
+        Wait = false;
     }
 }
