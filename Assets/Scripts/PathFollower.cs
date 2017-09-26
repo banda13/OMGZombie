@@ -11,7 +11,7 @@ public abstract class PathFollower : MonoBehaviour {
     protected List<Transform> waypoints;
     protected int currentWaypoint = 0;
 
-    public bool Wait { get; set; }
+    public bool Wait { get;  set; }
 
     public void init()
     {

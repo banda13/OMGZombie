@@ -17,12 +17,18 @@ public class SpawningPoint : MonoBehaviour {
             Debug.LogError("Wtf it is not zombie..?");
             return;
         }
-        zombie.player = player;
-        zombie.GetComponent<Animator>().runtimeAnimatorController = spawningAnimations;
-        zombie.Spawn(index);
+        
         var createdZomie = Instantiate(zombieObject, transform.position, rotation);
         createdZomie.transform.parent = parent;
         createdZomie.transform.name = "Zombie " + index;
+        zombie = createdZomie.GetComponent<ZombieController>();
+        zombie.player = player;
+        zombie.zombieIndex = index;
+        //try to help the zombie, and add the first detination to him!
+        if (transform.childCount > 0)
+        {
+            zombie.nextDestination = transform.GetChild(0).position;
+        }
     }
 
 }

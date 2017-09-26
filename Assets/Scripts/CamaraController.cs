@@ -2,13 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class CamaraController : PathFollower  {
 
-    private bool finalBattle = false;
+    public bool finalBattle = false;
+    private FinalBattle final;
+
 
     void Start () {
         init();
+        final = GetComponent<FinalBattle>();
     }
 
     void Update()
@@ -18,22 +22,32 @@ public class CamaraController : PathFollower  {
         {
             SceneManager.LoadScene("mine", LoadSceneMode.Single);
         }
-
         if (waypoints[currentWaypoint].name.Contains("finalBattle") && !finalBattle){
             startEpicFinalBattle();
         }
     }
-
+    private IEnumerator fading()
+    {
+        float fadeTime = GetComponent<Fading>().BeginFade(1);
+        yield return new WaitForSeconds(fadeTime);
+        fadeTime = GetComponent<Fading>().BeginFade(-1);
+        yield return new WaitForSeconds(fadeTime);
+    }
 
     private void startEpicFinalBattle()
     {
         finalBattle = true;
+        Debug.Log("Final battle started");
+        StartCoroutine(fading());
         Wait = true;
+        final.Go(this);
+
     }
 
-    private void stopEpicFinalBattle()
+    public void stopEpicFinalBattle()
     {
-        finalBattle = false;
+        StartCoroutine(fading());
         Wait = false;
+        Debug.Log("Final battler ended");
     }
 }

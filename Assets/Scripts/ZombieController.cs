@@ -7,12 +7,13 @@ public class ZombieController : MonoBehaviour
 
     private bool spawned = false;
     private bool dead = false;
-    private int zombieIndex;
+    public int zombieIndex;
 
     public Animator animator;
     public GameObject player;
     private Vector3 previousPosition;
     private Vector3 destination;
+    public Vector3 nextDestination;
     private CharacterController controller;
     public GameObject sphere;
 
@@ -24,6 +25,7 @@ public class ZombieController : MonoBehaviour
     public float attackRange = 1.8f;
     public float attackSpeed = 1;
     public float eyeShot = 10;
+    public float playerDetectionRange = 8.0f;
     
     private bool targetReached = true;
     private float attackTimer;
@@ -34,10 +36,13 @@ public class ZombieController : MonoBehaviour
         animator = GetComponent<Animator>();
         controller = GetComponent<CharacterController>();
         attackTimer = 0;
+        nextDestination = Vector3.zero;
     }
     
     void Update () {
-        
+
+        Debug.Log("nextDetination = " + zombieIndex);
+
         if (!Spawned() || dead)
         {
             return;
@@ -66,7 +71,7 @@ public class ZombieController : MonoBehaviour
             return true;
         }
         else if (animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
-        { 
+        {
             animator.runtimeAnimatorController = Resources.Load(Paths.normalBehaviorController) as RuntimeAnimatorController;
             controller = transform.gameObject.AddComponent(typeof(CharacterController)) as CharacterController;
             controller.center = new Vector3(0, 1, 0);
@@ -77,10 +82,17 @@ public class ZombieController : MonoBehaviour
         return false;
     }
 
-    public void Spawn(int index)
+    public void Spawn(int index, Transform route)
     {
         zombieIndex = index;
-        targetReached = true;
+        if(route != null)
+        {
+            nextDestination = route.transform.position;
+        }
+        else
+        {
+            nextDestination = Vector3.zero;
+        }
     }
 
     //zombie interactions
@@ -122,7 +134,16 @@ public class ZombieController : MonoBehaviour
 
     private void changeDestination()
     {
-        destination = transform.position + new Vector3(Random.Range(-5, 5), 0, Random.Range(-3, 3));
+        if(nextDestination != Vector3.zero)
+        {
+            destination = nextDestination;
+            nextDestination = Vector3.zero;
+            Debug.Log("Next destination in not null : " + nextDestination);
+        }
+        else
+        {
+            destination = transform.position + new Vector3(Random.Range(-5, 5), 0, Random.Range(-3, 3));
+        }
         targetReached = false;
         if (sphere != null)
         {
@@ -200,7 +221,7 @@ public class ZombieController : MonoBehaviour
 
     private bool detectPlayer()
     {
-        if(isDistanceSmaller(player.transform.position, transform.position, 8.0f) || playerBeforeZombie())
+        if(isDistanceSmaller(player.transform.position, transform.position, playerDetectionRange) || playerBeforeZombie())
         {
             return true;
         }

@@ -20,6 +20,8 @@ public class EnemyFactory : MonoBehaviour {
     public int zombiesAtStart = 10;
 
     private int zombieCounter = 0;
+
+    public bool Active = true;
     
     void Start () {
 
@@ -39,7 +41,7 @@ public class EnemyFactory : MonoBehaviour {
     {
         currentTime += Time.deltaTime;
         
-        if (currentTime >= spawnTime)
+        if (Active && currentTime >= spawnTime)
         {
             List<Transform> nearestPoints = getNearestSpawningpoints();
             if (nearestPoints.Count > 0)
@@ -65,7 +67,13 @@ public class EnemyFactory : MonoBehaviour {
         }
     }
 
-    private GameObject selectOneBeautifulZombie()
+    public void createZombie(SpawningPoint pos, GameObject zombie)
+    {
+        pos.Spawn(zombie, player, transform.GetChild(1), zombieCounter);
+        zombieCounter++;
+    }
+
+    public GameObject selectOneBeautifulZombie()
     {
         if(zombies == null || zombies.Count == 0)
         {
@@ -120,5 +128,16 @@ public class EnemyFactory : MonoBehaviour {
             }
         }
         return nearest;
+    }
+
+    public void killAll()
+    {
+        int count = 0;
+        foreach(Transform zombie in transform.GetChild(1))
+        {
+            zombie.GetComponent<ZombieController>().Die();
+            count++;
+        }
+        Debug.Log("I killed " + count + " zombies");
     }
 }

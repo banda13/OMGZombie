@@ -2007,8 +2007,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a137c915ce5a6f241a3a7dd64b9d4cff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  zombieIndex: 2
   animator: {fileID: 95851672596352994}
   player: {fileID: 0}
+  nextDestination: {x: 274.4, y: 0, z: 174.25}
   sphere: {fileID: 0}
   speed: 0
   directionChange: 4
@@ -2017,7 +2019,8 @@ MonoBehaviour:
   attackDamage: 10
   attackRange: 1.4
   attackSpeed: 0.5
-  eyeShot: 10
+  eyeShot: 0
+  playerDetectionRange: 0
 --- !u!137 &137123511842484388
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

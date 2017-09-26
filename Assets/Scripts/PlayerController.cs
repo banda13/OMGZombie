@@ -20,10 +20,11 @@ public class PlayerController : MonoBehaviour {
     public GameObject weapon;
     public ParticleSystem dust;
 
-    private LineRenderer laser;
-    
+    private GameObject hidedWeapon;
+
     void Start () {
         currentHealth = startingHealth;
+        movement = GetComponent<CamaraController>();
 	}
 	
 	void Update () {
@@ -67,6 +68,27 @@ public class PlayerController : MonoBehaviour {
         if (currentHealth <= 0 && !isDead)
         {
             Death();
+        }
+    }
+
+    public void hideWeapon(bool hide)
+    {
+        if(weapon != null)
+        {
+            if (hide)
+            {
+                hidedWeapon = weapon;
+                weapon = null;
+            }
+            else if(hidedWeapon != null)
+            {
+                weapon = hidedWeapon;
+                hidedWeapon = null;
+            }
+        }
+        else
+        {
+            Debug.LogError("Can't hide weapon, because i don't have");
         }
     }
 
