@@ -46,10 +46,7 @@ public class EnemyFactory : MonoBehaviour {
             List<Transform> nearestPoints = getNearestSpawningpoints();
             if (nearestPoints.Count > 0)
             {
-                int spawnIndex = Random.Range(0, nearestPoints.Count);
-                nearestPoints[spawnIndex].GetComponent<SpawningPoint>().Spawn(selectOneBeautifulZombie(), player, transform.GetChild(1), zombieCounter);
-                Debug.Log("Enemy Spawned at: " + nearestPoints[spawnIndex].name + " Index: " + zombieCounter);
-                zombieCounter++;
+                cleverZombieCreation(nearestPoints);
             }
             currentTime = 0;
             SetRandomTime();
@@ -61,10 +58,36 @@ public class EnemyFactory : MonoBehaviour {
     {
         for(int i= 0; i<zombiesAtStart; i++)
         {
-            int randomPlaceIndex = Random.Range(0, spawningPoints.Count);
-            spawningPoints[randomPlaceIndex].GetComponent<SpawningPoint>().Spawn(selectOneBeautifulZombie(), player, transform.GetChild(1), zombieCounter);
-            zombieCounter++;
+            cleverZombieCreation(spawningPoints);
         }
+    }
+
+    public bool cleverZombieCreation(List<Transform> spawnPoints)
+    {
+        if (spawnPoints.Count > 0)
+        {
+            SpawningPoint emptyPoint = null;
+            int iterCounter = 0;
+            //We try to randomly select an empty point from the 3 nearest spawning points
+            //we have a good chance to find it in this way
+            while (iterCounter < spawningPoints.Count)
+            {
+                iterCounter++;
+                int spawnIndex = Random.Range(0, spawnPoints.Count);
+                if (!spawnPoints[spawnIndex].GetComponent<SpawningPoint>().taken)
+                {
+                    //we found and empty, yee!
+                    emptyPoint = spawnPoints[spawnIndex].GetComponent<SpawningPoint>();
+                    createZombie(emptyPoint, selectOneBeautifulZombie());
+                    Debug.Log("Enemy Spawned at: " + spawnPoints[spawnIndex].name + " Index: " + zombieCounter);
+                    return true;
+                }
+            }
+            Debug.Log("Zombie creation failed cause all spawning points are taken");
+            return false;
+        }
+        Debug.Log("Zombie creation failed cause spawning points are empty");
+        return false;
     }
 
     public void createZombie(SpawningPoint pos, GameObject zombie)
