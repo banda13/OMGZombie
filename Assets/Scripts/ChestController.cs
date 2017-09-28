@@ -58,6 +58,7 @@ public class ChestController : MonoBehaviour {
                         wp.transform.localPosition = new Vector3(0.2f, -0.3f, 0.2f);
                         wp.transform.rotation = player.transform.GetChild(0).transform.rotation;
                         player.GetComponent<PlayerController>().weapon = wp;
+                        player.GetComponent<CamaraController>().activateZombies();
                     }
                 }
 

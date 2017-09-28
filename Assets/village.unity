@@ -3959,7 +3959,9 @@ MonoBehaviour:
   player: {fileID: 1967630002}
   activeSpawningPlaces: 3
   zombiesAtStart: 10
+  minZombiesAlive: 7
   Active: 1
+  zombiesAttackActivated: 0
 --- !u!4 &67454535
 Transform:
   m_ObjectHideFlags: 0
@@ -12476,7 +12478,7 @@ GameObject:
   m_Component:
   - component: {fileID: 690572217}
   m_Layer: 0
-  m_Name: Waypoint 4
+  m_Name: Waypoint 4_startFight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

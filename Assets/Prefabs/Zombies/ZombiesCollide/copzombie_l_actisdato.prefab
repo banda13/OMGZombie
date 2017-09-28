@@ -2108,7 +2108,7 @@ MonoBehaviour:
   healt: 100
   attackDamage: 10
   biteDamage: 20
-  attackRange: 1.8
+  attackRange: 2.1
   attackSpeed: 1
   eyeShot: 20
   playerDetectionRange: 8

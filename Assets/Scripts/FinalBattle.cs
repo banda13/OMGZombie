@@ -44,16 +44,10 @@ public class FinalBattle : PathFollower {
             if(p != null)
             {
                 GameObject zombieObj = factory.selectOneBeautifulZombie();
-                ZombieController zombie = zombieObj.GetComponent<ZombieController>();
-                if(zombie == null)
-                {
-                    Debug.LogError("Can't create final battle zombie because no zombie controller attached!");
-                    continue;
-                }
                 //create deaf and blind zombies
+                ZombieController zombie = factory.createZombie(p, zombieObj);
                 zombie.eyeShot = 0;
                 zombie.playerDetectionRange = 0;
-                factory.createZombie(p, zombieObj);
             }
         }
         Debug.Log(spawningPoints.Count + " zombies spawed ");

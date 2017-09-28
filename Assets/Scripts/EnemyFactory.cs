@@ -20,9 +20,11 @@ public class EnemyFactory : MonoBehaviour {
     public int zombiesAtStart = 10;
 
     private int zombieCounter = 0;
+    public int minZombiesAlive = 7;
 
     public bool Active = true;
-    
+    public bool zombiesAttackActivated = false;
+
     void Start () {
 
         spawningPoints = new List<Transform>();
@@ -40,17 +42,30 @@ public class EnemyFactory : MonoBehaviour {
     void FixedUpdate()
     {
         currentTime += Time.deltaTime;
-        
-        if (Active && currentTime >= spawnTime)
+        if (Active)
         {
-            List<Transform> nearestPoints = getNearestSpawningpoints();
-            if (nearestPoints.Count > 0)
+            if (currentTime >= spawnTime)
             {
-                cleverZombieCreation(nearestPoints);
+                List<Transform> nearestPoints = getNearestSpawningpoints();
+                if (nearestPoints.Count > 0)
+                {
+                    cleverZombieCreation(nearestPoints);
+                }
+                currentTime = 0;
+                SetRandomTime();
+
             }
-            currentTime = 0;
-            SetRandomTime();
-            
+
+            //dont let to the number of the zombies under a specified number
+            if (aliveZombies() < minZombiesAlive)
+            {
+                int i;
+                for (i = 0; i < minZombiesAlive - aliveZombies(); i++)
+                {
+                    cleverZombieCreation(spawningPoints);
+                }
+                Debug.Log("Zombies number is under " + minZombiesAlive + " so i created " + i + "zombies");
+            }
         }
     }
 
@@ -60,6 +75,19 @@ public class EnemyFactory : MonoBehaviour {
         {
             cleverZombieCreation(spawningPoints);
         }
+    }
+
+    private int aliveZombies()
+    {
+        int count = 0;
+        foreach(Transform zombie in transform.GetChild(1))
+        {
+            if (!zombie.GetComponent<ZombieController>().isDead())
+            {
+                count++;
+            }
+        }
+        return count;
     }
 
     public bool cleverZombieCreation(List<Transform> spawnPoints)
@@ -90,10 +118,11 @@ public class EnemyFactory : MonoBehaviour {
         return false;
     }
 
-    public void createZombie(SpawningPoint pos, GameObject zombie)
+    public ZombieController createZombie(SpawningPoint pos, GameObject zombie)
     {
-        pos.Spawn(zombie, player, transform.GetChild(1), zombieCounter);
         zombieCounter++;
+        return pos.Spawn(zombie, player, transform.GetChild(1), zombieCounter, zombiesAttackActivated);
+        
     }
 
     public GameObject selectOneBeautifulZombie()
@@ -162,5 +191,14 @@ public class EnemyFactory : MonoBehaviour {
             count++;
         }
         Debug.Log("I killed " + count + " zombies");
+    }
+
+    public void activeZombiesAttack()
+    {
+        foreach(Transform zombie in transform.GetChild(1))
+        {
+            zombie.GetComponent<ZombieController>().enableAttack(true);
+        }
+        Debug.Log("Zombies attack activated!");
     }
 }

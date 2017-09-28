@@ -38,11 +38,12 @@ public class PlayerController : MonoBehaviour {
             {
                 if (hit.collider.tag.Equals("Zombie"))
                 {
-                    hit.collider.gameObject.GetComponent<ZombieController>().Die();
+                    StartCoroutine(hit.collider.gameObject.GetComponent<ZombieController>().Die());
                 }
                 else
                 {
-                    Instantiate(dust, hit.point, Quaternion.identity);
+                    ParticleSystem dustObj = Instantiate(dust, hit.point, Quaternion.identity);
+                    Destroy(dustObj.gameObject, 2);
                 }
             }
         }
@@ -58,6 +59,7 @@ public class PlayerController : MonoBehaviour {
 
         damaged = false;
 	}
+    
 
     public void TakeDamage(int amount)
     {

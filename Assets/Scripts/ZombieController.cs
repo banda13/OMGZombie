@@ -33,6 +33,8 @@ public class ZombieController : MonoBehaviour
     private float attackTimer;
 
     private bool playerDetected = false;
+    private bool attackEnable = false;
+    private bool dying = false;
 
 
     void Start()
@@ -46,6 +48,10 @@ public class ZombieController : MonoBehaviour
 
         if (!Spawned() || dead)
         {
+            if (dying)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, new Vector3(transform.position.x, -0.9f, transform.position.z), Time.deltaTime);
+            }
             return;
         }
         if (!Attack())
@@ -56,13 +62,14 @@ public class ZombieController : MonoBehaviour
 
 
     //interaction with the zombie= die, and spawn
-    public void Die()
+    public IEnumerator Die()
     {
         dead = true;
         speed = 0;
         animator.SetInteger("Die", 1);
-        //StartCoroutine(waitSecond(3));
-        Destroy(this.gameObject, 3);
+        yield return new WaitForSeconds(1);
+        dying = true;
+        //Destroy(this.gameObject, 3);
     }
     
     public void setNextDestination(Transform dest)
@@ -141,7 +148,7 @@ public class ZombieController : MonoBehaviour
         else
         {
             destination = transform.position + new Vector3(Random.Range(-5, 5), 0, Random.Range(-3, 3));
-            //StartCoroutine(NewHeading());
+            StartCoroutine(NewHeading());
         }
         targetReached = false;
         if (sphere != null)
@@ -161,7 +168,7 @@ public class ZombieController : MonoBehaviour
     
     private bool Attack()
     {
-        if(isDistanceSmaller(transform.position, player.transform.position, attackRange) && attackTimer >= attackSpeed)
+        if(isDistanceSmaller(transform.position, player.transform.position, attackRange) && attackTimer >= attackSpeed && attackEnable)
         {
             if(Random.Range(0, 100) > 70)
             {
@@ -251,14 +258,27 @@ public class ZombieController : MonoBehaviour
 
     private bool detectPlayer()
     {
+        if (!attackEnable)
+        {
+            return false;
+        }
         if(isDistanceSmaller(player.transform.position, transform.position, playerDetectionRange) || playerBeforeZombie())
         {
-            Debug.Log("Zombie"+ zombieIndex +": detect player");
             return true;
         }
         else
         {
             return false;
         }
+    }
+
+    public void enableAttack(bool enable)
+    {
+        attackEnable = enable;
+    }
+
+    public bool isDead()
+    {
+        return dead;
     }
 }

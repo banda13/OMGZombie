@@ -10,6 +10,7 @@ public abstract class PathFollower : MonoBehaviour {
 
     protected List<Transform> waypoints;
     protected int currentWaypoint = 0;
+    protected Vector3 shift = Vector3.zero;
 
     public bool Wait { get;  set; }
 
@@ -18,6 +19,7 @@ public abstract class PathFollower : MonoBehaviour {
         waypoints = new List<Transform>();
         foreach (Transform waypoint in path.transform)
         {
+            waypoint.position += shift;
             waypoints.Add(waypoint.transform);
         }
     }

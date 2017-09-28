@@ -10,7 +10,7 @@ public class SpawningPoint : MonoBehaviour {
 
     private ZombieController zombie = null;
 
-    public void Spawn(GameObject zombieObject, GameObject player, Transform parent, int index)
+    public ZombieController Spawn(GameObject zombieObject, GameObject player, Transform parent, int index, bool activated)
     {
         taken = true;
         StartCoroutine(waitForLeaving());
@@ -19,7 +19,7 @@ public class SpawningPoint : MonoBehaviour {
         if (zombie == null)
         {
             Debug.LogError("Wtf it is not zombie..?");
-            return;
+            return null;
         }
         var createdZomie = Instantiate(zombieObject, transform.position, Quaternion.Euler(new Vector3(0,  extraYRotation, 0)));
         createdZomie.transform.parent = parent;
@@ -27,11 +27,13 @@ public class SpawningPoint : MonoBehaviour {
         zombie = createdZomie.GetComponent<ZombieController>();
         zombie.player = player;
         zombie.zombieIndex = index;
+        zombie.enableAttack(activated);
         //try to help the zombie, and add the first detination to him!
         if (transform.childCount > 0)
         {
             zombie.setNextDestination(transform.GetChild(0));
         }
+        return zombie;
     }
 
     IEnumerator waitForLeaving()

@@ -9,10 +9,13 @@ public class CamaraController : PathFollower  {
     public bool finalBattle = false;
     private FinalBattle final;
 
+    private EnemyFactory factory;
 
     void Start () {
+        shift = new Vector3(0, 0.5f, 0);
         init();
         final = GetComponent<FinalBattle>();
+        factory = final.factory;
     }
 
     void Update()
@@ -26,28 +29,36 @@ public class CamaraController : PathFollower  {
             startEpicFinalBattle();
         }
     }
-    private IEnumerator fading()
+    private IEnumerator fading(bool start)
     {
         float fadeTime = GetComponent<Fading>().BeginFade(1);
         yield return new WaitForSeconds(fadeTime);
         fadeTime = GetComponent<Fading>().BeginFade(-1);
         yield return new WaitForSeconds(fadeTime);
+        if (start)
+        {
+            final.Go(this);
+        }
+        Wait = start;
     }
 
     private void startEpicFinalBattle()
     {
         finalBattle = true;
         Debug.Log("Final battle started");
-        StartCoroutine(fading());
-        Wait = true;
-        final.Go(this);
+        StartCoroutine(fading(true));
 
     }
 
     public void stopEpicFinalBattle()
     {
-        StartCoroutine(fading());
-        Wait = false;
+        StartCoroutine(fading(false));
         Debug.Log("Final battler ended");
+    }
+
+    public void activateZombies()
+    {
+        factory.zombiesAttackActivated = true;
+        factory.activeZombiesAttack();
     }
 }
