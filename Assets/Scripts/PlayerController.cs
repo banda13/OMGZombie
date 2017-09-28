@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -36,14 +37,25 @@ public class PlayerController : MonoBehaviour {
             Ray weaponRay = new Ray(weapon.transform.GetChild(3).transform.position, transform.GetChild(0).forward);
             if(Physics.Raycast(weaponRay, out hit, attackRange))
             {
-                if (hit.collider.tag.Equals("Zombie"))
+                try
                 {
-                    StartCoroutine(hit.collider.gameObject.GetComponent<ZombieController>().Die());
+                    if (hit.collider.tag.Equals("ZombieHead"))
+                    {
+                        hit.transform.GetComponent<ZombieController>().takeDamage(100);
+                    }
+                    if (hit.collider.tag.Equals("ZombieBody"))
+                    {
+                        hit.transform.GetComponent<ZombieController>().takeDamage(20);
+                    }
+                    else
+                    {
+                        ParticleSystem dustObj = Instantiate(dust, hit.point, Quaternion.identity);
+                        Destroy(dustObj.gameObject, 2);
+                    }
                 }
-                else
+                catch (NullReferenceException e)
                 {
-                    ParticleSystem dustObj = Instantiate(dust, hit.point, Quaternion.identity);
-                    Destroy(dustObj.gameObject, 2);
+                    //its ok, we need to wait until the zombie gets up!
                 }
             }
         }

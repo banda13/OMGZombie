@@ -3947,13 +3947,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   zombies:
-  - {fileID: 1883715536870378, guid: fdbdada992cf0e64cb6555c29d8584b1, type: 2}
-  - {fileID: 1396728827974632, guid: be51ff91d36fd114dbeae1efe6eb41db, type: 2}
-  - {fileID: 1828110795168024, guid: 3c5a1cf0a60842343803196d894f9ea0, type: 2}
-  - {fileID: 1712935529069582, guid: 177baefa3711d274a846276a1e5deb28, type: 2}
-  - {fileID: 1433644261781294, guid: 397032ccf947af94aaeec6b599730cce, type: 2}
-  - {fileID: 1225857051488758, guid: a1c9b7b49adf07b45b04ae4e4fc20959, type: 2}
-  - {fileID: 1582128628482702, guid: ba37a2e06e966d2469686f080bd35de8, type: 2}
+  - {fileID: 1870422433062096, guid: 3bc9a61d406b38c44ac1ba3a30b47143, type: 2}
+  - {fileID: 1970849601923996, guid: 3caf3dafd8710194e90627e2daa3a1aa, type: 2}
+  - {fileID: 1619862939603876, guid: 3a80e091ae3a16347ae6cf7d59dc58fc, type: 2}
+  - {fileID: 1832885624090982, guid: ca38a96b4e09d554484f3b0bd4c52efc, type: 2}
+  - {fileID: 1738612508918980, guid: f334b35e420ea664a8fa0607f636097f, type: 2}
+  - {fileID: 1595030281027694, guid: 9c09aeb21c9ced0429d2f0b0edeea3c0, type: 2}
+  - {fileID: 1956323793914396, guid: 020dc116008067749857c9756ddcbfd8, type: 2}
   maxTime: 15
   minTime: 5
   player: {fileID: 1967630002}
@@ -29902,7 +29902,7 @@ Prefab:
     - target: {fileID: 114319388119935374, guid: d45d22b7d26212645bf3a78f41aa3d94,
         type: 2}
       propertyPath: speed
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1360243786505556, guid: d45d22b7d26212645bf3a78f41aa3d94, type: 2}
       propertyPath: m_TagString

@@ -69,7 +69,8 @@ public class ZombieController : MonoBehaviour
         animator.SetInteger("Die", 1);
         yield return new WaitForSeconds(1);
         dying = true;
-        //Destroy(this.gameObject, 3);
+        //for the worst case
+        Destroy(this.gameObject, 30);
     }
     
     public void setNextDestination(Transform dest)
@@ -112,7 +113,15 @@ public class ZombieController : MonoBehaviour
         if (detectPlayer() && rotateToDestination(300, new Vector3(player.transform.position.x, 0, player.transform.position.z)))
         {
             playerDetected = true;
-            speed = 0.9f;
+            if(healt < 50)
+            {
+                speed = 0.3f;
+            }
+            else
+            {
+                speed = 0.9f;
+            }
+            
         }
         else if (targetReached || zombieStuck())
         {
@@ -120,7 +129,14 @@ public class ZombieController : MonoBehaviour
         }
         else if (rotateToDestination(100, destination))
         {
-            speed = 0.6f;
+            if (healt < 50)
+            {
+                speed = 0.3f;
+            }
+            else
+            {
+                speed = 0.6f;
+            }
         }
         
         animator.SetFloat("Speed", speed);
@@ -235,6 +251,16 @@ public class ZombieController : MonoBehaviour
             }
         }
         return false;
+    }
+
+    public void takeDamage(int damage)
+    {
+        healt -= damage;
+        animator.SetTrigger("Hit");
+        if(healt <= 0)
+        {
+            StartCoroutine(Die());
+        }
     }
 
     private bool zombieStuck()
