@@ -264,7 +264,7 @@ Light:
   m_Type: 2
   m_Color: {r: 1, g: 0.8371778, b: 0.104477584, a: 1}
   m_Intensity: 0
-  m_Range: 5
+  m_Range: 10
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
@@ -319,8 +319,8 @@ MonoBehaviour:
   BaseFlame: {fileID: 100008}
   Etincelles: {fileID: 100004}
   Fumee: {fileID: 100010}
-  MaxLightIntensity: 3
-  IntensityLight: 0
+  MaxLightIntensity: 5
+  IntensityLight: 4
 --- !u!198 &19800000
 ParticleSystem:
   m_ObjectHideFlags: 1
