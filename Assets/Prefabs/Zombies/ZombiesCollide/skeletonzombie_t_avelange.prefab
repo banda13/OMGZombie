@@ -2010,17 +2010,17 @@ MonoBehaviour:
   zombieIndex: 0
   animator: {fileID: 95441557527206078}
   player: {fileID: 0}
-  nextDestination: {x: 274.4, y: 0, z: 174.25}
   sphere: {fileID: 0}
   speed: 0
   directionChange: 4
   maxRotation: 90
   healt: 100
   attackDamage: 10
-  attackRange: 1.4
-  attackSpeed: 0.5
-  eyeShot: 0
-  playerDetectionRange: 0
+  attackRange: 1.8
+  attackSpeed: 1
+  eyeShot: 15
+  playerDetectionRange: 8
+  obstacleDetection: 1.5
 --- !u!137 &137391656017005738
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

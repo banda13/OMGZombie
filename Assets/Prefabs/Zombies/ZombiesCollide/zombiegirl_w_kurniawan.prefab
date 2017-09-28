@@ -1932,10 +1932,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a137c915ce5a6f241a3a7dd64b9d4cff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  zombieIndex: 9
+  zombieIndex: 0
   animator: {fileID: 95495300960855830}
   player: {fileID: 0}
-  nextDestination: {x: 274.4, y: 0, z: 174.25}
   sphere: {fileID: 0}
   speed: 0
   directionChange: 4
@@ -1944,8 +1943,9 @@ MonoBehaviour:
   attackDamage: 10
   attackRange: 1.8
   attackSpeed: 1
-  eyeShot: 0
-  playerDetectionRange: 0
+  eyeShot: 15
+  playerDetectionRange: 8
+  obstacleDetection: 1.5
 --- !u!135 &135632870831271356
 SphereCollider:
   m_ObjectHideFlags: 1

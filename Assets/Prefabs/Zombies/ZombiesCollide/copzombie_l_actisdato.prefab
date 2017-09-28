@@ -2097,20 +2097,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a137c915ce5a6f241a3a7dd64b9d4cff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  zombieIndex: 6
+  zombieIndex: 0
   animator: {fileID: 95134616590647138}
   player: {fileID: 0}
-  nextDestination: {x: 274.4, y: 0, z: 174.25}
-  sphere: {fileID: 1567122873282906, guid: a2993925e58c29e4798f40dbd89cb686, type: 2}
+  sphere: {fileID: 0}
   speed: 0
   directionChange: 4
   maxRotation: 90
   healt: 100
   attackDamage: 10
-  attackRange: 1.4
-  attackSpeed: 0.5
-  eyeShot: 10
+  attackRange: 1.8
+  attackSpeed: 1
+  eyeShot: 15
   playerDetectionRange: 8
+  obstacleDetection: 1.5
 --- !u!137 &137110439177455250
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

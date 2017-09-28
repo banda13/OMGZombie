@@ -47,8 +47,8 @@ public class EnemyFactory : MonoBehaviour {
             if (nearestPoints.Count > 0)
             {
                 int spawnIndex = Random.Range(0, nearestPoints.Count);
-                nearestPoints[spawnIndex].GetComponent<SpawningPoint>().Spawn(selectOneBeautifulZombie(), player, transform.GetChild(1), zombieCounter);
-                Debug.Log("Enemy Spawned at: " + nearestPoints[spawnIndex].name + " Index: " + zombieCounter);
+                //nearestPoints[spawnIndex].GetComponent<SpawningPoint>().Spawn(selectOneBeautifulZombie(), player, transform.GetChild(1), zombieCounter);
+                //Debug.Log("Enemy Spawned at: " + nearestPoints[spawnIndex].name + " Index: " + zombieCounter);
                 zombieCounter++;
             }
             currentTime = 0;

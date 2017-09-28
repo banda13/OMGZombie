@@ -13,7 +13,7 @@ public class ZombieController : MonoBehaviour
     public GameObject player;
     private Vector3 previousPosition;
     private Vector3 destination;
-    public Vector3 nextDestination;
+    private Vector3 nextDestination;
     private CharacterController controller;
     public GameObject sphere;
 
@@ -26,9 +26,12 @@ public class ZombieController : MonoBehaviour
     public float attackSpeed = 1;
     public float eyeShot = 10;
     public float playerDetectionRange = 8.0f;
-    
+    public float obstacleDetection = 1.5f;
+
     private bool targetReached = true;
     private float attackTimer;
+
+    private bool playerDetected = false;
 
 
     void Start()
@@ -36,12 +39,9 @@ public class ZombieController : MonoBehaviour
         animator = GetComponent<Animator>();
         controller = GetComponent<CharacterController>();
         attackTimer = 0;
-        nextDestination = Vector3.zero;
     }
     
     void Update () {
-
-        Debug.Log("nextDetination = " + zombieIndex);
 
         if (!Spawned() || dead)
         {
@@ -61,7 +61,20 @@ public class ZombieController : MonoBehaviour
     public void Die()
     {
         dead = true;
+        speed = 0;
         animator.SetInteger("Die", 1);
+        //StartCoroutine(waitSecond(3));
+        Destroy(this.gameObject, 3);
+    }
+    
+    public void setNextDestination(Transform dest)
+    {
+        nextDestination = dest.position;
+    }
+
+    private IEnumerator waitSecond(float sec)
+    {
+        yield return new WaitForSeconds(sec);
     }
 
     private bool Spawned()
@@ -74,6 +87,7 @@ public class ZombieController : MonoBehaviour
         {
             animator.runtimeAnimatorController = Resources.Load(Paths.normalBehaviorController) as RuntimeAnimatorController;
             controller = transform.gameObject.AddComponent(typeof(CharacterController)) as CharacterController;
+            //animator.applyRootMotion = false;
             controller.center = new Vector3(0, 1, 0);
             controller.radius = 0.4f;
             //StartCoroutine(NewHeading());
@@ -81,20 +95,7 @@ public class ZombieController : MonoBehaviour
         }
         return false;
     }
-
-    public void Spawn(int index, Transform route)
-    {
-        zombieIndex = index;
-        if(route != null)
-        {
-            nextDestination = route.transform.position;
-        }
-        else
-        {
-            nextDestination = Vector3.zero;
-        }
-    }
-
+    
     //zombie interactions
     private void Attack()
     {
@@ -106,6 +107,7 @@ public class ZombieController : MonoBehaviour
     {
         if (detectPlayer() && rotateToDestination(300, new Vector3(player.transform.position.x, 0, player.transform.position.z)))
         {
+            playerDetected = true;
             speed = 0.9f;
         }
         else if (targetReached || zombieStuck())
@@ -125,6 +127,9 @@ public class ZombieController : MonoBehaviour
 
         //positioning fixes to avoid flying zombies!
 
+        //transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+        //transform.rotation = Quaternion.Euler(0, transform.rotation.y, 0);
+
         if (isDistanceSmaller(transform.position, destination, 0.1f))
         {
             Debug.Log("Target reached: " + destination);
@@ -134,7 +139,7 @@ public class ZombieController : MonoBehaviour
 
     private void changeDestination()
     {
-        if(nextDestination != Vector3.zero)
+        if(nextDestination != null && nextDestination != Vector3.zero)
         {
             destination = nextDestination;
             nextDestination = Vector3.zero;
@@ -208,14 +213,37 @@ public class ZombieController : MonoBehaviour
 
     private bool playerBeforeZombie()
     {
-        //Debug.DrawRay(transform.position, transform.forward, Color.red, eyeShot);
+        RaycastHit hit;
+        Ray eye = new Ray(transform.position+ new Vector3(0, 1.6f, 0), transform.forward);
+
+        Debug.DrawRay(transform.position + new Vector3(0, 1.6f, 0), transform.forward, Color.red, eyeShot);
+        if (Physics.Raycast(eye, out hit, eyeShot))
+        {
+            if (hit.collider.tag.Equals("Player"))
+            {
+                Debug.Log("Zombie" + zombieIndex + ": The lunch is before me. Distance :" + Vector3.Distance(transform.position, new Vector3(hit.point.x, 0, hit.point.z)));
+                return true;
+            }
+        }
         return false;
     }
 
     private bool zombieStuck()
     {
+        
         //have we move since our last know destination? 
         //is there any obstacle before us?
+        RaycastHit hit;
+        Ray eye = new Ray(transform.position + new Vector3(0, 1.5f, 0), destination-transform.position);
+        if (Physics.Raycast(eye, out hit, obstacleDetection))
+        {
+            if (!hit.collider.tag.Equals("Player") && !hit.collider.tag.Equals("Zombie"))
+            {
+                Debug.Log("Zombie " + zombieIndex + ": Oops a " + hit.collider.name + " is before me, I'll change my destination");
+                Debug.DrawRay(transform.position + new Vector3(0, 1.5f, 0), destination - transform.position, Color.green, obstacleDetection);
+                return true;
+            }
+        }
         return false;
     }
 
