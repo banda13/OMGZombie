@@ -864,6 +864,7 @@ GameObject:
   - component: {fileID: 4612886647258814}
   - component: {fileID: 95134616590647138}
   - component: {fileID: 114749338784847050}
+  - component: {fileID: 195053357005260000}
   m_Layer: 0
   m_Name: copzombie_l_actisdato
   m_TagString: Zombie
@@ -2101,6 +2102,7 @@ MonoBehaviour:
   animator: {fileID: 95134616590647138}
   player: {fileID: 0}
   sphere: {fileID: 0}
+  zerofriction: {fileID: 13400000, guid: c2815a7ab32e42c4bb42f59caacb8ec1, type: 2}
   speed: 0
   directionChange: 4
   maxRotation: 90
@@ -2369,3 +2371,24 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.14958039, y: 0.3337233, z: 0.12572156}
     m_Extent: {x: 0.1274781, y: 0.19498527, z: 0.10997493}
   m_DirtyAABB: 0
+--- !u!195 &195053357005260000
+NavMeshAgent:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1883715536870378}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4

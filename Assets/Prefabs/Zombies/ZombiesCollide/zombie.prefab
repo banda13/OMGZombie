@@ -426,6 +426,7 @@ GameObject:
   - component: {fileID: 4950752839611382}
   - component: {fileID: 95083142664914260}
   - component: {fileID: 114870144562425908}
+  - component: {fileID: 195393965722946612}
   m_Layer: 0
   m_Name: zombie
   m_TagString: Zombie
@@ -2727,7 +2728,7 @@ Animator:
   m_GameObject: {fileID: 1225857051488758}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 587c0859faa329d4d9bfca43eaafa735, type: 3}
-  m_Controller: {fileID: 9100000, guid: d44aa66638498f045b5a94b226a16880, type: 2}
+  m_Controller: {fileID: 9100000, guid: a88b020eb10c52a499ba02ca80dd4069, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -2750,6 +2751,7 @@ MonoBehaviour:
   animator: {fileID: 95083142664914260}
   player: {fileID: 0}
   sphere: {fileID: 0}
+  zerofriction: {fileID: 13400000, guid: c2815a7ab32e42c4bb42f59caacb8ec1, type: 2}
   speed: 0
   directionChange: 4
   maxRotation: 90
@@ -2881,3 +2883,24 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.00053450465, y: -0.06398171, z: 0.024336375}
     m_Extent: {x: 0.9598551, y: 0.90179163, z: 0.17387664}
   m_DirtyAABB: 0
+--- !u!195 &195393965722946612
+NavMeshAgent:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1225857051488758}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4

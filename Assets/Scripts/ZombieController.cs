@@ -16,6 +16,7 @@ public class ZombieController : MonoBehaviour
     private Vector3 nextDestination;
     private CharacterController controller;
     public GameObject sphere;
+    public PhysicMaterial zerofriction;
 
     public float speed = 0;
     public float directionChange = 4;
@@ -37,7 +38,7 @@ public class ZombieController : MonoBehaviour
     void Start()
     {
         animator = GetComponent<Animator>();
-        controller = GetComponent<CharacterController>();
+        //controller = GetComponent<CharacterController>();
         attackTimer = 0;
     }
     
@@ -86,10 +87,16 @@ public class ZombieController : MonoBehaviour
         else if (animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
         {
             animator.runtimeAnimatorController = Resources.Load(Paths.normalBehaviorController) as RuntimeAnimatorController;
-            controller = transform.gameObject.AddComponent(typeof(CharacterController)) as CharacterController;
+            Rigidbody rb = transform.gameObject.AddComponent(typeof(Rigidbody)) as Rigidbody;
+            rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezePositionY;
+            CapsuleCollider collider = transform.gameObject.AddComponent(typeof(CapsuleCollider)) as CapsuleCollider;
+            collider.center = new Vector3(0, 1, 0);
+            collider.height = 2.0f;
+            collider.material = zerofriction;
+            //controller = transform.gameObject.AddComponent(typeof(CharacterController)) as CharacterController;
             //animator.applyRootMotion = false;
-            controller.center = new Vector3(0, 1, 0);
-            controller.radius = 0.4f;
+            //controller.center = new Vector3(0, 1, 0);
+            //controller.radius = 0.4f;
             //StartCoroutine(NewHeading());
             spawned = true;
         }
@@ -123,12 +130,12 @@ public class ZombieController : MonoBehaviour
         animator.SetBool("Attack", false);
         animator.SetFloat("Speed", speed);
         transform.position = new Vector3(transform.position.x, 0, transform.position.z);
-        controller.Move(transform.forward * speed * 0.01f);
+        //controller.Move(transform.forward * speed * 0.01f);
 
         //positioning fixes to avoid flying zombies!
 
-        //transform.position = new Vector3(transform.position.x, 0, transform.position.z);
-        //transform.rotation = Quaternion.Euler(0, transform.rotation.y, 0);
+       // transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+       // transform.rotation = Quaternion.Euler(0, transform.rotation.y, 0);
 
         if (isDistanceSmaller(transform.position, destination, 0.1f))
         {
@@ -206,7 +213,7 @@ public class ZombieController : MonoBehaviour
         }
         else
         {
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(destination- transform.position), rotationSpeed * Time.deltaTime);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(destination- transform.position, Vector3.up), rotationSpeed * Time.deltaTime);
             return false;
         }
     }
@@ -216,7 +223,7 @@ public class ZombieController : MonoBehaviour
         RaycastHit hit;
         Ray eye = new Ray(transform.position+ new Vector3(0, 1.6f, 0), transform.forward);
 
-        Debug.DrawRay(transform.position + new Vector3(0, 1.6f, 0), transform.forward, Color.red, eyeShot);
+        //Debug.DrawRay(transform.position + new Vector3(0, 1.6f, 0), transform.forward, Color.red, eyeShot);
         if (Physics.Raycast(eye, out hit, eyeShot))
         {
             if (hit.collider.tag.Equals("Player"))
@@ -240,7 +247,7 @@ public class ZombieController : MonoBehaviour
             if (!hit.collider.tag.Equals("Player") && !hit.collider.tag.Equals("Zombie"))
             {
                 Debug.Log("Zombie " + zombieIndex + ": Oops a " + hit.collider.name + " is before me, I'll change my destination");
-                Debug.DrawRay(transform.position + new Vector3(0, 1.5f, 0), destination - transform.position, Color.green, obstacleDetection);
+                //Debug.DrawRay(transform.position + new Vector3(0, 1.5f, 0), destination - transform.position, Color.green, obstacleDetection);
                 return true;
             }
         }

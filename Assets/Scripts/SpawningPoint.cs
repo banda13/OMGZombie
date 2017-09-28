@@ -21,8 +21,7 @@ public class SpawningPoint : MonoBehaviour {
             Debug.LogError("Wtf it is not zombie..?");
             return;
         }
-        Vector3 look = transform.GetChild(0).position;
-        var createdZomie = Instantiate(zombieObject, transform.position, Quaternion.LookRotation(new Vector3(look.x, look.y + extraYRotation, 0)));
+        var createdZomie = Instantiate(zombieObject, transform.position, Quaternion.Euler(new Vector3(0,  extraYRotation, 0)));
         createdZomie.transform.parent = parent;
         createdZomie.transform.name = "Zombie " + index;
         zombie = createdZomie.GetComponent<ZombieController>();

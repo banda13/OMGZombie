@@ -181,7 +181,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawningAnimations: {fileID: 9100000, guid: d44aa66638498f045b5a94b226a16880, type: 2}
-  extraYRotation: 0
+  extraYRotation: 90
   taken: 0
 --- !u!1 &9373987
 GameObject:
@@ -3948,11 +3948,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   zombies:
   - {fileID: 1883715536870378, guid: fdbdada992cf0e64cb6555c29d8584b1, type: 2}
+  - {fileID: 1396728827974632, guid: be51ff91d36fd114dbeae1efe6eb41db, type: 2}
+  - {fileID: 1828110795168024, guid: 3c5a1cf0a60842343803196d894f9ea0, type: 2}
+  - {fileID: 1712935529069582, guid: 177baefa3711d274a846276a1e5deb28, type: 2}
+  - {fileID: 1433644261781294, guid: 397032ccf947af94aaeec6b599730cce, type: 2}
+  - {fileID: 1225857051488758, guid: a1c9b7b49adf07b45b04ae4e4fc20959, type: 2}
+  - {fileID: 1582128628482702, guid: ba37a2e06e966d2469686f080bd35de8, type: 2}
   maxTime: 15
   minTime: 5
   player: {fileID: 1967630002}
   activeSpawningPlaces: 3
-  zombiesAtStart: 1
+  zombiesAtStart: 10
   Active: 1
 --- !u!4 &67454535
 Transform:
@@ -4019,7 +4025,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawningAnimations: {fileID: 9100000, guid: a88b020eb10c52a499ba02ca80dd4069, type: 2}
-  extraYRotation: 0
+  extraYRotation: 90
   taken: 0
 --- !u!1001 &83300362
 Prefab:
@@ -5089,7 +5095,7 @@ Transform:
   m_LocalPosition: {x: 294.514, y: 1.8, z: 175.842}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1010940142}
+  - {fileID: 1777004815}
   m_Father: {fileID: 605126640}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
@@ -5106,7 +5112,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawningAnimations: {fileID: 9100000, guid: a88b020eb10c52a499ba02ca80dd4069, type: 2}
-  extraYRotation: 180
+  extraYRotation: -90
   taken: 0
 --- !u!4 &228570768 stripped
 Transform:
@@ -6009,12 +6015,12 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 301281413}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 295.897, y: 0, z: 181.881}
+  m_LocalPosition: {x: 295.897, y: 0, z: 181.68}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
   - {fileID: 365606541}
   m_Father: {fileID: 605126640}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &301281415
 MonoBehaviour:
@@ -6029,7 +6035,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawningAnimations: {fileID: 9100000, guid: d44aa66638498f045b5a94b226a16880, type: 2}
-  extraYRotation: 0
+  extraYRotation: -90
   taken: 0
 --- !u!4 &304159138 stripped
 Transform:
@@ -11452,6 +11458,20 @@ Light:
   m_Lightmapping: 4
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
+  m_FalloffTable:
+    m_Table[0]: 0
+    m_Table[1]: 0
+    m_Table[2]: 0
+    m_Table[3]: 0
+    m_Table[4]: 0
+    m_Table[5]: 0
+    m_Table[6]: 0
+    m_Table[7]: 0
+    m_Table[8]: 0
+    m_Table[9]: 0
+    m_Table[10]: 0
+    m_Table[11]: 0
+    m_Table[12]: 0
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
@@ -11622,9 +11642,9 @@ Transform:
   m_Children:
   - {fileID: 7092351}
   - {fileID: 1658161877}
+  - {fileID: 2016627990}
   - {fileID: 301281414}
   - {fileID: 1814634003}
-  - {fileID: 2016627990}
   - {fileID: 219138949}
   - {fileID: 1974538753}
   - {fileID: 1457015508}
@@ -12175,7 +12195,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 645754736}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.453003, y: -1.8, z: 0}
+  m_LocalPosition: {x: 1.29, y: -1.8, z: 5.96}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 79576831}
@@ -15229,6 +15249,20 @@ Light:
   m_Lightmapping: 4
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 0.6
+  m_FalloffTable:
+    m_Table[0]: 0
+    m_Table[1]: 0
+    m_Table[2]: 0
+    m_Table[3]: 0
+    m_Table[4]: 0
+    m_Table[5]: 0
+    m_Table[6]: 0
+    m_Table[7]: 0
+    m_Table[8]: 0
+    m_Table[9]: 0
+    m_Table[10]: 0
+    m_Table[11]: 0
+    m_Table[12]: 0
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
@@ -18777,52 +18811,6 @@ ParticleSystem:
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
---- !u!1 &1010940141
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 1224639031158226, guid: 93b8d6b19e6bc904b91707364d18c5b8,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1010940142}
-  - component: {fileID: 1010940143}
-  m_Layer: 0
-  m_Name: house1_window
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1010940142
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 4760042156476494, guid: 93b8d6b19e6bc904b91707364d18c5b8,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1010940141}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.093994, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 219138949}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1010940143
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 114544330686064918, guid: 93b8d6b19e6bc904b91707364d18c5b8,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1010940141}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d581db2ed669bfc4a97d68cdad05f795, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spawningAnimations: {fileID: 9100000, guid: a88b020eb10c52a499ba02ca80dd4069, type: 2}
-  extraYRotation: 0
-  taken: 0
 --- !u!4 &1013197343 stripped
 Transform:
   m_PrefabParentObject: {fileID: 412106, guid: 34b237876876baf4fa134407d8dc57d5, type: 2}
@@ -18895,6 +18883,20 @@ Light:
   m_Lightmapping: 4
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 0.6
+  m_FalloffTable:
+    m_Table[0]: 0
+    m_Table[1]: 0
+    m_Table[2]: 0
+    m_Table[3]: 0
+    m_Table[4]: 0
+    m_Table[5]: 0
+    m_Table[6]: 0
+    m_Table[7]: 0
+    m_Table[8]: 0
+    m_Table[9]: 0
+    m_Table[10]: 0
+    m_Table[11]: 0
+    m_Table[12]: 0
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
@@ -20110,6 +20112,20 @@ Light:
   m_Lightmapping: 4
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
+  m_FalloffTable:
+    m_Table[0]: 0
+    m_Table[1]: 0
+    m_Table[2]: 0
+    m_Table[3]: 0
+    m_Table[4]: 0
+    m_Table[5]: 0
+    m_Table[6]: 0
+    m_Table[7]: 0
+    m_Table[8]: 0
+    m_Table[9]: 0
+    m_Table[10]: 0
+    m_Table[11]: 0
+    m_Table[12]: 0
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
@@ -21042,6 +21058,20 @@ Light:
   m_Lightmapping: 4
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
+  m_FalloffTable:
+    m_Table[0]: 0
+    m_Table[1]: 0
+    m_Table[2]: 0
+    m_Table[3]: 0
+    m_Table[4]: 0
+    m_Table[5]: 0
+    m_Table[6]: 0
+    m_Table[7]: 0
+    m_Table[8]: 0
+    m_Table[9]: 0
+    m_Table[10]: 0
+    m_Table[11]: 0
+    m_Table[12]: 0
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
@@ -22611,7 +22641,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1457015507}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 299.13, y: 0, z: 187.728}
+  m_LocalPosition: {x: 299.13, y: 0, z: 186.86}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1898708199}
@@ -22631,7 +22661,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawningAnimations: {fileID: 9100000, guid: d44aa66638498f045b5a94b226a16880, type: 2}
-  extraYRotation: 0
+  extraYRotation: -90
   taken: 0
 --- !u!1001 &1460026123
 Prefab:
@@ -22763,6 +22793,20 @@ Light:
   m_Lightmapping: 4
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 0.6
+  m_FalloffTable:
+    m_Table[0]: 0
+    m_Table[1]: 0
+    m_Table[2]: 0
+    m_Table[3]: 0
+    m_Table[4]: 0
+    m_Table[5]: 0
+    m_Table[6]: 0
+    m_Table[7]: 0
+    m_Table[8]: 0
+    m_Table[9]: 0
+    m_Table[10]: 0
+    m_Table[11]: 0
+    m_Table[12]: 0
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
@@ -24392,7 +24436,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawningAnimations: {fileID: 9100000, guid: d44aa66638498f045b5a94b226a16880, type: 2}
-  extraYRotation: 0
+  extraYRotation: 90
   taken: 0
 --- !u!1 &1658491488
 GameObject:
@@ -25095,6 +25139,52 @@ MonoBehaviour:
   spawningAnimations: {fileID: 9100000, guid: d44aa66638498f045b5a94b226a16880, type: 2}
   extraYRotation: 0
   taken: 0
+--- !u!1 &1777004814
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 1224639031158226, guid: 93b8d6b19e6bc904b91707364d18c5b8,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1777004815}
+  - component: {fileID: 1777004816}
+  m_Layer: 0
+  m_Name: house1_window
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1777004815
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 4760042156476494, guid: 93b8d6b19e6bc904b91707364d18c5b8,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1777004814}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.666, y: -1.8, z: -5.524}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 219138949}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!114 &1777004816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 114544330686064918, guid: 93b8d6b19e6bc904b91707364d18c5b8,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1777004814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d581db2ed669bfc4a97d68cdad05f795, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawningAnimations: {fileID: 9100000, guid: a88b020eb10c52a499ba02ca80dd4069, type: 2}
+  extraYRotation: -90
+  taken: 0
 --- !u!4 &1781254265 stripped
 Transform:
   m_PrefabParentObject: {fileID: 482608, guid: d24cbc466424f71408559463ee47e0cf, type: 2}
@@ -25410,7 +25500,7 @@ Transform:
   m_Children:
   - {fileID: 1609058530}
   m_Father: {fileID: 605126640}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1814634004
 MonoBehaviour:
@@ -25425,7 +25515,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawningAnimations: {fileID: 9100000, guid: d44aa66638498f045b5a94b226a16880, type: 2}
-  extraYRotation: 0
+  extraYRotation: -45
   taken: 0
 --- !u!1001 &1816257921
 Prefab:
@@ -28927,6 +29017,20 @@ Light:
   m_Lightmapping: 4
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
+  m_FalloffTable:
+    m_Table[0]: 0
+    m_Table[1]: 0
+    m_Table[2]: 0
+    m_Table[3]: 0
+    m_Table[4]: 0
+    m_Table[5]: 0
+    m_Table[6]: 0
+    m_Table[7]: 0
+    m_Table[8]: 0
+    m_Table[9]: 0
+    m_Table[10]: 0
+    m_Table[11]: 0
+    m_Table[12]: 0
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
@@ -29421,7 +29525,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1898708198}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -6.06, y: 0, z: -2.14}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1457015508}
@@ -29589,7 +29693,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1904887546}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.79074734, y: 0, z: 5.632757}
+  m_LocalPosition: {x: 0.79074734, y: -1.8, z: 5.632757}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2016627990}
@@ -30223,7 +30327,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawningAnimations: {fileID: 9100000, guid: d44aa66638498f045b5a94b226a16880, type: 2}
-  extraYRotation: 0
+  extraYRotation: -90
   taken: 0
 --- !u!1 &1975690294
 GameObject:
@@ -30609,7 +30713,7 @@ Transform:
   m_Children:
   - {fileID: 1904887547}
   m_Father: {fileID: 605126640}
-  m_RootOrder: 4
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 172.009, z: 0}
 --- !u!114 &2016627991
 MonoBehaviour:
@@ -30624,7 +30728,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawningAnimations: {fileID: 9100000, guid: a88b020eb10c52a499ba02ca80dd4069, type: 2}
-  extraYRotation: 90
+  extraYRotation: 180
   taken: 0
 --- !u!1001 &2021234081
 Prefab:

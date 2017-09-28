@@ -337,6 +337,7 @@ GameObject:
   - component: {fileID: 4647343935930364}
   - component: {fileID: 95050552790751654}
   - component: {fileID: 114635924425117100}
+  - component: {fileID: 195276197641412484}
   m_Layer: 0
   m_Name: parasite_l_starkie
   m_TagString: Zombie
@@ -2008,6 +2009,7 @@ MonoBehaviour:
   animator: {fileID: 95050552790751654}
   player: {fileID: 0}
   sphere: {fileID: 0}
+  zerofriction: {fileID: 13400000, guid: c2815a7ab32e42c4bb42f59caacb8ec1, type: 2}
   speed: 0
   directionChange: 4
   maxRotation: 90
@@ -2127,3 +2129,24 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.00014019012, y: -0.13339466, z: 0.0020104498}
     m_Extent: {x: 1.1224717, y: 1.014343, z: 0.26887834}
   m_DirtyAABB: 0
+--- !u!195 &195276197641412484
+NavMeshAgent:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1396728827974632}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
