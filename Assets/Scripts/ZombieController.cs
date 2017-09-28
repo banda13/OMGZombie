@@ -20,9 +20,9 @@ public class ZombieController : MonoBehaviour
 
     public float speed = 0;
     public float directionChange = 4;
-    public float maxRotation = 90;
     public int healt = 100;
     public int attackDamage = 10;
+    public int biteDamage = 20;
     public float attackRange = 1.8f;
     public float attackSpeed = 1;
     public float eyeShot = 10;
@@ -48,12 +48,9 @@ public class ZombieController : MonoBehaviour
         {
             return;
         }
-        if (canAttack())
-        {
-            Attack();
-        }
-        Move();
-
+        if (!Attack())
+            Move();
+        
         attackTimer += Time.deltaTime;
     }
 
@@ -102,13 +99,6 @@ public class ZombieController : MonoBehaviour
         }
         return false;
     }
-    
-    //zombie interactions
-    private void Attack()
-    {
-        //Debug.Log("Zombie" + zombieIndex + " is attacking!");
-        player.GetComponent<PlayerController>().TakeDamage(attackDamage);
-    }
 
     private void Move()
     {
@@ -125,9 +115,7 @@ public class ZombieController : MonoBehaviour
         {
             speed = 0.6f;
         }
-
-
-        animator.SetBool("Attack", false);
+        
         animator.SetFloat("Speed", speed);
         transform.position = new Vector3(transform.position.x, 0, transform.position.z);
         //controller.Move(transform.forward * speed * 0.01f);
@@ -139,7 +127,7 @@ public class ZombieController : MonoBehaviour
 
         if (isDistanceSmaller(transform.position, destination, 0.1f))
         {
-            Debug.Log("Target reached: " + destination);
+            //Debug.Log("Target reached: " + destination);
             targetReached = true;
         }
     }
@@ -149,12 +137,11 @@ public class ZombieController : MonoBehaviour
         if(nextDestination != null && nextDestination != Vector3.zero)
         {
             destination = nextDestination;
-            nextDestination = Vector3.zero;
-            Debug.Log("Next destination in not null : " + nextDestination);
         }
         else
         {
             destination = transform.position + new Vector3(Random.Range(-5, 5), 0, Random.Range(-3, 3));
+            //StartCoroutine(NewHeading());
         }
         targetReached = false;
         if (sphere != null)
@@ -162,30 +149,38 @@ public class ZombieController : MonoBehaviour
             Instantiate(sphere, destination, Quaternion.identity);
         }
         //StopCoroutine(NewHeading());
-        //StartCoroutine(NewHeading());
         //Debug.Log("Zombie " + zombieIndex + " choosed new destination: " + destination);
     }
 
     IEnumerator NewHeading()
     {
-        while (true)
-        {
-            changeDestination();
-            yield return new WaitForSeconds(directionChange);
-        }
+        yield return new WaitForSeconds(directionChange);
+        changeDestination();
+        Debug.Log("Zombie"+zombieIndex+": Time is up, new destination choosed");
     }
     
-    private bool canAttack()
+    private bool Attack()
     {
         if(isDistanceSmaller(transform.position, player.transform.position, attackRange) && attackTimer >= attackSpeed)
         {
-            animator.SetBool("Attack", true);
+            if(Random.Range(0, 100) > 70)
+            {
+                animator.SetBool("Bite", true);
+                player.GetComponent<PlayerController>().TakeDamage(biteDamage);
+            }
+            else
+            {
+                animator.SetBool("Attack", true);
+                player.GetComponent<PlayerController>().TakeDamage(attackDamage);
+            }
             //Debug.Log("Zombie" + zombieIndex + "is attacking");
             attackTimer = 0;
             return true;
         }
         else
         {
+            animator.SetBool("Bite", false);
+            animator.SetBool("Attack", false);
             return false;
         }
     }
@@ -228,7 +223,7 @@ public class ZombieController : MonoBehaviour
         {
             if (hit.collider.tag.Equals("Player"))
             {
-                Debug.Log("Zombie" + zombieIndex + ": The lunch is before me. Distance :" + Vector3.Distance(transform.position, new Vector3(hit.point.x, 0, hit.point.z)));
+                //Debug.Log("Zombie" + zombieIndex + ": The lunch is before me. Distance :" + Vector3.Distance(transform.position, new Vector3(hit.point.x, 0, hit.point.z)));
                 return true;
             }
         }
@@ -246,7 +241,7 @@ public class ZombieController : MonoBehaviour
         {
             if (!hit.collider.tag.Equals("Player") && !hit.collider.tag.Equals("Zombie"))
             {
-                Debug.Log("Zombie " + zombieIndex + ": Oops a " + hit.collider.name + " is before me, I'll change my destination");
+                //Debug.Log("Zombie " + zombieIndex + ": Oops a " + hit.collider.name + " is before me, I'll change my destination");
                 //Debug.DrawRay(transform.position + new Vector3(0, 1.5f, 0), destination - transform.position, Color.green, obstacleDetection);
                 return true;
             }
@@ -258,6 +253,7 @@ public class ZombieController : MonoBehaviour
     {
         if(isDistanceSmaller(player.transform.position, transform.position, playerDetectionRange) || playerBeforeZombie())
         {
+            Debug.Log("Zombie"+ zombieIndex +": detect player");
             return true;
         }
         else

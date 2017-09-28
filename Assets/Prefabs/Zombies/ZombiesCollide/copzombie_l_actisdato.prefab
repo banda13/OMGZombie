@@ -2105,12 +2105,12 @@ MonoBehaviour:
   zerofriction: {fileID: 13400000, guid: c2815a7ab32e42c4bb42f59caacb8ec1, type: 2}
   speed: 0
   directionChange: 4
-  maxRotation: 90
   healt: 100
   attackDamage: 10
+  biteDamage: 20
   attackRange: 1.8
   attackSpeed: 1
-  eyeShot: 15
+  eyeShot: 20
   playerDetectionRange: 8
   obstacleDetection: 1.5
 --- !u!137 &137110439177455250
