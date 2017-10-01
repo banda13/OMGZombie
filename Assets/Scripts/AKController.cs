@@ -18,8 +18,9 @@ public class AKController : GunController {
 		
 	}
 
-    public override void Shoot()
+    public override bool Shoot()
     {
         shoot.Play("AKShooting");
+        return true;
     }
 }

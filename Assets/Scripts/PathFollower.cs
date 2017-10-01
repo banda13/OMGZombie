@@ -49,4 +49,7 @@ public abstract class PathFollower : MonoBehaviour {
             }
         }
     }
+
+    public abstract void Go();
 }
+

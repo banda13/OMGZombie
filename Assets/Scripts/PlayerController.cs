@@ -32,30 +32,32 @@ public class PlayerController : MonoBehaviour {
 
         if (Input.GetMouseButtonDown(0) && weapon != null)
         {
-            weapon.GetComponent<GunController>().Shoot();
-            RaycastHit hit;
-            Ray weaponRay = new Ray(weapon.transform.GetChild(3).transform.position, transform.GetChild(0).forward);
-            if(Physics.Raycast(weaponRay, out hit, attackRange))
+            if (weapon.GetComponent<GunController>().Shoot())
             {
-                try
+                RaycastHit hit;
+                Ray weaponRay = new Ray(weapon.transform.GetChild(3).transform.position, transform.GetChild(0).forward);
+                if (Physics.Raycast(weaponRay, out hit, attackRange))
                 {
-                    if (hit.collider.tag.Equals("ZombieHead"))
+                    try
                     {
-                        hit.transform.GetComponent<ZombieController>().takeDamage(100);
+                        if (hit.collider.tag.Equals("ZombieHead"))
+                        {
+                            hit.transform.GetComponent<ZombieController>().takeDamage(100);
+                        }
+                        if (hit.collider.tag.Equals("ZombieBody"))
+                        {
+                            hit.transform.GetComponent<ZombieController>().takeDamage(20);
+                        }
+                        else
+                        {
+                            ParticleSystem dustObj = Instantiate(dust, hit.point, Quaternion.identity);
+                            Destroy(dustObj.gameObject, 2);
+                        }
                     }
-                    if (hit.collider.tag.Equals("ZombieBody"))
+                    catch (NullReferenceException e)
                     {
-                        hit.transform.GetComponent<ZombieController>().takeDamage(20);
+                        //its ok, we need to wait until the zombie gets up!
                     }
-                    else
-                    {
-                        ParticleSystem dustObj = Instantiate(dust, hit.point, Quaternion.identity);
-                        Destroy(dustObj.gameObject, 2);
-                    }
-                }
-                catch (NullReferenceException e)
-                {
-                    //its ok, we need to wait until the zombie gets up!
                 }
             }
         }

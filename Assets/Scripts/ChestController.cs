@@ -9,6 +9,8 @@ public class ChestController : MonoBehaviour {
     public GameObject item;
     public GameObject weapon;
 
+    public GameObject canvas;
+
     private CamaraController controller;
     private Animator anim;
 
@@ -16,17 +18,36 @@ public class ChestController : MonoBehaviour {
     private bool opening = false;
     private bool particlesPlayed = false;
 
+    public bool missionStarted = false;
+    public bool missionCompleted = false;
+
     private void Start()
     {
         controller = player.GetComponent<CamaraController>();
-    }
 
-    // Update is called once per frame
+    }
+    
     void Update () {
 
-        if (Input.GetKeyDown("space"))
+        if (Input.GetKeyDown("space") && (Vector3.Distance(transform.position, player.transform.position) < 5))
         {
-            opening = !opening;
+            if (!missionStarted)
+            {
+                missionStarted = true;
+                StartCoroutine(testCallForMissionOne());
+
+            }
+            if (missionStarted && missionCompleted)
+            {
+                opening = !opening;
+            }
+        }
+
+        if (missionStarted && !missionCompleted)
+        {
+            player.GetComponent<CamaraController>().Wait = true;
+            canvas.transform.rotation = Quaternion.LookRotation(-(player.transform.position - transform.position));
+            canvas.SetActive(true);
         }
 
         if (opening)
@@ -61,8 +82,22 @@ public class ChestController : MonoBehaviour {
                         player.GetComponent<CamaraController>().activateZombies();
                     }
                 }
-
             }
         }
+    }
+
+    IEnumerator testCallForMissionOne()
+    {
+        yield return new WaitForSeconds(2);
+        startMission();
+    }
+
+    public void startMission()
+    {
+        missionStarted = true;
+        Debug.Log("Mission started");
+        canvas.SetActive(false);
+        player.GetComponent<CamaraController>().startSnipeMission();
+
     }
 }

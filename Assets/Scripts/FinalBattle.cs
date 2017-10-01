@@ -31,11 +31,11 @@ public class FinalBattle : PathFollower {
         }
 	}
 
-    public void Go(CamaraController camera)
+    public override void Go()
     {
         transform.position = waypoints[currentWaypoint].position;
         Wait = false;
-        controller = camera;
+        controller = transform.root.GetComponent<CamaraController>();
         factory.killAll();
         factory.Active = false;
         foreach(Transform t in spawningPoints)

@@ -2025,6 +2025,10 @@ MonoBehaviour:
   eyeShot: 20
   playerDetectionRange: 8
   obstacleDetection: 1.5
+  speed_animationIdle: 0
+  speed_animationInjured: 0.3
+  speed_animationWalk: 0.6
+  speed_animationRun: 0.9
 --- !u!135 &135356237307794662
 SphereCollider:
   m_ObjectHideFlags: 1

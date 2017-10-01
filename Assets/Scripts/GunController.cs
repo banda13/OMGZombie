@@ -4,5 +4,5 @@ using UnityEngine;
 
 public abstract class GunController : MonoBehaviour {
     
-    public abstract void Shoot();
+    public abstract bool Shoot();
 }

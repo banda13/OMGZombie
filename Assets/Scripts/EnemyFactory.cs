@@ -22,7 +22,7 @@ public class EnemyFactory : MonoBehaviour {
     private int zombieCounter = 0;
     public int minZombiesAlive = 7;
 
-    public bool Active = true;
+    public bool Active = false;
     public bool zombiesAttackActivated = false;
 
     void Start () {
@@ -90,7 +90,7 @@ public class EnemyFactory : MonoBehaviour {
         return count;
     }
 
-    public bool cleverZombieCreation(List<Transform> spawnPoints)
+    public ZombieController cleverZombieCreation(List<Transform> spawnPoints)
     {
         if (spawnPoints.Count > 0)
         {
@@ -106,24 +106,24 @@ public class EnemyFactory : MonoBehaviour {
                 {
                     //we found and empty, yee!
                     emptyPoint = spawnPoints[spawnIndex].GetComponent<SpawningPoint>();
-                    createZombie(emptyPoint, selectOneBeautifulZombie());
+                    ZombieController created = createZombie(emptyPoint, selectOneBeautifulZombie());
                     Debug.Log("Enemy Spawned at: " + spawnPoints[spawnIndex].name + " Index: " + zombieCounter);
-                    return true;
+                    return created;
                 }
             }
             Debug.Log("Zombie creation failed cause all spawning points are taken");
-            return false;
+            return null;
         }
         Debug.Log("Zombie creation failed cause spawning points are empty");
-        return false;
+        return null;
     }
 
     public ZombieController createZombie(SpawningPoint pos, GameObject zombie)
     {
         zombieCounter++;
         return pos.Spawn(zombie, player, transform.GetChild(1), zombieCounter, zombiesAttackActivated);
-        
     }
+    
 
     public GameObject selectOneBeautifulZombie()
     {

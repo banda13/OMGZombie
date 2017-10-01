@@ -36,7 +36,11 @@ public class ZombieController : MonoBehaviour
     private bool attackEnable = false;
     private bool dying = false;
 
-
+    public float speed_animationIdle = 0.0f;
+    public float speed_animationInjured = 0.3f;
+    public float speed_animationWalk = 0.6f;
+    public float speed_animationRun = 0.9f;
+    
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -70,7 +74,7 @@ public class ZombieController : MonoBehaviour
         yield return new WaitForSeconds(1);
         dying = true;
         //for the worst case
-        Destroy(this.gameObject, 30);
+        //Destroy(this.gameObject, 30);
     }
     
     public void setNextDestination(Transform dest)
@@ -115,11 +119,11 @@ public class ZombieController : MonoBehaviour
             playerDetected = true;
             if(healt < 50)
             {
-                speed = 0.3f;
+                speed = speed_animationInjured;
             }
             else
             {
-                speed = 0.9f;
+                speed = speed_animationRun;
             }
             
         }
@@ -131,11 +135,11 @@ public class ZombieController : MonoBehaviour
         {
             if (healt < 50)
             {
-                speed = 0.3f;
+                speed = speed_animationInjured;
             }
             else
             {
-                speed = 0.6f;
+                speed = speed_animationWalk;
             }
         }
         

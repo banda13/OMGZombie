@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -54,5 +55,10 @@ public class cartController : PathFollower {
         {
             transform.Rotate(-0.01f, 0, 0);
         }
+    }
+
+    public override void Go()
+    {
+        throw new NotImplementedException();
     }
 }
