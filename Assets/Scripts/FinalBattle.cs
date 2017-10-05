@@ -28,6 +28,7 @@ public class FinalBattle : PathFollower {
         {
             Wait = true;
             controller.stopEpicFinalBattle();
+            GameObject.Find("EpicRedPortal").SetActive(true);
         }
 	}
 

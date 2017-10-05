@@ -19,7 +19,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4024739084771854}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36,7 +36,7 @@ GameObject:
   - component: {fileID: 4311385538183218}
   - component: {fileID: 33074016673364246}
   - component: {fileID: 23170944360810950}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Ak47Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -53,7 +53,7 @@ GameObject:
   - component: {fileID: 4073056703641432}
   - component: {fileID: 33313186213917438}
   - component: {fileID: 23656761114721056}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Ak47Mag
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -70,7 +70,7 @@ GameObject:
   - component: {fileID: 4096133010058346}
   - component: {fileID: 33393177351008352}
   - component: {fileID: 23421527243517934}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cube_001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -88,7 +88,7 @@ GameObject:
   - component: {fileID: 82342237996543244}
   - component: {fileID: 114207218595937836}
   - component: {fileID: 111695741443332890}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Ak-47 1 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -104,7 +104,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4377158885953766}
   - component: {fileID: 120885213036309822}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: laser
   m_TagString: Untagged
   m_Icon: {fileID: 0}

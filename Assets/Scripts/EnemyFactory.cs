@@ -36,7 +36,7 @@ public class EnemyFactory : MonoBehaviour {
         SetRandomTime();
         currentTime = 0;
 
-        setUpZombieVillage();
+        //setUpZombieVillage();
 	}
 
     void FixedUpdate()
@@ -69,7 +69,7 @@ public class EnemyFactory : MonoBehaviour {
         }
     }
 
-    private void setUpZombieVillage()
+    public void setUpZombieVillage()
     {
         for(int i= 0; i<zombiesAtStart; i++)
         {
@@ -200,5 +200,15 @@ public class EnemyFactory : MonoBehaviour {
             zombie.GetComponent<ZombieController>().enableAttack(true);
         }
         Debug.Log("Zombies attack activated!");
+    }
+
+    public void clearFactory()
+    {
+        int count = 0;
+        foreach (Transform zombie in transform.GetChild(1))
+        {
+            Destroy(zombie.gameObject);
+        }
+        Debug.Log("Factory cleard: I deleted " + count + " zombies");
     }
 }

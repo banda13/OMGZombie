@@ -12,7 +12,7 @@ public class ZombieController : MonoBehaviour
     public Animator animator;
     public GameObject player;
     private Vector3 previousPosition;
-    private Vector3 destination;
+    public Vector3 destination;
     private Vector3 nextDestination;
     private CharacterController controller;
     public GameObject sphere;

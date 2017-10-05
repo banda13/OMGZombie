@@ -14,18 +14,21 @@ public class SniperController : GunController {
     
     void Start () {
         shoot = GetComponent<Animation>();
-        //shootAudio = GetComponent<AudioSource>();
+        shootAudio = GetComponent<AudioSource>();
+        
     }
 
     void Update () {
-		
-	}
+        
+    }
 
     public override bool Shoot()
     {
         if (attackEnable)
         {
             StartCoroutine(attackDelay());
+            if(shootAudio != null)
+                shootAudio.Play();
             //here need to add some rotation
             return true;
         }

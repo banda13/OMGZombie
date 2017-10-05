@@ -5,34 +5,57 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class CamaraController : PathFollower  {
+public class CamaraController : PathFollower {
 
     public bool finalBattle = false;
-    private bool sniperMission = false;
+    private bool sniperMissionCompleted = false;
     private FinalBattle final;
     private SnippingMission snipping;
 
     private EnemyFactory factory;
 
-    void Start () {
+    void Start() {
         shift = new Vector3(0, 0.5f, 0);
         init();
         final = GetComponent<FinalBattle>();
         snipping = GetComponent<SnippingMission>();
         factory = final.factory;
+        Wait = true;
+        StartCoroutine(startFading());
     }
 
     void Update()
     {
+        rotateTheWord();
         move();
-        if(currentWaypoint == waypoints.Count)
+        if (currentWaypoint == waypoints.Count)
         {
             SceneManager.LoadScene("mine", LoadSceneMode.Single);
         }
-        if (waypoints[currentWaypoint].name.Contains("finalBattle") && !finalBattle){
+        if (waypoints[currentWaypoint].name.Contains("startFight") && !sniperMissionCompleted)
+        {
+            Wait = true;
+        }
+        if (waypoints[currentWaypoint].name.Contains("finalBattle") && !finalBattle) {
             startEpicFinalBattle();
         }
     }
+
+    private void rotateTheWord()
+    {
+        Transform cameraPos = transform.GetChild(0);
+        transform.GetChild(2).transform.position = new Vector3(cameraPos.position.x, cameraPos.position.y, cameraPos.position.z) + (cameraPos.forward) * 3.5f;
+        transform.GetChild(2).transform.LookAt(cameraPos);
+    }
+
+    private IEnumerator startFading()
+    {
+        float fadeTime = GetComponent<Fading>().BeginFade(-1);
+        yield return new WaitForSeconds(fadeTime);
+        Wait = false;
+    }
+
+
     private IEnumerator fading(bool start, PathFollower follow)
     {
         float fadeTime = GetComponent<Fading>().BeginFade(1);
@@ -67,19 +90,20 @@ public class CamaraController : PathFollower  {
 
     public void startSnipeMission()
     {
-        sniperMission = true;
         StartCoroutine(fading(true, snipping));
     }
 
     public void stopSnipeMission()
     {
-        sniperMission = false;
-        StartCoroutine(fading(true, null));
+        Debug.Log("Snipe mission stoped ");
+        sniperMissionCompleted = true;
+        StartCoroutine(fading(true, this));
     }
 
     //dont need to override this , because it isn't a mission 
     public override void Go()
     {
-        throw new NotImplementedException();
+        Wait = false;
+        Debug.Log("ggogog");
     }
 }

@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour {
 	
 	void Update () {
 
-        if (Input.GetMouseButtonDown(0) && weapon != null)
+        if ((Input.GetMouseButtonDown(0) || GvrControllerInput.ClickButton) && weapon != null)
         {
             if (weapon.GetComponent<GunController>().Shoot())
             {

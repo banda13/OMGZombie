@@ -8,7 +8,7 @@ public class WeaponController : MonoBehaviour {
     private Animator animator;
     public GameObject sniperView;
 
-    private bool isScoped = false;
+    public bool isScoped = false;
     public GameObject weaponCamera;
     public Camera mainCamera;
 
@@ -26,29 +26,37 @@ public class WeaponController : MonoBehaviour {
 
     void Start () {
         animator = GetComponent<Animator>();
+        //Gvr laser and end point fix
 	}
 	
 	void Update () {
 
         transform.forward = mainCamera.transform.forward;
-        if (Activated && Input.GetKeyDown("space"))
+        transform.GetChild(0).GetChild(3).position = new Vector3(mainCamera.transform.position.x , mainCamera.transform.position.y, mainCamera.transform.position.z) + mainCamera.transform.forward * 1;
+        transform.GetChild(0).GetChild(4).position = new Vector3(mainCamera.transform.position.x , mainCamera.transform.position.y, mainCamera.transform.position.z) + mainCamera.transform.forward * 1;
+        if (sniperView.active)
         {
-            isScoped = !isScoped;
-            animator.SetBool("isScoped", isScoped);
-            if (isScoped)
-            {
-                StartCoroutine(OnScoped());
-            }
-            else
-            {
-                StartCoroutine(OnUnScoped());
-            }
+            sniperView.transform.position = mainCamera.transform.position + mainCamera.transform.forward * 1.0f;
+            sniperView.transform.LookAt(mainCamera.transform.position);
+        }
+
+        if (Activated && (Input.GetKeyDown(KeyCode.UpArrow) || (GvrControllerInput.TouchDown)))
+        {
+            isScoped = true;
+            animator.SetBool("isScoped", true);
+            StartCoroutine(OnScoped());
+        }
+        if(Activated && (Input.GetKeyDown(KeyCode.DownArrow) || (GvrControllerInput.TouchUp))){
+            isScoped = false;
+            animator.SetBool("isScoped", false);
+            StartCoroutine(OnUnScoped());
         }
         if(Activated && isScoped)
         {
             disturb();
         }
 	}
+    
 
     private void disturb()
     {
@@ -66,7 +74,6 @@ public class WeaponController : MonoBehaviour {
         float randomY = Random.Range(-aimDisturbForce, aimDisturbForce);
         destRot = transform.root.rotation * Quaternion.Euler(randomX, randomY, 0);
         newDisturbDirection = false;
-        Debug.Log("New destination choosed");
         yield return new WaitForSeconds(2);
         newDisturbDirection = true;
     }
@@ -83,12 +90,13 @@ public class WeaponController : MonoBehaviour {
         newDisturbDirection = true;
     }
 
+   
+
     public IEnumerator OnUnScoped()
     {
         yield return new WaitForSeconds(.15f);
         sniperView.SetActive(false);
         weaponCamera.SetActive(true);
-
         mainCamera.fieldOfView = normalFOV;
     }
 }

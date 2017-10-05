@@ -54,7 +54,7 @@ public class SnippingMission : PathFollower {
         if (currentWaypoint == waypoints.Count && !Wait)
         {
             Wait = true;
-            this.transform.root.GetComponent<CamaraController>().stopSnipeMission();
+            //this.transform.root.GetComponent<CamaraController>().stopSnipeMission();
         }
 
         if (!started && !ended && waypoints[currentWaypoint].transform.name.Contains("battle"))
@@ -71,17 +71,21 @@ public class SnippingMission : PathFollower {
                     transform.root.gameObject.GetComponent<PlayerController>().weapon = weaponHolder.transform.GetChild(0).transform.gameObject;
                     StartCoroutine(createZombies());
                 }
+#if UNITY_EDITOR
                 StartCoroutine(delayedTestCall(onClickOnGun));
+#endif
             }
             else
             {
                 StartMessage.SetActive(true);
+#if UNITY_EDITOR
                 StartCoroutine(delayedTestCall(startGame));
+#endif
             }
-        }
+            }
         if (!ended && checkMissionEnded() && (playerAcceptWinning || failed))
         {
-            Ended();
+            StartCoroutine(Ended());
         }
 
 	}
@@ -106,6 +110,25 @@ public class SnippingMission : PathFollower {
     public void acceptWinning()
     {
         playerAcceptWinning = true;
+        CompletedMessage.SetActive(false);
+    }
+
+    public void restartMission()
+    {
+        Debug.Log("Mission will restart soon");
+        factory.killAll();
+        zombiesInGame = new List<ZombieController>();
+        StartCoroutine(delayedTestCall(restartAfterZombiesKilled));
+        FailedMessage.SetActive(false);
+
+    }
+
+    private void restartAfterZombiesKilled()
+    {
+        factory.clearFactory();
+        ended = false;
+        putUpGun = false;
+        started = false;
     }
 
     private IEnumerator createZombies()
@@ -115,7 +138,7 @@ public class SnippingMission : PathFollower {
         zombie.playerDetectionRange = 0;
         zombie.eyeShot = 0;
         zombie.setNextDestination(destination);
-        zombie.directionChange = 30; // in this case the zombie probaly stuck somewhere
+        zombie.directionChange = 120; // in this case the zombie probaly stuck somewhere
         setZombieSpeed(zombie);
 
         yield return new WaitForSeconds(timeBetweenSpawn);
@@ -136,7 +159,7 @@ public class SnippingMission : PathFollower {
         }
         else
         {
-            zombie.speed_animationWalk = 0.8f;
+            zombie.speed_animationWalk = 0.9f;
         }
     }
 
@@ -158,6 +181,7 @@ public class SnippingMission : PathFollower {
                     player.TakeDamage(player.currentHealth);
                     FailedMessage.SetActive(true);
                     failed = true;
+                    Debug.Log("Zombies reached the house..");
                     return true;
                 }
             }
@@ -167,7 +191,9 @@ public class SnippingMission : PathFollower {
             }
             Debug.Log("Oke, u killed " + zombiesInGame.Count + " zombies, the mission was completed");
             CompletedMessage.SetActive(true);
+#if UNITY_EDITOR
             StartCoroutine(delayedTestCall(acceptWinning));
+#endif
             return true;
         }
         return false;
@@ -178,23 +204,34 @@ public class SnippingMission : PathFollower {
         Wait = false;
     }
 
-    public void Ended()
+    public IEnumerator Ended()
     {
         if (!failed)
         {
-            Wait = false;
             chest.missionCompleted = true;
 
             //important!!!
             //this activates the  zombie creation
             //you should not start it earlier, otherwise the player would have no change
+            
             factory.Active = true;
+            factory.setUpZombieVillage();
+        }
+        else
+        {
+#if UNITY_EDITOR
+            StartCoroutine(delayedTestCall(restartMission));
+#endif
         }
         ended = true;
-        StartCoroutine(weapon.OnUnScoped());
+        if (weapon.isScoped)
+        {
+            StartCoroutine(weapon.OnUnScoped());
+        }
+        yield return new WaitForSeconds(.2f);
         weaponHolder.SetActive(false);
         dummyWeapon.SetActive(true);
         transform.root.gameObject.GetComponent<PlayerController>().weapon = null;
-
+        Go();
     }
 }
