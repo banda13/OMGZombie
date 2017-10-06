@@ -9,7 +9,7 @@ public abstract class PathFollower : MonoBehaviour {
     public float speed = 1;
 
     protected List<Transform> waypoints;
-    protected int currentWaypoint = 0;
+    public int currentWaypoint = 0;
     protected Vector3 shift = Vector3.zero;
 
     public bool Wait { get;  set; }
@@ -22,6 +22,7 @@ public abstract class PathFollower : MonoBehaviour {
             waypoint.position += shift;
             waypoints.Add(waypoint.transform);
         }
+        
     }
 
     public void move()
@@ -51,5 +52,10 @@ public abstract class PathFollower : MonoBehaviour {
     }
 
     public abstract void Go();
+
+    public virtual void replaceCamera()
+    {
+        return;
+    }
 }
 

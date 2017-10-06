@@ -77,9 +77,13 @@ public class EnemyFactory : MonoBehaviour {
         }
     }
 
-    private int aliveZombies()
+    public int aliveZombies()
     {
         int count = 0;
+        if(transform.GetChild(1).childCount == 0)
+        {
+            Debug.Log("There is no zombie in the game");
+        }
         foreach(Transform zombie in transform.GetChild(1))
         {
             if (!zombie.GetComponent<ZombieController>().isDead())
@@ -208,6 +212,7 @@ public class EnemyFactory : MonoBehaviour {
         foreach (Transform zombie in transform.GetChild(1))
         {
             Destroy(zombie.gameObject);
+            count++;
         }
         Debug.Log("Factory cleard: I deleted " + count + " zombies");
     }

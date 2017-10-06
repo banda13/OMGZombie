@@ -22,6 +22,7 @@ public class CamaraController : PathFollower {
         factory = final.factory;
         Wait = true;
         StartCoroutine(startFading());
+        transform.position = waypoints[currentWaypoint].position;
     }
 
     void Update()
@@ -36,8 +37,22 @@ public class CamaraController : PathFollower {
         {
             Wait = true;
         }
-        if (waypoints[currentWaypoint].name.Contains("finalBattle") && !finalBattle) {
-            startEpicFinalBattle();
+        if (waypoints[currentWaypoint].name.Contains("finalBattle"))
+        {
+            if (!finalBattle)
+            {
+                startEpicFinalBattle();
+            }
+            else if (final.battleStarted && final.battleCompleted)
+            {
+                Debug.Log("Final battle completed");
+                Go();
+            }
+        }
+
+        if (Input.GetKeyDown("space"))
+        {
+            factory.killAll();
         }
     }
 
@@ -52,17 +67,21 @@ public class CamaraController : PathFollower {
     {
         float fadeTime = GetComponent<Fading>().BeginFade(-1);
         yield return new WaitForSeconds(fadeTime);
-        Wait = false;
+        Go();
     }
 
 
     private IEnumerator fading(bool start, PathFollower follow)
     {
+        Wait = start;
         float fadeTime = GetComponent<Fading>().BeginFade(1);
         yield return new WaitForSeconds(fadeTime);
+        if ( start && follow is FinalBattle) //TODO: need to find better solution
+        {
+            final.replaceCamera();
+        }
         fadeTime = GetComponent<Fading>().BeginFade(-1);
         yield return new WaitForSeconds(fadeTime);
-        Wait = start;
         if(follow != null)
             follow.Go();
        
@@ -71,6 +90,7 @@ public class CamaraController : PathFollower {
     private void startEpicFinalBattle()
     {
         finalBattle = true;
+        final.battleStarted = true;
         Debug.Log("Final battle started");
         StartCoroutine(fading(true, final));
 
@@ -78,8 +98,9 @@ public class CamaraController : PathFollower {
 
     public void stopEpicFinalBattle()
     {
-        StartCoroutine(fading(false, null));
-        Debug.Log("Final battler ended");
+        StartCoroutine(fading(true, null));
+        StartCoroutine(final.zombiesDepart());
+        Debug.Log("Lets fight!");
     }
 
     public void activateZombies()
@@ -99,11 +120,10 @@ public class CamaraController : PathFollower {
         sniperMissionCompleted = true;
         StartCoroutine(fading(true, this));
     }
-
-    //dont need to override this , because it isn't a mission 
+    
     public override void Go()
     {
         Wait = false;
-        Debug.Log("ggogog");
+        Debug.Log("Camera started in base path");
     }
 }
