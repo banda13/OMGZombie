@@ -2022,7 +2022,7 @@ MonoBehaviour:
   attackDamage: 10
   biteDamage: 20
   attackRange: 2.1
-  attackSpeed: 1
+  attackSpeed: 2
   eyeShot: 20
   playerDetectionRange: 8
   obstacleDetection: 1.5

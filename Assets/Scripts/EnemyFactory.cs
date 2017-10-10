@@ -20,7 +20,8 @@ public class EnemyFactory : MonoBehaviour {
     public int zombiesAtStart = 10;
 
     private int zombieCounter = 0;
-    public int minZombiesAlive = 7;
+    public int minZombiesAlive = 5;
+    public int maxZombiesAlive = 15;
 
     public bool Active = false;
     public bool zombiesAttackActivated = false;
@@ -44,7 +45,7 @@ public class EnemyFactory : MonoBehaviour {
         currentTime += Time.deltaTime;
         if (Active)
         {
-            if (currentTime >= spawnTime)
+            if (currentTime >= spawnTime && aliveZombies() < maxZombiesAlive)
             {
                 List<Transform> nearestPoints = getNearestSpawningpoints();
                 if (nearestPoints.Count > 0)

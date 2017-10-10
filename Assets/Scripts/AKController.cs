@@ -11,7 +11,7 @@ public class AKController : GunController {
     void Start()
     {
         shoot = GetComponent<Animation>();
-        //shootAudio = GetComponent<AudioSource>();
+        shootAudio = GetComponent<AudioSource>();
     }
 
     void Update () {
@@ -20,7 +20,8 @@ public class AKController : GunController {
 
     public override bool Shoot()
     {
-        shoot.Play("AKShooting");
+        //shoot.Play("AKShooting");
+        shootAudio.Play();
         return true;
     }
 }

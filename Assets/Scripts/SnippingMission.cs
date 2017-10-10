@@ -85,7 +85,7 @@ public class SnippingMission : PathFollower {
             }
         if (!ended && checkMissionEnded() && (playerAcceptWinning || failed))
         {
-            StartCoroutine(Ended());
+            Ended();
         }
 
 	}
@@ -162,6 +162,14 @@ public class SnippingMission : PathFollower {
             zombie.speed_animationWalk = 0.9f;
         }
     }
+    
+    private IEnumerator startZombieIfStuck(ZombieController zombie)
+    {
+        yield return new WaitForSeconds(10);
+        if(zombie.speed == 0 && !zombie.isDead()){
+            zombie.speed = 0.8f;
+        }
+    }
 
     public bool checkMissionEnded()
     {
@@ -174,7 +182,7 @@ public class SnippingMission : PathFollower {
                 {
                     noDeathButZombiesAlive = true;
                 }
-                if (Vector3.Distance(enemies.transform.position, destination.position) < 0.2f)
+                if (Vector3.Distance(enemies.transform.position, destination.position) < 0.3f)
                 {
                     //Oh no, the zombies reached the house, u will die.. :'(
                     PlayerController player = transform.root.gameObject.GetComponent<PlayerController>();
@@ -190,6 +198,7 @@ public class SnippingMission : PathFollower {
                 return false;
             }
             Debug.Log("Oke, u killed " + zombiesInGame.Count + " zombies, the mission was completed");
+            StartCoroutine(putDownTheGun());
             CompletedMessage.SetActive(true);
 #if UNITY_EDITOR
             StartCoroutine(delayedTestCall(acceptWinning));
@@ -204,7 +213,7 @@ public class SnippingMission : PathFollower {
         Wait = false;
     }
 
-    public IEnumerator Ended()
+    public void Ended()
     {
         if (!failed)
         {
@@ -216,6 +225,7 @@ public class SnippingMission : PathFollower {
             
             factory.Active = true;
             factory.setUpZombieVillage();
+            Go();
         }
         else
         {
@@ -224,6 +234,11 @@ public class SnippingMission : PathFollower {
 #endif
         }
         ended = true;
+       
+    }
+
+    private IEnumerator putDownTheGun()
+    {
         if (weapon.isScoped)
         {
             StartCoroutine(weapon.OnUnScoped());
@@ -232,6 +247,5 @@ public class SnippingMission : PathFollower {
         weaponHolder.SetActive(false);
         dummyWeapon.SetActive(true);
         transform.root.gameObject.GetComponent<PlayerController>().weapon = null;
-        Go();
     }
 }

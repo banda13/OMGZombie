@@ -74,7 +74,7 @@ public class ZombieController : MonoBehaviour
         yield return new WaitForSeconds(1);
         dying = true;
         //for the worst case
-        //Destroy(this.gameObject, 30);
+        Destroy(this.gameObject, 60);
     }
     
     public void setNextDestination(Transform dest)
@@ -102,11 +102,6 @@ public class ZombieController : MonoBehaviour
             collider.center = new Vector3(0, 1, 0);
             collider.height = 2.0f;
             collider.material = zerofriction;
-            //controller = transform.gameObject.AddComponent(typeof(CharacterController)) as CharacterController;
-            //animator.applyRootMotion = false;
-            //controller.center = new Vector3(0, 1, 0);
-            //controller.radius = 0.4f;
-            //StartCoroutine(NewHeading());
             spawned = true;
         }
         return false;
@@ -188,6 +183,10 @@ public class ZombieController : MonoBehaviour
     
     private bool Attack()
     {
+        if(player == null)
+        {
+            Debug.LogError("Can't find the player component");
+        }
         if(isDistanceSmaller(transform.position, player.transform.position, attackRange) && attackTimer >= attackSpeed && attackEnable)
         {
             if(Random.Range(0, 100) > 70)
@@ -229,7 +228,7 @@ public class ZombieController : MonoBehaviour
     private bool rotateToDestination(float rotationSpeed, Vector3 destination)
     {
         Vector3 degree = Vector3.Cross(transform.forward, destination - transform.position);
-        if (Mathf.Abs(degree.y) < 0.1)
+        if (Mathf.Abs(degree.y) < 0.2)
         {
             return true;
         }

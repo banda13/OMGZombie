@@ -22,6 +22,9 @@ public class PlayerController : MonoBehaviour {
     public ParticleSystem dust;
 
     private GameObject hidedWeapon;
+    private Quaternion previosRotation;
+    public float maxRotation = 10;
+
 
     void Start () {
         currentHealth = startingHealth;
@@ -29,13 +32,13 @@ public class PlayerController : MonoBehaviour {
 	}
 	
 	void Update () {
-
+        
         if ((Input.GetMouseButtonDown(0) || GvrControllerInput.ClickButton) && weapon != null)
         {
             if (weapon.GetComponent<GunController>().Shoot())
             {
                 RaycastHit hit;
-                Ray weaponRay = new Ray(weapon.transform.GetChild(3).transform.position, transform.GetChild(0).forward);
+                Ray weaponRay = new Ray(weapon.transform.GetChild(3).transform.position, chooseWeaponDirection());
                 if (Physics.Raycast(weaponRay, out hit, attackRange))
                 {
                     try
@@ -56,10 +59,24 @@ public class PlayerController : MonoBehaviour {
                     }
                     catch (NullReferenceException e)
                     {
-                        //its ok, we need to wait until the zombie gets up!
+                        //sometimes its ok, dont care
                     }
                 }
             }
+        }
+        if (weapon != null && weapon.GetComponent<GunController>() is AKController)
+        {
+            if(previosRotation != null)
+            {
+                Quaternion currentRotation = GvrControllerInput.Orientation;
+                if((Math.Abs(previosRotation.eulerAngles.x - currentRotation.eulerAngles.x) < maxRotation && 
+                    Math.Abs(previosRotation.eulerAngles.y - currentRotation.eulerAngles.y) < maxRotation && 
+                        Math.Abs(previosRotation.eulerAngles.z - currentRotation.eulerAngles.z) < maxRotation))
+                {
+                    weapon.transform.localRotation = GvrControllerInput.Orientation;
+                }
+            }
+            previosRotation = GvrControllerInput.Orientation;
         }
 
         if (damaged)
@@ -73,6 +90,25 @@ public class PlayerController : MonoBehaviour {
 
         damaged = false;
 	}
+
+    private Vector3 chooseWeaponDirection()
+    {
+        if(weapon != null || weapon.GetComponent<GunController>() == null)
+        {
+            if(weapon.GetComponent<GunController>() is AKController)
+            {
+                //in this case the controller rotate our weapon
+                return weapon.transform.forward;
+            }
+            if(weapon.GetComponent<GunController>() is SniperController)
+            {
+                //there we get the rotation from our camera
+                return transform.root.GetChild(0).forward;
+            }
+        }
+        Debug.LogError("Opps , can't find any weapon!");
+        return Vector3.zero;
+    }
     
 
     public void TakeDamage(int amount)
@@ -113,5 +149,6 @@ public class PlayerController : MonoBehaviour {
     {
         isDead = true;
         movement.Wait = true;
+        Debug.Log("diediedie");
     }
 }

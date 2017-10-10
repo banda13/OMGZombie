@@ -15,18 +15,20 @@ public class CamaraController : PathFollower {
     private EnemyFactory factory;
 
     void Start() {
+#if UNITY_EDITOR
         shift = new Vector3(0, 0.5f, 0);
+#endif
         init();
         final = GetComponent<FinalBattle>();
         snipping = GetComponent<SnippingMission>();
         factory = final.factory;
         Wait = true;
         StartCoroutine(startFading());
-        transform.position = waypoints[currentWaypoint].position;
     }
 
     void Update()
     {
+        //transform.GetChild(0).GetComponent<Camera>().fieldOfView = 20; ->not working
         rotateTheWord();
         move();
         if (currentWaypoint == waypoints.Count)
@@ -91,6 +93,7 @@ public class CamaraController : PathFollower {
     {
         finalBattle = true;
         final.battleStarted = true;
+        GetComponent<PlayerController>().hideWeapon(true);
         Debug.Log("Final battle started");
         StartCoroutine(fading(true, final));
 
@@ -100,6 +103,7 @@ public class CamaraController : PathFollower {
     {
         StartCoroutine(fading(true, null));
         StartCoroutine(final.zombiesDepart());
+        GetComponent<PlayerController>().hideWeapon(false);
         Debug.Log("Lets fight!");
     }
 

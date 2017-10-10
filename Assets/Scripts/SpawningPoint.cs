@@ -15,7 +15,10 @@ public class SpawningPoint : MonoBehaviour {
         taken = true;
         StartCoroutine(waitForLeaving());
         zombie = zombieObject.GetComponent<ZombieController>();
-        zombie.GetComponent<Animator>().runtimeAnimatorController = spawningAnimations;
+
+        //set the spawning animator which specify how the zombie spawns
+        //the zombie will change it after he spawned
+        zombie.GetComponent<Animator>().runtimeAnimatorController = spawningAnimations; 
         if (zombie == null)
         {
             Debug.LogError("Wtf it is not zombie..?");
@@ -38,7 +41,7 @@ public class SpawningPoint : MonoBehaviour {
 
     IEnumerator waitForLeaving()
     {
-        yield return new WaitForSeconds(5.0f);
+        yield return new WaitForSeconds(6.0f); //6sec spawning time
         taken = false;
     }
 

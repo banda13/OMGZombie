@@ -15,6 +15,8 @@ public class FinalBattle : PathFollower {
     public bool battleStarted = false;
     public bool battleCompleted = false;
 
+    public Transform destination;
+
     void Start () {
         init();
         Wait = true;
@@ -60,7 +62,7 @@ public class FinalBattle : PathFollower {
                 ZombieController zombie = factory.createZombie(p, zombieObj);
                 zombie.eyeShot = 0;
                 zombie.playerDetectionRange = 0;
-                zombie.setNextDestination(waypoints[waypoints.Count-1]);
+                zombie.setNextDestination(destination);
                 zombie.directionChange = 120; //if stucked
                 zombie.speed_animationWalk = 0;
                 zombiesInBattle.Add(zombie);
