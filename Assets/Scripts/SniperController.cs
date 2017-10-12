@@ -9,7 +9,7 @@ public class SniperController : GunController {
     private AudioSource shootAudio;
 
     //in seconds
-    public float timeBetweenAttack = 2;
+    public float timeBetweenAttack = 3;
     private bool attackEnable = true;
     
     void Start () {

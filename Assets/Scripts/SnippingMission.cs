@@ -183,7 +183,7 @@ public class SnippingMission : PathFollower {
                 {
                     noDeathButZombiesAlive = true;
                 }
-                if (Vector3.Distance(enemies.transform.position, destination.position) < 0.4f)
+                if (Vector3.Distance(enemies.transform.position, destination.position) < 0.8f)
                 {
                     //Oh no, the zombies reached the house, u will die.. :'(
                     PlayerController player = transform.root.gameObject.GetComponent<PlayerController>();

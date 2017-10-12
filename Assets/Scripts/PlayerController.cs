@@ -46,11 +46,11 @@ public class PlayerController : MonoBehaviour {
                     {
                         if (hit.collider.tag.Equals("ZombieHead"))
                         {
-                            hit.transform.GetComponent<ZombieController>().takeDamage(100);
+                            findZombieParent(hit.collider.transform.gameObject).takeDamage(100);
                         }
                         if (hit.collider.tag.Equals("ZombieBody"))
                         {
-                            hit.transform.GetComponent<ZombieController>().takeDamage(20);
+                            findZombieParent(hit.collider.transform.gameObject).takeDamage(20);
                         }
                         else
                         {
@@ -60,7 +60,7 @@ public class PlayerController : MonoBehaviour {
                     }
                     catch (NullReferenceException e)
                     {
-                        //sometimes its ok, dont care
+                        Debug.LogError("Its ok, hit doesn't have zombie controller");
                     }
                 }
             }
@@ -91,7 +91,19 @@ public class PlayerController : MonoBehaviour {
 
         damaged = false;
 	}
-
+    private ZombieController findZombieParent(GameObject child)
+    {
+        Transform t = child.transform;
+        while(t != null)
+        {
+            if(t.tag == "Zombie")
+            {
+                return t.GetComponent<ZombieController>();
+            }
+            t = t.parent.transform;
+        }
+        return null;
+    }
     private Vector3 chooseWeaponDirection()
     {
         if(weapon != null || weapon.GetComponent<GunController>() == null)
@@ -126,23 +138,18 @@ public class PlayerController : MonoBehaviour {
 
     public void hideWeapon(bool hide)
     {
-        if(weapon != null)
-        {
             if (hide)
             {
                 hidedWeapon = weapon;
+                weapon.SetActive(false);
                 weapon = null;
             }
             else if(hidedWeapon != null)
             {
                 weapon = hidedWeapon;
+                weapon.SetActive(true);
                 hidedWeapon = null;
             }
-        }
-        else
-        {
-            Debug.LogError("Can't hide weapon, because i don't have");
-        }
     }
 
 

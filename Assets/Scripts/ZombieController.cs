@@ -258,6 +258,7 @@ public class ZombieController : MonoBehaviour
 
     public void takeDamage(int damage)
     {
+        Debug.Log("founded");
         healt -= damage;
         animator.SetTrigger("Hit");
         if(healt <= 0)
