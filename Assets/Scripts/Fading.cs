@@ -8,7 +8,11 @@ public class Fading : MonoBehaviour {
     public Image fadeingImage;
     public float fadeSpeed = 1.0f;
     private float alpha = 1.0f;
-	
+
+    private void Start()
+    {
+        fadeingImage.gameObject.SetActive(true);
+    }
 
     private void fadeIn()
     {

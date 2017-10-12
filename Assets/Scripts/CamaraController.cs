@@ -14,6 +14,9 @@ public class CamaraController : PathFollower {
 
     private EnemyFactory factory;
 
+    AndroidJavaClass jc;
+    AndroidJavaObject currentActivity;
+
     void Start() {
 #if UNITY_EDITOR
         shift = new Vector3(0, 0.5f, 0);
@@ -24,6 +27,14 @@ public class CamaraController : PathFollower {
         factory = final.factory;
         Wait = true;
         StartCoroutine(startFading());
+
+        //init
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            jc = new AndroidJavaClass("com.andy.omg.UnityPlayerActivity");
+            currentActivity = jc.GetStatic<AndroidJavaObject>("UnityPlayerActivity");
+        }
+        StartCoroutine(sendTestData());
     }
 
     void Update()
@@ -71,7 +82,7 @@ public class CamaraController : PathFollower {
         yield return new WaitForSeconds(fadeTime);
         Go();
     }
-
+    
 
     private IEnumerator fading(bool start, PathFollower follow)
     {
@@ -86,7 +97,15 @@ public class CamaraController : PathFollower {
         yield return new WaitForSeconds(fadeTime);
         if(follow != null)
             follow.Go();
-       
+    }
+    
+
+    private IEnumerator sendTestData()
+    {
+        yield return new WaitForSeconds(20);
+        Debug.Log("Test data send: " + System.DateTime.Now);
+        //currentActivity.Call("testCall", new object[] {System.DateTime.Now.Second, currentWaypoint });
+        StartCoroutine(sendTestData());
     }
 
     private void startEpicFinalBattle()
@@ -130,4 +149,6 @@ public class CamaraController : PathFollower {
         Wait = false;
         Debug.Log("Camera started in base path");
     }
+
+    
 }

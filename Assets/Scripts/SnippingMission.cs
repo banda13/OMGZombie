@@ -126,6 +126,7 @@ public class SnippingMission : PathFollower {
     private void restartAfterZombiesKilled()
     {
         factory.clearFactory();
+        failed = false;
         ended = false;
         putUpGun = false;
         started = false;
@@ -165,7 +166,7 @@ public class SnippingMission : PathFollower {
     
     private IEnumerator startZombieIfStuck(ZombieController zombie)
     {
-        yield return new WaitForSeconds(10);
+        yield return new WaitForSeconds(5);
         if(zombie.speed == 0 && !zombie.isDead()){
             zombie.speed = 0.8f;
         }
@@ -182,14 +183,17 @@ public class SnippingMission : PathFollower {
                 {
                     noDeathButZombiesAlive = true;
                 }
-                if (Vector3.Distance(enemies.transform.position, destination.position) < 0.3f)
+                if (Vector3.Distance(enemies.transform.position, destination.position) < 0.4f)
                 {
                     //Oh no, the zombies reached the house, u will die.. :'(
                     PlayerController player = transform.root.gameObject.GetComponent<PlayerController>();
-                    player.TakeDamage(player.currentHealth);
+                    player.TakeDamage(player.currentHealth/2);
                     FailedMessage.SetActive(true);
                     failed = true;
                     Debug.Log("Zombies reached the house..");
+#if UNITY_EDITOR
+                    StartCoroutine(delayedTestCall(restartMission));
+#endif
                     return true;
                 }
             }

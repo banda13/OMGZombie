@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour {
     public Image damageImage;
     public float flashSpeed = 5f;                               
     public Color flashColour = new Color(1f, 0f, 0f, 0.1f);
-
+    
     private bool isDead;                                                
     public bool damaged;
     public float attackRange = 20;
@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour {
     private Quaternion previosRotation;
     public float maxRotation = 10;
 
+    public GameObject restart;
 
     void Start () {
         currentHealth = startingHealth;
@@ -145,10 +146,30 @@ public class PlayerController : MonoBehaviour {
     }
 
 
-    void Death()
+    private void Death()
     {
         isDead = true;
         movement.Wait = true;
-        Debug.Log("diediedie");
+        StartCoroutine(dying());
+        GetComponent<Fading>().BeginFade(1);
+        //restart.SetActive(true);
+    }
+
+    private IEnumerator dying()
+    {
+        for (int i = 1; i < 90; i++)
+        {
+            transform.Rotate(new Vector3(-1, 0, 0));
+            yield return null;
+        }
+    }
+
+
+    //only test call, i need more checkpoints!
+    public void restartTestCall()
+    {
+        currentHealth = 100;
+        GetComponent<CamaraController>().Wait = false;
+        //restart.SetActive(false);
     }
 }

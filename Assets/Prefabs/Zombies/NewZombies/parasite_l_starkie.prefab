@@ -2020,8 +2020,8 @@ MonoBehaviour:
   biteDamage: 20
   attackRange: 2.1
   attackSpeed: 2
-  eyeShot: 20
-  playerDetectionRange: 8
+  eyeShot: 30
+  playerDetectionRange: 12
   obstacleDetection: 1.5
   speed_animationIdle: 0
   speed_animationInjured: 0.3

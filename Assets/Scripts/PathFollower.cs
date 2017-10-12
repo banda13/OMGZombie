@@ -27,7 +27,11 @@ public abstract class PathFollower : MonoBehaviour {
 
     public void move()
     {
-        if (!Wait && currentWaypoint < waypoints.Count)
+        bool touching = GvrControllerInput.IsTouching;
+#if UNITY_EDITOR
+        touching = true;
+#endif
+        if (!Wait && currentWaypoint < waypoints.Count && touching)
         {
             if (transform.position != waypoints[currentWaypoint].position)
             {
@@ -56,6 +60,14 @@ public abstract class PathFollower : MonoBehaviour {
     public virtual void replaceCamera()
     {
         return;
+    }
+
+    public Transform getNextDestination()
+    {
+        if (waypoints.Count > currentWaypoint + 1)
+            return waypoints[currentWaypoint + 1];
+        else
+            return waypoints[currentWaypoint - 1];
     }
 }
 

@@ -1987,7 +1987,7 @@ Animator:
   m_GameObject: {fileID: 1630056781105004}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: bb10cf01fb5b23242a02c8790cfdd59d, type: 3}
-  m_Controller: {fileID: 9100000, guid: a88b020eb10c52a499ba02ca80dd4069, type: 2}
+  m_Controller: {fileID: 9100000, guid: d44aa66638498f045b5a94b226a16880, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -2019,8 +2019,8 @@ MonoBehaviour:
   biteDamage: 20
   attackRange: 2.1
   attackSpeed: 2
-  eyeShot: 20
-  playerDetectionRange: 8
+  eyeShot: 30
+  playerDetectionRange: 12
   obstacleDetection: 1.5
   speed_animationIdle: 0
   speed_animationInjured: 0.3

@@ -171,7 +171,7 @@ public class EnemyFactory : MonoBehaviour {
         {
             if(dist == -1)
             {
-                dist = Vector3.Distance(t.position, player.transform.position);
+                dist = Vector3.Distance(t.position, player.GetComponent<CamaraController>().getNextDestination().position);
                 nearest = t;
             }
             else

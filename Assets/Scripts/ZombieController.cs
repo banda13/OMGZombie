@@ -49,7 +49,7 @@ public class ZombieController : MonoBehaviour
     }
     
     void Update () {
-
+        
         if (!Spawned() || dead)
         {
             if (dying)
@@ -228,7 +228,7 @@ public class ZombieController : MonoBehaviour
     private bool rotateToDestination(float rotationSpeed, Vector3 destination)
     {
         Vector3 degree = Vector3.Cross(transform.forward, destination - transform.position);
-        if (Mathf.Abs(degree.y) < 0.2)
+        if (Mathf.Abs(degree.y) < 0.2) 
         {
             return true;
         }
