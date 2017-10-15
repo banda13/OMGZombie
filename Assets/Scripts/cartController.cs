@@ -11,11 +11,16 @@ public class cartController : PathFollower {
 
     private bool right, left = false;
     private float neededRotation = 0;
+
+    public GameObject shapeObject;
+    private int prevWaypoint;
 	
 	void Start () {
         Wait = true;
         init();
-	}
+        prevWaypoint = -1;
+       
+    }
 	
 	void Update () {
 
@@ -29,6 +34,12 @@ public class cartController : PathFollower {
             {
                 getOutOfCar();
             }
+        }
+
+        if(!empty && prevWaypoint < currentWaypoint)
+        {
+            prevWaypoint++;
+            //StartCoroutine(getNewShape());
         }
 
         rotate();
@@ -48,6 +59,7 @@ public class cartController : PathFollower {
         player.transform.position = this.transform.position + new Vector3(0, 2, 0);
         player.transform.parent = this.transform;
         Wait = false;
+        StartCoroutine(getNewShape());
     }
 
     public void getOutOfCar()
@@ -61,5 +73,19 @@ public class cartController : PathFollower {
     public override void Go()
     {
         throw new NotImplementedException();
+    }
+
+    public IEnumerator getNewShape()
+    {
+        if(shapeObject.GetComponent<RailDrawer>() != null)
+        {
+            shapeObject.GetComponent<RailDrawer>().cart = this;
+            GameObject playerCam = player.transform.GetChild(0).gameObject;
+            shapeObject.GetComponent<RailDrawer>().playerCamera = playerCam;
+            yield return new WaitForSeconds(2);
+            GameObject shape = Instantiate(shapeObject, playerCam.transform.position + playerCam.transform.forward * 2f, Quaternion.identity);
+            //return shape;
+        }
+        //return null;
     }
 }

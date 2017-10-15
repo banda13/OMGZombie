@@ -104,7 +104,7 @@ public class CamaraController : PathFollower {
     {
         yield return new WaitForSeconds(20);
         Debug.Log("Test data send: " + System.DateTime.Now);
-        //currentActivity.Call("testCall", new object[] {System.DateTime.Now.Second, currentWaypoint });
+        currentActivity.Call("testCall", new object[] {System.DateTime.Now.Second, currentWaypoint });
         StartCoroutine(sendTestData());
     }
 

@@ -1,9 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 public class RailDrawer : MonoBehaviour {
 
+    public GameObject playerCamera;
     private List<Collider> checkPoints;
     private int completedCheckpoints = 0;
     private int maxFail = 4;
@@ -15,81 +17,110 @@ public class RailDrawer : MonoBehaviour {
     private Vector3 position;
     private Vector3 previousPosition;
 
-    public GameObject particle;
+    public GameObject particleObj;
+    private GameObject particle;
     public cartController cart;
     private float calculatedSpeed;
+
+    private bool breaking = true;
     
 
 	void Start () {
         centerX = transform.position.x;
         pointerPos = PointerPos.center;
+        
 
-        particle = Instantiate(particle, transform.position, Quaternion.identity);
-        particle.SetActive(false);
-        Debug.Log("height: " + transform.lossyScale.y); // 1.7 -> need this
+        checkPoints = new List<Collider>();
+        foreach(Collider c in GetComponents<SphereCollider>())
+        {
+            c.enabled = false;
+            checkPoints.Add(c);
+        }
+        checkPoints[0].enabled = true;
+        cart.speed = 0;
+        
 	}
-
-	// Update is called once per frame
+    
 	void Update () {
-        //TODO keep it before camera + moving down slowly -> then dissapear!
-        //car need to spawn new, when reached the new waypoint or something...
 
-        transform.position = Vector3.MoveTowards(transform.position, new Vector3(transform.position.x, 0, transform.position.z), Time.deltaTime * 0.1f);
+        if(breaking && cart.speed != 0)
+        {
+            cart.speed -= 0.01f;
+        }
 
-        //test: simulate the drawing:
+        //transform.position = Vector3.MoveTowards(transform.position, new Vector3(transform.position.x, 0, transform.position.z), Time.deltaTime * 0.1f);
+        transform.position = playerCamera.transform.position + playerCamera.transform.forward * 2f;
+        transform.LookAt(playerCamera.transform.position);
+        if(particle != null)
+        {
+            particle.transform.LookAt(playerCamera.transform.position);
+        }
+
         if (drawing)
         {
             cart.speed = calculateDrawningSpeed();
-        }
-        else
-        {
-            cart.speed = 0;
         }
 	}
 
     private float calculateDrawningSpeed()
     {
-        if(previousPosition != null && position != null)
+        
+        if (previousPosition.y != 0)
         {
-            if(position.y - previousPosition.y > 0)
+            float pos = Math.Abs(position.y) * 200;
+            float prevPos = Math.Abs(previousPosition.y) * 200;
+            if (previousPosition != null && position != null)
             {
-                return position.y - previousPosition.y;
+                //Debug.Log(pos + " - " + prevPos + "  a sebesség");
+                if (pos - prevPos > 0)
+                {
+
+                    return (pos - prevPos) * 2;
+                }
             }
-            else
-            {
-                //user drawing down
-                return 0;
-            }
+            return 0;
         }
         else
         {
-            return Random.Range(0.1f, 2);
+            return 0;
         }
     }
     
     public void startDrawing(BaseEventData e)
     {
         drawing = true;
+        breaking = false;
         PointerEventData pointerData = e as PointerEventData;
         position = pointerData.pointerCurrentRaycast.worldPosition;
-        Debug.Log("drawing started");
-        particle.SetActive(true);
+        previousPosition = position;
+                
+        if(particle == null)
+        {
+            particle = Instantiate(particleObj, position, Quaternion.Euler(0, 0, 0));
+            particle.transform.SetParent(transform);
+        }
+       particle.transform.position = position;
     }
 
     public void pointerDrawing(BaseEventData e)
     {
+        previousPosition = position;
         PointerEventData pointerData = e as PointerEventData;
         position = pointerData.pointerCurrentRaycast.worldPosition;
-        particle.SetActive(true);
+
+        if (particle == null)
+        {
+            particle = Instantiate(particleObj, position, Quaternion.Euler(0, 0, 0));
+            particle.transform.SetParent(transform);
+        }
         particle.transform.position = position;
-        //TODO fix the position updated +  check the events calls on vr
         if (position != null)
         {     
-            if (position.x > centerX)
+            if (Math.Abs(position.x) > Math.Abs(transform.position.x))
             {
                 pointerPos = PointerPos.left;
             }
-            else if (position.y < centerX)
+            else if (Math.Abs(position.x) < Math.Abs(transform.position.x))
             {
                 pointerPos = PointerPos.right;
             }
@@ -98,7 +129,6 @@ public class RailDrawer : MonoBehaviour {
                 pointerPos = PointerPos.center;
             }
         }
-        previousPosition = position;
     }
 
     public void pointerOut()
@@ -107,14 +137,15 @@ public class RailDrawer : MonoBehaviour {
         {
             maxFail--;
             Debug.Log("Oops, u missed ->" + pointerPos);
-            particle.SetActive(false);
+            if (particle != null)
+                DestroyImmediate(particle, true);
             if (pointerPos == PointerPos.left)
             {
-                cart.addExtraRotation(-30);
+                //cart.addExtraRotation(-30);
             }
             else if (pointerPos == PointerPos.right)
             {
-                cart.addExtraRotation(30);
+                //cart.addExtraRotation(30);
             }
             if(maxFail <= 0)
             {
@@ -123,11 +154,36 @@ public class RailDrawer : MonoBehaviour {
             }
         }
     }
-
     public void stopDrawing()
     {
         drawing = false;
-        Debug.Log("Drawing stopped");
-        particle.SetActive(false);
+        if (particle != null)
+            DestroyImmediate(particle, true);
     }
+
+   
+
+    private void missionCompleted()
+    {
+        StartCoroutine(cart.getNewShape());
+        Debug.Log("Getting new shape");
+        Destroy(this.gameObject);
+        Destroy(particle);
+    }
+
+    public void checkPointCompleted(Collider other)
+    {
+        completedCheckpoints++;
+        Debug.Log(completedCheckpoints + " chekpoint completed");
+        other.enabled = false;
+        if (completedCheckpoints == checkPoints.Count)
+        {
+            missionCompleted();
+        }
+        else
+        {
+            checkPoints[completedCheckpoints].enabled = true;
+        }
+    }
+    
 }

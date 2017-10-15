@@ -8,6 +8,7 @@ TagManager:
   - ZombieHead
   - ZombieBody
   - Door
+  - Shape
   layers:
   - Default
   - TransparentFX
