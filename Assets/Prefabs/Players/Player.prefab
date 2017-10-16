@@ -682,7 +682,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99cc9a2944d925c4a9f222a8f2579481, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeOutTexture: {fileID: 2800000, guid: 2f7de9f6fcd82b444bff4a9cb049e6ce, type: 3}
+  fadeingImage: {fileID: 0}
   fadeSpeed: 0.8
 --- !u!114 &114319388119935374
 MonoBehaviour:
@@ -697,8 +697,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   path: {fileID: 0}
   speed: 1
+  currentWaypoint: 0
   factory: {fileID: 0}
   points: {fileID: 0}
+  epicPortal: {fileID: 0}
+  battleStarted: 0
+  battleCompleted: 0
+  destination: {fileID: 0}
 --- !u!114 &114342448133604190
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -803,6 +808,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   path: {fileID: 0}
   speed: 1
+  currentWaypoint: 0
   finalBattle: 0
 --- !u!114 &114693397771208036
 MonoBehaviour:
@@ -825,6 +831,8 @@ MonoBehaviour:
   attackRange: 20
   weapon: {fileID: 0}
   dust: {fileID: 198110534788076834, guid: 4dccceea7c84abf4281bbee548e5224a, type: 2}
+  maxRotation: 10
+  restart: {fileID: 0}
 --- !u!114 &114713034860402388
 MonoBehaviour:
   m_ObjectHideFlags: 1

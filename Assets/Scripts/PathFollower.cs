@@ -39,6 +39,7 @@ public abstract class PathFollower : MonoBehaviour {
             }
             else
             {
+                AdaptedEventHandler.wayPointReached(transform.position);
                 currentWaypoint++;
             }
         }

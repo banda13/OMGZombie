@@ -6848,7 +6848,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   path: {fileID: 1143104794}
-  speed: 0.1
+  speed: 1
   currentWaypoint: 0
   finalBattle: 0
 --- !u!4 &558815880

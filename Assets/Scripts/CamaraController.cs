@@ -14,8 +14,7 @@ public class CamaraController : PathFollower {
 
     private EnemyFactory factory;
 
-    AndroidJavaClass jc;
-    AndroidJavaObject currentActivity;
+    
 
     void Start() {
 #if UNITY_EDITOR
@@ -28,13 +27,7 @@ public class CamaraController : PathFollower {
         Wait = true;
         StartCoroutine(startFading());
 
-        //init
-        if (Application.platform == RuntimePlatform.Android)
-        {
-            jc = new AndroidJavaClass("com.andy.omg.UnityPlayerActivity");
-            currentActivity = jc.GetStatic<AndroidJavaObject>("UnityPlayerActivity");
-        }
-        StartCoroutine(sendTestData());
+        AdaptedEventHandler.init();
     }
 
     void Update()
@@ -104,8 +97,6 @@ public class CamaraController : PathFollower {
     {
         yield return new WaitForSeconds(20);
         Debug.Log("Test data send: " + System.DateTime.Now);
-        currentActivity.Call("testCall", new object[] {System.DateTime.Now.Second, currentWaypoint });
-        StartCoroutine(sendTestData());
     }
 
     private void startEpicFinalBattle()

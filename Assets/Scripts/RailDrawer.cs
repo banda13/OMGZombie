@@ -6,25 +6,14 @@ using UnityEngine.EventSystems;
 public class RailDrawer : MonoBehaviour {
 
     public GameObject playerCamera;
-    private List<Collider> checkPoints;
-    private int completedCheckpoints = 0;
-    private int maxFail = 4;
-    private float centerX;
-    public bool drawing = false;
-
-    public enum PointerPos { left, center, right};
-    public PointerPos pointerPos;
-    private Vector3 position;
-    private Vector3 previousPosition;
-
+    public cartController cart;
     public GameObject particleObj;
     private GameObject particle;
-    public cartController cart;
-    private float calculatedSpeed;
 
-    private bool breaking = true;
+    private List<Collider> checkPoints;
+    private int completedCheckpoints = 0;
+    public int maxFail = 4;
     
-
     public bool isPointerOnObject = false;
     public bool isPointerDown = false;
     public bool isDragging = false;
@@ -34,8 +23,11 @@ public class RailDrawer : MonoBehaviour {
     private Vector3 draggingPosition;
     private Vector3 previousDraggingPosition;
 
-    private float speedMultiplier = 200;
+    public float speedMultiplier = 200;
     public float breakingSpeed = 0.01f;
+    public float maxCarSpeed = 3;
+
+    public float distanceFromCamera = 2;
 
 
     public void pointerDown(BaseEventData e)
@@ -63,7 +55,10 @@ public class RailDrawer : MonoBehaviour {
     public void pointerExit(BaseEventData e)
     {
         isPointerOnObject = false;
-        
+        if(isPointerDown && isDragging)
+        {
+
+        }
     }
     public void startDragging(BaseEventData e)
     {
@@ -95,9 +90,9 @@ public class RailDrawer : MonoBehaviour {
         if (particle == null)
         {
             particle = Instantiate(particleObj, draggingPosition, Quaternion.Euler(0, 0, 0));
-            particle.transform.SetParent(transform);
+            //particle.transform.SetParent(transform);
         }
-        particle.transform.position = draggingPosition;
+        particle.transform.localPosition = draggingPosition;
     }
     
 
@@ -108,10 +103,6 @@ public class RailDrawer : MonoBehaviour {
     }
 
 	void Start () {
-        centerX = transform.position.x;
-        pointerPos = PointerPos.center;
-        
-
         checkPoints = new List<Collider>();
         foreach(Collider c in GetComponents<SphereCollider>())
         {
@@ -119,15 +110,13 @@ public class RailDrawer : MonoBehaviour {
             checkPoints.Add(c);
         }
         checkPoints[0].enabled = true;
-        cart.speed = 0;
 	}
     
 	void Update () {
 
         //set Shape
-        transform.position = playerCamera.transform.position + playerCamera.transform.forward * 4f;
+        transform.position = playerCamera.transform.position + playerCamera.transform.forward * distanceFromCamera;
         transform.LookAt(playerCamera.transform.position);
-        //transform.position = Vector3.MoveTowards(transform.position, new Vector3(transform.position.x, 0, transform.position.z), Time.deltaTime * 0.1f);
 
         //set particle
         if (particle != null)
@@ -136,7 +125,7 @@ public class RailDrawer : MonoBehaviour {
         }
         if(isPointerOnObject && isPointerDown)
         {
-            //createOrUpdateParticle();
+            createOrUpdateParticle();
         }
         else
         {
@@ -183,14 +172,14 @@ public class RailDrawer : MonoBehaviour {
 
     private void setCarSpeed()
     {
-        if(previousDraggingPosition != null && position!= null)
+        if(previousDraggingPosition != null && draggingPosition!= null)
         {
             float pos = Math.Abs(draggingPosition.y) * 200;
             float prevPos = Math.Abs(previousDraggingPosition.y) * 200;
             if (pos - prevPos > 0)
             {
                 float newSpeed = (pos - prevPos) * 2;
-                cart.speed = newSpeed < 2 ? newSpeed : 2;
+                cart.speed = newSpeed < maxCarSpeed ? newSpeed : maxCarSpeed;
                 return;
             }
         }
@@ -200,8 +189,20 @@ public class RailDrawer : MonoBehaviour {
     private void missionCompleted()
     {
         cart.getNewShape();
+        cart.speed = 1;
         Destroy(this.gameObject);
         Destroy(particle);
+    }
+
+    private void checkPointMissed()
+    {
+        maxFail--;
+        destroyPartice();
+        Debug.Log("Hiba");
+        if(maxFail <= 0)
+        {
+            Debug.Log("Meghaltál");
+        }
     }
 
     public void checkPointCompleted(Collider other)
