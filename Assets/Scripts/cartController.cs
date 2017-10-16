@@ -12,8 +12,11 @@ public class cartController : PathFollower {
     private bool right, left = false;
     private float neededRotation = 0;
 
-    public GameObject shapeObject;
+    public List<GameObject> shapes;
     private int prevWaypoint;
+
+    public float rotationLimit = 30;
+    public float rotationSpeed = 10;
 	
 	void Start () {
         Wait = true;
@@ -39,27 +42,36 @@ public class cartController : PathFollower {
         if(!empty && prevWaypoint < currentWaypoint)
         {
             prevWaypoint++;
-            //StartCoroutine(getNewShape());
         }
 
         rotate();
         move();
+        
 
 	}
 
-    public void addExtraRotation(float rotation)
+    public void rotateLeft()
     {
-        neededRotation = rotation;
-        transform.rotation = transform.rotation *  Quaternion.Euler(rotation, 0, 0);
-    }
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(330, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z), Time.deltaTime * rotationSpeed);
 
+    }
+    public void rotateRight()
+    {
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(30, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z), Time.deltaTime * rotationSpeed);
+        
+    }
+    public void stabilaze()
+    { 
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z), Time.deltaTime * rotationSpeed);
+    }
+    
     public void getInCar()
     {
         empty = false;
         player.transform.position = this.transform.position + new Vector3(0, 2, 0);
         player.transform.parent = this.transform;
         Wait = false;
-        StartCoroutine(getNewShape());
+        getNewShape();
     }
 
     public void getOutOfCar()
@@ -75,9 +87,20 @@ public class cartController : PathFollower {
         throw new NotImplementedException();
     }
 
-    public IEnumerator getNewShape()
+    public void getNewShape()
     {
-        if(shapeObject.GetComponent<RailDrawer>() != null)
+        StartCoroutine(spawnNewShape());
+    }
+
+    private IEnumerator spawnNewShape()
+    {
+        yield return new WaitForSeconds(3);
+        GameObject shapeObject = null;
+        if(shapes != null && shapes.Count != 0)
+        {
+            shapeObject = shapes[UnityEngine.Random.Range(0, shapes.Count)];
+        }
+        if (shapeObject.GetComponent<RailDrawer>() != null)
         {
             shapeObject.GetComponent<RailDrawer>().cart = this;
             GameObject playerCam = player.transform.GetChild(0).gameObject;
@@ -86,6 +109,5 @@ public class cartController : PathFollower {
             GameObject shape = Instantiate(shapeObject, playerCam.transform.position + playerCam.transform.forward * 2f, Quaternion.identity);
             //return shape;
         }
-        //return null;
     }
 }

@@ -10,7 +10,7 @@ public class RailDrawer : MonoBehaviour {
     private int completedCheckpoints = 0;
     private int maxFail = 4;
     private float centerX;
-    private bool drawing = false;
+    public bool drawing = false;
 
     public enum PointerPos { left, center, right};
     public PointerPos pointerPos;
@@ -25,6 +25,88 @@ public class RailDrawer : MonoBehaviour {
     private bool breaking = true;
     
 
+    public bool isPointerOnObject = false;
+    public bool isPointerDown = false;
+    public bool isDragging = false;
+    public bool isLeaningLeft = false;
+    public bool isLeaningRight = false;
+
+    private Vector3 draggingPosition;
+    private Vector3 previousDraggingPosition;
+
+    private float speedMultiplier = 200;
+    public float breakingSpeed = 0.01f;
+
+
+    public void pointerDown(BaseEventData e)
+    {
+        isPointerDown = true;
+        PointerEventData pointerData = e as PointerEventData;
+        draggingPosition = pointerData.pointerCurrentRaycast.worldPosition;
+        previousDraggingPosition = draggingPosition;
+    }
+
+    public void pointerUp(BaseEventData e)
+    {
+        isPointerDown = false;
+        PointerEventData pointerData = e as PointerEventData;
+        draggingPosition = pointerData.pointerCurrentRaycast.worldPosition;
+    }
+
+    public void pointerEnter(BaseEventData e)
+    {
+        isPointerOnObject = true;
+
+
+    }
+
+    public void pointerExit(BaseEventData e)
+    {
+        isPointerOnObject = false;
+        
+    }
+    public void startDragging(BaseEventData e)
+    {
+        previousDraggingPosition = draggingPosition;
+        isDragging = true;
+        PointerEventData pointerData = e as PointerEventData;
+        draggingPosition = pointerData.pointerCurrentRaycast.worldPosition;
+    }
+
+    public void dragging(BaseEventData e)
+    {
+        if (isPointerOnObject)
+        {
+            previousDraggingPosition = draggingPosition;
+            PointerEventData pointerData = e as PointerEventData;
+            draggingPosition = pointerData.pointerCurrentRaycast.worldPosition;
+        }
+        
+    }
+    public void stopDragging(BaseEventData e)
+    {
+        isDragging = false;
+        PointerEventData pointerData = e as PointerEventData;
+        draggingPosition = pointerData.pointerCurrentRaycast.worldPosition;
+    }
+
+    private void createOrUpdateParticle()
+    {
+        if (particle == null)
+        {
+            particle = Instantiate(particleObj, draggingPosition, Quaternion.Euler(0, 0, 0));
+            particle.transform.SetParent(transform);
+        }
+        particle.transform.position = draggingPosition;
+    }
+    
+
+    private void destroyPartice()
+    {
+        if (particle != null)
+            DestroyImmediate(particle, true);
+    }
+
 	void Start () {
         centerX = transform.position.x;
         pointerPos = PointerPos.center;
@@ -38,135 +120,86 @@ public class RailDrawer : MonoBehaviour {
         }
         checkPoints[0].enabled = true;
         cart.speed = 0;
-        
 	}
     
 	void Update () {
 
-        if(breaking && cart.speed != 0)
-        {
-            cart.speed -= 0.01f;
-        }
-
-        //transform.position = Vector3.MoveTowards(transform.position, new Vector3(transform.position.x, 0, transform.position.z), Time.deltaTime * 0.1f);
-        transform.position = playerCamera.transform.position + playerCamera.transform.forward * 2f;
+        //set Shape
+        transform.position = playerCamera.transform.position + playerCamera.transform.forward * 4f;
         transform.LookAt(playerCamera.transform.position);
-        if(particle != null)
+        //transform.position = Vector3.MoveTowards(transform.position, new Vector3(transform.position.x, 0, transform.position.z), Time.deltaTime * 0.1f);
+
+        //set particle
+        if (particle != null)
         {
             particle.transform.LookAt(playerCamera.transform.position);
         }
-
-        if (drawing)
+        if(isPointerOnObject && isPointerDown)
         {
-            cart.speed = calculateDrawningSpeed();
-        }
-	}
-
-    private float calculateDrawningSpeed()
-    {
-        
-        if (previousPosition.y != 0)
-        {
-            float pos = Math.Abs(position.y) * 200;
-            float prevPos = Math.Abs(previousPosition.y) * 200;
-            if (previousPosition != null && position != null)
-            {
-                //Debug.Log(pos + " - " + prevPos + "  a sebesség");
-                if (pos - prevPos > 0)
-                {
-
-                    return (pos - prevPos) * 2;
-                }
-            }
-            return 0;
+            //createOrUpdateParticle();
         }
         else
         {
-            return 0;
+            destroyPartice();
         }
-    }
-    
-    public void startDrawing(BaseEventData e)
-    {
-        drawing = true;
-        breaking = false;
-        PointerEventData pointerData = e as PointerEventData;
-        position = pointerData.pointerCurrentRaycast.worldPosition;
-        previousPosition = position;
-                
-        if(particle == null)
-        {
-            particle = Instantiate(particleObj, position, Quaternion.Euler(0, 0, 0));
-            particle.transform.SetParent(transform);
-        }
-       particle.transform.position = position;
-    }
 
-    public void pointerDrawing(BaseEventData e)
-    {
-        previousPosition = position;
-        PointerEventData pointerData = e as PointerEventData;
-        position = pointerData.pointerCurrentRaycast.worldPosition;
-
-        if (particle == null)
+        //set cart rotation
+        if (isPointerDown && isDragging && !isPointerOnObject)
         {
-            particle = Instantiate(particleObj, position, Quaternion.Euler(0, 0, 0));
-            particle.transform.SetParent(transform);
+                if (draggingPosition.x < previousDraggingPosition.x)
+                {
+                    isLeaningLeft = true;
+                    cart.rotateLeft();
+                }
+                else
+                {
+                    isLeaningRight = true;
+                    cart.rotateRight();
+                }
         }
-        particle.transform.position = position;
-        if (position != null)
-        {     
-            if (Math.Abs(position.x) > Math.Abs(transform.position.x))
+        else
+        {
+            isLeaningRight = isLeaningLeft = false;
+            cart.stabilaze();
+        }
+
+        //set cart speed
+        if(isPointerOnObject && isDragging && isPointerOnObject)
+        {
+            setCarSpeed();
+        }
+        else
+        {
+            if (cart.speed > 0)
             {
-                pointerPos = PointerPos.left;
-            }
-            else if (Math.Abs(position.x) < Math.Abs(transform.position.x))
-            {
-                pointerPos = PointerPos.right;
+                cart.speed -= breakingSpeed;
             }
             else
             {
-                pointerPos = PointerPos.center;
+                cart.speed = 0;
             }
         }
-    }
+	}
 
-    public void pointerOut()
+    private void setCarSpeed()
     {
-        if (drawing)
+        if(previousDraggingPosition != null && position!= null)
         {
-            maxFail--;
-            Debug.Log("Oops, u missed ->" + pointerPos);
-            if (particle != null)
-                DestroyImmediate(particle, true);
-            if (pointerPos == PointerPos.left)
+            float pos = Math.Abs(draggingPosition.y) * 200;
+            float prevPos = Math.Abs(previousDraggingPosition.y) * 200;
+            if (pos - prevPos > 0)
             {
-                //cart.addExtraRotation(-30);
-            }
-            else if (pointerPos == PointerPos.right)
-            {
-                //cart.addExtraRotation(30);
-            }
-            if(maxFail <= 0)
-            {
-                cart.Wait = true;
-                //we dead
+                float newSpeed = (pos - prevPos) * 2;
+                cart.speed = newSpeed < 2 ? newSpeed : 2;
+                return;
             }
         }
+        cart.speed = 0;
     }
-    public void stopDrawing()
-    {
-        drawing = false;
-        if (particle != null)
-            DestroyImmediate(particle, true);
-    }
-
-   
 
     private void missionCompleted()
     {
-        StartCoroutine(cart.getNewShape());
-        Debug.Log("Getting new shape");
+        cart.getNewShape();
         Destroy(this.gameObject);
         Destroy(particle);
     }
