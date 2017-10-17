@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class CamaraController : PathFollower {
 
@@ -13,7 +10,6 @@ public class CamaraController : PathFollower {
     private SnippingMission snipping;
 
     private EnemyFactory factory;
-
     
 
     void Start() {
@@ -91,8 +87,16 @@ public class CamaraController : PathFollower {
         if(follow != null)
             follow.Go();
     }
-    
 
+    public IEnumerator fadingWithAction(CandleBase.actionBetweenFadeing f)
+    {
+        float fadeTime = GetComponent<Fading>().BeginFade(1);
+        yield return new WaitForSeconds(fadeTime);
+        f();
+        fadeTime = GetComponent<Fading>().BeginFade(-1);
+        yield return new WaitForSeconds(fadeTime);
+    }
+    
     private IEnumerator sendTestData()
     {
         yield return new WaitForSeconds(20);
@@ -140,6 +144,21 @@ public class CamaraController : PathFollower {
         Wait = false;
         Debug.Log("Camera started in base path");
     }
-
     
+
+    public void jump(string destination, Transform target)
+    {
+        int index = 0;
+        foreach(Transform t in waypoints)
+        {
+            if (t.name.Contains(destination))
+            {
+                currentWaypoint = index;
+                target.position = waypoints[currentWaypoint - 1].position;
+            }
+            index++;
+        }
+    }
+
+
 }

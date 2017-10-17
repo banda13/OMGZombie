@@ -138,18 +138,25 @@ public class PlayerController : MonoBehaviour {
 
     public void hideWeapon(bool hide)
     {
+        try
+        {
             if (hide)
             {
                 hidedWeapon = weapon;
                 weapon.SetActive(false);
                 weapon = null;
             }
-            else if(hidedWeapon != null)
+            else if (hidedWeapon != null)
             {
                 weapon = hidedWeapon;
                 weapon.SetActive(true);
                 hidedWeapon = null;
             }
+        } catch(NullReferenceException e)
+        {
+            Debug.Log("Could not hide weapon, cause isnt exist");
+        }
+
     }
 
 
