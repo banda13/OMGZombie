@@ -127,6 +127,7 @@ public class SnippingMission : PathFollower {
     {
         factory.clearFactory();
         failed = false;
+        transform.root.gameObject.GetComponent<PlayerController>().weapon = null;
         ended = false;
         putUpGun = false;
         started = false;
@@ -149,7 +150,7 @@ public class SnippingMission : PathFollower {
         }
     }
     //to make harder zombies, we set the walk animation speed of the zombies
-    //they still think they walk, but actually they're running or ..
+    //they still think they walk, but actually they're running 
     private void setZombieSpeed(ZombieController zombie)
     {
         float current = zombiesInGame.Count;
@@ -226,7 +227,6 @@ public class SnippingMission : PathFollower {
             //important!!!
             //this activates the  zombie creation
             //you should not start it earlier, otherwise the player would have no change
-            
             factory.Active = true;
             factory.setUpZombieVillage();
             Go();

@@ -13,9 +13,7 @@ public class CamaraController : PathFollower {
     
 
     void Start() {
-#if UNITY_EDITOR
         shift = new Vector3(0, 0.5f, 0);
-#endif
         init();
         final = GetComponent<FinalBattle>();
         snipping = GetComponent<SnippingMission>();
@@ -69,7 +67,6 @@ public class CamaraController : PathFollower {
     {
         float fadeTime = GetComponent<Fading>().BeginFade(-1);
         yield return new WaitForSeconds(fadeTime);
-        Go();
     }
     
 

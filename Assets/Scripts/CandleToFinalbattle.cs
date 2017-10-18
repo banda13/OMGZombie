@@ -10,6 +10,7 @@ public class CandleToFinalbattle : CandleBase {
     public override void fadingActions()
     {
         camara.jump("beforeBattle", camara.transform);
+        camara.Wait = false;
     }
 
     void Update()
