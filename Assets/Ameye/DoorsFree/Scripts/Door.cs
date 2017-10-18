@@ -45,6 +45,8 @@ public class Door : MonoBehaviour
     // An offset to take into account the original rotation of a 3rd party door
     Quaternion RotationOffset;
 
+    public ChestController chest;
+
     void Start()
     {
         // Give the object the name "Door" for future reference
@@ -141,6 +143,15 @@ public class Door : MonoBehaviour
             }
         }
     }
+
+    public void Open()
+    {
+        if (chest.canStartWalking(Speed))
+        {
+            StartCoroutine(Move());
+        }
+    }
+        
 
     // MOVE FUNCTION
     public IEnumerator Move()

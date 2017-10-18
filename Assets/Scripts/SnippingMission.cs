@@ -193,7 +193,7 @@ public class SnippingMission : PathFollower {
                     failed = true;
                     Debug.Log("Zombies reached the house..");
 #if UNITY_EDITOR
-                    StartCoroutine(delayedTestCall(restartMission));
+                    //StartCoroutine(delayedTestCall(restartMission));
 #endif
                     return true;
                 }
@@ -206,7 +206,7 @@ public class SnippingMission : PathFollower {
             StartCoroutine(putDownTheGun());
             CompletedMessage.SetActive(true);
 #if UNITY_EDITOR
-            StartCoroutine(delayedTestCall(acceptWinning));
+           // StartCoroutine(delayedTestCall(acceptWinning));
 #endif
             return true;
         }
@@ -234,7 +234,7 @@ public class SnippingMission : PathFollower {
         else
         {
 #if UNITY_EDITOR
-            StartCoroutine(delayedTestCall(restartMission));
+            //StartCoroutine(delayedTestCall(restartMission));
 #endif
         }
         ended = true;

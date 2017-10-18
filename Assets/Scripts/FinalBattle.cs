@@ -8,6 +8,7 @@ public class FinalBattle : PathFollower {
     public EnemyFactory factory;
     public Transform points;
     public GameObject epicPortal;
+    public Door door;
 
     private List<Transform> spawningPoints;
 
@@ -39,7 +40,7 @@ public class FinalBattle : PathFollower {
         {
             Wait = true;
             controller.stopEpicFinalBattle();
-            epicPortal.SetActive(true);
+            
         }
 	}
 
@@ -88,6 +89,8 @@ public class FinalBattle : PathFollower {
         if (zombiesInBattle != null && zombiesInBattle.Count != 0 && factory.aliveZombies() == 0)
         {
             battleCompleted = true;
+            StartCoroutine(door.Move());
+            epicPortal.SetActive(true);
         }
     }
 

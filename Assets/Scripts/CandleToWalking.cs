@@ -6,6 +6,7 @@ public class CandleToWalking : CandleBase {
 
     public ChestController chest;
     public EnemyFactory factory;
+    public SnippingMission misson;
 
     public override void fadingActions()
     {
@@ -14,6 +15,8 @@ public class CandleToWalking : CandleBase {
         chest.missionStarted = true;
         factory.Active = true;
         factory.setUpZombieVillage();
+        misson.Wait = true;
+
 
     }
 

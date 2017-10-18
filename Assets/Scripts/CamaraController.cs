@@ -46,7 +46,7 @@ public class CamaraController : PathFollower {
             else if (final.battleStarted && final.battleCompleted)
             {
                 Debug.Log("Final battle completed");
-                Go();
+                StartCoroutine(delayedGo(2));
             }
         }
 
@@ -61,6 +61,9 @@ public class CamaraController : PathFollower {
         Transform cameraPos = transform.GetChild(0);
         transform.GetChild(2).transform.position = new Vector3(cameraPos.position.x, cameraPos.position.y, cameraPos.position.z) + (cameraPos.forward) * 3.5f;
         transform.GetChild(2).transform.LookAt(cameraPos);
+
+        transform.GetChild(4).transform.position = new Vector3(cameraPos.position.x, cameraPos.position.y, cameraPos.position.z) + (cameraPos.forward) * 0.1f;
+        transform.GetChild(4).transform.LookAt(cameraPos);
     }
 
     private IEnumerator startFading()
@@ -72,7 +75,6 @@ public class CamaraController : PathFollower {
 
     private IEnumerator fading(bool start, PathFollower follow)
     {
-        Wait = start;
         float fadeTime = GetComponent<Fading>().BeginFade(1);
         yield return new WaitForSeconds(fadeTime);
         if ( start && follow is FinalBattle) //TODO: need to find better solution
@@ -81,7 +83,7 @@ public class CamaraController : PathFollower {
         }
         fadeTime = GetComponent<Fading>().BeginFade(-1);
         yield return new WaitForSeconds(fadeTime);
-        if(follow != null)
+        if(follow != null && !start)
             follow.Go();
     }
 
@@ -140,6 +142,12 @@ public class CamaraController : PathFollower {
     {
         Wait = false;
         Debug.Log("Camera started in base path");
+    }
+
+    public IEnumerator delayedGo(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        Wait = false;
     }
     
 
