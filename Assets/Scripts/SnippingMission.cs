@@ -71,16 +71,16 @@ public class SnippingMission : PathFollower {
                     transform.root.gameObject.GetComponent<PlayerController>().weapon = weaponHolder.transform.GetChild(0).transform.gameObject;
                     StartCoroutine(createZombies());
                 }
-#if UNITY_EDITOR
-                StartCoroutine(delayedTestCall(onClickOnGun));
-#endif
+//#if UNITY_EDITOR
+//                StartCoroutine(delayedTestCall(onClickOnGun));
+//#endif
             }
             else
             {
                 StartMessage.SetActive(true);
-#if UNITY_EDITOR
-                StartCoroutine(delayedTestCall(startGame));
-#endif
+//#if UNITY_EDITOR
+//                StartCoroutine(delayedTestCall(startGame));
+//#endif
             }
             }
         if (!ended && checkMissionEnded() && (playerAcceptWinning || failed))
@@ -192,9 +192,9 @@ public class SnippingMission : PathFollower {
                     FailedMessage.SetActive(true);
                     failed = true;
                     Debug.Log("Zombies reached the house..");
-#if UNITY_EDITOR
+//#if UNITY_EDITOR
                     //StartCoroutine(delayedTestCall(restartMission));
-#endif
+//#endif
                     return true;
                 }
             }
@@ -205,9 +205,9 @@ public class SnippingMission : PathFollower {
             Debug.Log("Oke, u killed " + zombiesInGame.Count + " zombies, the mission was completed");
             StartCoroutine(putDownTheGun());
             CompletedMessage.SetActive(true);
-#if UNITY_EDITOR
+//#if UNITY_EDITOR
            // StartCoroutine(delayedTestCall(acceptWinning));
-#endif
+//#endif
             return true;
         }
         return false;
@@ -233,15 +233,15 @@ public class SnippingMission : PathFollower {
         }
         else
         {
-#if UNITY_EDITOR
+//#if UNITY_EDITOR
             //StartCoroutine(delayedTestCall(restartMission));
-#endif
+//#endif
         }
         ended = true;
        
     }
 
-    private IEnumerator putDownTheGun()
+    public IEnumerator putDownTheGun()
     {
         if (weapon.isScoped)
         {

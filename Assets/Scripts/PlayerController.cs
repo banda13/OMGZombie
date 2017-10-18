@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour {
     public float flashSpeed = 5f;                               
     public Color flashColour = new Color(1f, 0f, 0f, 0.1f);
     
-    private bool isDead;                                                
+    public bool isDead;                                                
     public bool damaged;
     public float attackRange = 20;
 
@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour {
     private Quaternion previosRotation;
     public float maxRotation = 10;
 
-    public GameObject restart;
+    public CandleRespawning restart;
 
     void Start () {
         currentHealth = startingHealth;
@@ -165,7 +165,13 @@ public class PlayerController : MonoBehaviour {
         isDead = true;
         movement.Wait = true;
         StartCoroutine(dying());
-        GetComponent<Fading>().BeginFade(1);
+        CandleRespawning helper = Instantiate(restart, transform.position + transform.forward * 1.2f, Quaternion.identity);
+        helper.player = this;
+        helper.camara = transform.GetComponent<CamaraController>();
+        helper.factory = transform.GetComponent<SnippingMission>().factory;
+        helper.misson = transform.GetComponent<SnippingMission>();
+        helper.chest = transform.GetComponent<SnippingMission>().chest;
+        
         //restart.SetActive(true);
     }
 
@@ -176,6 +182,7 @@ public class PlayerController : MonoBehaviour {
             transform.Rotate(new Vector3(-1, 0, 0));
             yield return null;
         }
+        GetComponent<Fading>().BeginFade(1);
     }
 
 

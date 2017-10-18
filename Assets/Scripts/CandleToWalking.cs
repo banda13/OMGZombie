@@ -10,14 +10,17 @@ public class CandleToWalking : CandleBase {
 
     public override void fadingActions()
     {
+
         camara.jump("startFight", camara.transform);
         chest.missionCompleted = true;
         chest.missionStarted = true;
-        factory.Active = true;
-        factory.setUpZombieVillage();
+        if (factory.Active == false)
+        {
+            factory.Active = true;
+            factory.setUpZombieVillage();
+        }
         misson.Wait = true;
-
-
+        StartCoroutine(misson.putDownTheGun());
     }
 
     void Update()

@@ -10,6 +10,10 @@ public abstract class CandleBase : MonoBehaviour {
     public void jumpTo()
     {
         Debug.Log("Teleporting started");
+        if(camara == null)
+        {
+            Debug.Log("cant set camera");
+        }
         StartCoroutine(camara.fadingWithAction(fadingActions));
     }
 

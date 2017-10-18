@@ -9,10 +9,7 @@ public class CandleToSnipping : CandleBase {
 
     public override void fadingActions()
     {
-        chest.missionStarted = true;
-        chest.missionProgress = true;
         camara.jump("startFight", camara.transform);
-        chest.startMission();
     }
 
     void Update()

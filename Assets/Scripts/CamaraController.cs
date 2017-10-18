@@ -75,6 +75,7 @@ public class CamaraController : PathFollower {
 
     private IEnumerator fading(bool start, PathFollower follow)
     {
+        Wait = start;
         float fadeTime = GetComponent<Fading>().BeginFade(1);
         yield return new WaitForSeconds(fadeTime);
         if ( start && follow is FinalBattle) //TODO: need to find better solution
@@ -83,7 +84,7 @@ public class CamaraController : PathFollower {
         }
         fadeTime = GetComponent<Fading>().BeginFade(-1);
         yield return new WaitForSeconds(fadeTime);
-        if(follow != null && !start)
+        if(follow != null)
             follow.Go();
     }
 

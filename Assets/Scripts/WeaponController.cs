@@ -89,9 +89,7 @@ public class WeaponController : MonoBehaviour {
 
         newDisturbDirection = true;
     }
-
-   
-
+    
     public IEnumerator OnUnScoped()
     {
         yield return new WaitForSeconds(.15f);
