@@ -5,12 +5,15 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class CandleToFinalbattle : CandleBase {
-    
+
+    public EnemyFactory factory;
 
     public override void fadingActions()
     {
         camara.jump("beforeBattle", camara.transform);
         camara.Wait = false;
+        factory.Active = true;
+        factory.zombiesAttackActivated = true;
     }
 
     void Update()

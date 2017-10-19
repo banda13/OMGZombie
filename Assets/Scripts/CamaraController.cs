@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -28,31 +29,39 @@ public class CamaraController : PathFollower {
     {
         //transform.GetChild(0).GetComponent<Camera>().fieldOfView = 20; ->not working
         rotateTheWord();
-        move();
-        if (currentWaypoint == waypoints.Count)
+        try
         {
-            SceneManager.LoadScene("mine", LoadSceneMode.Single);
-        }
-        if (waypoints[currentWaypoint].name.Contains("startFight") && !sniperMissionCompleted)
-        {
-            Wait = true;
-        }
-        if (waypoints[currentWaypoint].name.Contains("finalBattle"))
-        {
-            if (!finalBattle)
+            if (currentWaypoint == waypoints.Count)
             {
-                startEpicFinalBattle();
+                SceneManager.LoadScene("mine", LoadSceneMode.Single);
             }
-            else if (final.battleStarted && final.battleCompleted)
+            if (waypoints[currentWaypoint].name.Contains("startFight") && !sniperMissionCompleted)
             {
-                Debug.Log("Final battle completed");
-                StartCoroutine(delayedGo(2));
+                Wait = true;
             }
-        }
+            if (waypoints[currentWaypoint].name.Contains("finalBattle"))
+            {
+                if (!finalBattle)
+                {
+                    startEpicFinalBattle();
+                }
+                else if (final.battleStarted && final.battleCompleted)
+                {
+                    Debug.Log("Final battle completed");
+                    StartCoroutine(delayedGo(2));
+                }
+            }
 
-        if (Input.GetKeyDown("space"))
+            if (Input.GetKeyDown("space"))
+            {
+                factory.killAll();
+            }
+
+            move();
+        }
+        catch(Exception e)
         {
-            factory.killAll();
+            //find better solution to index out of range
         }
     }
 
@@ -136,7 +145,7 @@ public class CamaraController : PathFollower {
     {
         Debug.Log("Snipe mission stoped ");
         sniperMissionCompleted = true;
-        StartCoroutine(fading(true, this));
+        StartCoroutine(fading(true, null));
     }
     
     public override void Go()

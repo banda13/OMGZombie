@@ -57,17 +57,20 @@ public class ChestController : MonoBehaviour {
                     particlesPlayed = true;
                     raiseDuration -= Time.deltaTime;
                     item.transform.position += new Vector3(0, 0.05f, 0);
-                    
+
                     if (raiseDuration < 0)
                     {
                         opening = false;
                         controller.Wait = true;
-                        GameObject wp = Instantiate(weapon, new Vector3(0, 0, 0), player.transform.rotation) as GameObject;
-                        wp.transform.parent = player.transform;
-                        wp.transform.localPosition = new Vector3(0.5f, -0.6f, 0.2f);
-                        //wp.transform.position = player.transform.GetChild(0).transform.position + new Vector3(0.2f, -2f, -0.2f);
-                        wp.transform.rotation = player.transform.GetChild(0).transform.rotation;
-                        player.GetComponent<PlayerController>().weapon = wp;
+                        if (player.GetComponent<PlayerController>().weapon == null)
+                        {
+                            GameObject wp = Instantiate(weapon, new Vector3(0, 0, 0), player.transform.rotation) as GameObject;
+                            wp.transform.parent = player.transform;
+                            wp.transform.localPosition = new Vector3(0.5f, -0.6f, 0.2f);
+                            //wp.transform.position = player.transform.GetChild(0).transform.position + new Vector3(0.2f, -2f, -0.2f);
+                            wp.transform.rotation = player.transform.GetChild(0).transform.rotation;
+                            player.GetComponent<PlayerController>().weapon = wp;
+                        }
                         player.transform.GetChild(5).gameObject.SetActive(true);
                         player.GetComponent<CamaraController>().activateZombies();
                         player.GetComponent<CamaraController>().stopSnipeMission();
@@ -85,10 +88,6 @@ public class ChestController : MonoBehaviour {
             missionStarted = true;
             player.GetComponent<CamaraController>().Wait = true;
             StartCoroutine(spawnText(1));
-        }
-        else if(missionStarted && !missionCompleted && !missionProgress)
-        {
-            startMission();
         }
         else if (missionStarted && missionCompleted)
         {

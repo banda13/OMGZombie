@@ -106,8 +106,8 @@ public class cartController : PathFollower {
             GameObject playerCam = player.transform.GetChild(0).gameObject;
             shapeObject.GetComponent<RailDrawer>().playerCamera = playerCam;
             yield return new WaitForSeconds(2);
-            GameObject shape = Instantiate(shapeObject, playerCam.transform.position + playerCam.transform.forward * 2f, Quaternion.identity);
-            //return shape;
+            GameObject shape = Instantiate(shapeObject, playerCam.transform.position + (Quaternion.Euler(0, -90, 0) * transform.forward ) * shapeObject.GetComponent<RailDrawer>().distanceFromCamera, Quaternion.identity);
+            //return shape;(
         }
     }
 }

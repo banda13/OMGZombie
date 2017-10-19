@@ -149,9 +149,16 @@ public class Door : MonoBehaviour
         if (chest.canStartWalking(Speed))
         {
             StartCoroutine(Move());
+            Close();
         }
     }
-        
+       
+    
+    public IEnumerator Close()
+    {
+        yield return new WaitForSeconds(15);
+        StartCoroutine(Move());
+    } 
 
     // MOVE FUNCTION
     public IEnumerator Move()

@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour {
 
     private CamaraController movement;
     public GameObject weapon;
+    public GameObject weaponObject;
     public ParticleSystem dust;
 
     private GameObject hidedWeapon;
@@ -152,7 +153,17 @@ public class PlayerController : MonoBehaviour {
                 weapon.SetActive(true);
                 hidedWeapon = null;
             }
-        } catch(NullReferenceException e)
+            else
+            {
+                GameObject wp = Instantiate(weaponObject, new Vector3(0, 0, 0), transform.rotation) as GameObject;
+                wp.transform.parent = transform;
+                wp.transform.localPosition = new Vector3(0.5f, -0.6f, 0.2f);
+                wp.transform.rotation = transform.GetChild(0).transform.rotation;
+                weapon = wp;
+                weapon.SetActive(true);
+                transform.GetChild(5).gameObject.SetActive(true);
+            }
+        } catch(Exception e)
         {
             Debug.Log("Could not hide weapon, cause isnt exist");
         }
@@ -165,13 +176,8 @@ public class PlayerController : MonoBehaviour {
         isDead = true;
         movement.Wait = true;
         StartCoroutine(dying());
-        CandleRespawning helper = Instantiate(restart, transform.position + transform.forward * 1.2f, Quaternion.identity);
-        helper.player = this;
-        helper.camara = transform.GetComponent<CamaraController>();
-        helper.factory = transform.GetComponent<SnippingMission>().factory;
-        helper.misson = transform.GetComponent<SnippingMission>();
-        helper.chest = transform.GetComponent<SnippingMission>().chest;
-        
+        StartCoroutine(restart.delayedJump(5));
+           
         //restart.SetActive(true);
     }
 
@@ -180,6 +186,7 @@ public class PlayerController : MonoBehaviour {
         for (int i = 1; i < 90; i++)
         {
             transform.Rotate(new Vector3(-1, 0, 0));
+            transform.position = new Vector3(transform.position.x, transform.position.y - 0.01f, transform.position.z);
             yield return null;
         }
         GetComponent<Fading>().BeginFade(1);

@@ -115,7 +115,7 @@ public class RailDrawer : MonoBehaviour {
 	void Update () {
 
         //set Shape
-        transform.position = playerCamera.transform.position + playerCamera.transform.forward * distanceFromCamera;
+        //transform.position = playerCamera.transform.position + playerCamera.transform.forward * distanceFromCamera;
         transform.LookAt(playerCamera.transform.position);
 
         //set particle

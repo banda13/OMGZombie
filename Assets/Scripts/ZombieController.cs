@@ -64,8 +64,7 @@ public class ZombieController : MonoBehaviour
         attackTimer += Time.deltaTime;
     }
 
-
-    //interaction with the zombie= die, and spawn
+    
     public IEnumerator Die()
     {
         dead = true;
@@ -258,7 +257,6 @@ public class ZombieController : MonoBehaviour
 
     public void takeDamage(int damage)
     {
-        Debug.Log("founded");
         healt -= damage;
         animator.SetTrigger("Hit");
         if(healt <= 0)

@@ -104,7 +104,8 @@ public class SnippingMission : PathFollower {
 
     public void onClickOnGun()
     {
-        putUpGun = true;
+        if(playerStarted)
+            putUpGun = true;
     }
     
     public void acceptWinning()
@@ -250,6 +251,11 @@ public class SnippingMission : PathFollower {
         yield return new WaitForSeconds(.2f);
         weaponHolder.SetActive(false);
         dummyWeapon.SetActive(true);
-        transform.root.gameObject.GetComponent<PlayerController>().weapon = null;
+        GameObject w = transform.root.gameObject.GetComponent<PlayerController>().weapon;
+        if (w != null && w.GetComponent<SniperController>())
+        {
+            transform.root.gameObject.GetComponent<PlayerController>().weapon = null;
+        }
     }
+
 }

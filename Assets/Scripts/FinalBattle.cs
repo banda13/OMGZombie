@@ -59,13 +59,11 @@ public class FinalBattle : PathFollower {
             if(p != null)
             {
                 GameObject zombieObj = factory.selectOneBeautifulZombie();
-                //create deaf and blind zombies
                 ZombieController zombie = factory.createZombie(p, zombieObj);
-                zombie.eyeShot = 0;
-                zombie.playerDetectionRange = 0;
                 zombie.setNextDestination(destination);
-                zombie.directionChange = 120; //if stucked
-                zombie.speed_animationWalk = 0;
+                //zombie.directionChange = 120; //if stucked
+                zombie.speed_animationWalk = 0.0f;
+                zombie.speed_animationRun = 0.0f;
                 zombiesInBattle.Add(zombie);
             }
         }
@@ -79,9 +77,18 @@ public class FinalBattle : PathFollower {
 
         foreach(ZombieController zombie in zombiesInBattle)
         {
-            zombie.speed_animationWalk = 0.6f;
-            zombie.speed = 0.6f;
+            //zombie.playerDetectionRange = 50;
+            zombie.speed_animationWalk = 0.4f;
+            zombie.speed_animationRun = 0.4f;
+            zombie.speed = 0.4f;
         }
+        //start 30sec timer
+        StartCoroutine(countDonw());
+    }
+    private IEnumerator countDonw()
+    {
+       yield  return new WaitForSeconds(30);
+       //battleCompleted = true;
     }
 
     private void checkBattleEnded()

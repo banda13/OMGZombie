@@ -9,14 +9,13 @@ public class CandleRespawning : CandleToWalking {
     public override void fadingActions()
     {
         StartCoroutine(Undying());
-        Debug.Log("action child child");
         base.fadingActions();
         player.currentHealth = 100;
         player.isDead = false;
         factory.killAll();
         factory.clearFactory();
         factory.setUpZombieVillage();
-       
+        camara.Wait = false;
     }
 
     private IEnumerator Undying()
@@ -24,17 +23,15 @@ public class CandleRespawning : CandleToWalking {
         for (int i = 1; i < 90; i++)
         {
             player.transform.Rotate(new Vector3(1, 0, 0));
+            player.transform.position = new Vector3(player.transform.position.x, player.transform.position.y + 0.01f, player.transform.position.z);
             yield return null;
         }
     }
 
-    void Update()
+    public IEnumerator delayedJump(float wait)
     {
-        if (Input.GetKeyDown(KeyCode.F6))
-        {
-            jumpTo();
-        }
+        yield return new WaitForSeconds(wait);
+        jumpTo();
     }
 
-    //nyehehe soma voltam XD bátya
 }
