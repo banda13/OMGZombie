@@ -9,6 +9,7 @@ TagManager:
   - ZombieBody
   - Door
   - Shape
+  - ExplosiveStuff
   layers:
   - Default
   - TransparentFX

@@ -25,6 +25,7 @@ public class EnemyFactory : MonoBehaviour {
 
     public bool Active = false;
     public bool zombiesAttackActivated = false;
+    
 
     void Start () {
 
@@ -123,10 +124,11 @@ public class EnemyFactory : MonoBehaviour {
         return null;
     }
 
-    public ZombieController createZombie(SpawningPoint pos, GameObject zombie)
+    public ZombieController createZombie(SpawningPoint pos, GameObject zombie, bool instant = true)
     {
         zombieCounter++;
-        return pos.Spawn(zombie, player, transform.GetChild(1), zombieCounter, zombiesAttackActivated);
+        Debug.Log("instant: " + instant);
+        return pos.Spawn(zombie, player, transform.GetChild(1), zombieCounter, zombiesAttackActivated, instantSpawn:instant);
     }
     
 
@@ -192,7 +194,7 @@ public class EnemyFactory : MonoBehaviour {
         int count = 0;
         foreach(Transform zombie in transform.GetChild(1))
         {
-            zombie.GetComponent<ZombieController>().Die();
+            StartCoroutine(zombie.GetComponent<ZombieController>().Die());
             count++;
         }
         Debug.Log("I killed " + count + " zombies");

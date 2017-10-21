@@ -126,6 +126,7 @@ public class CamaraController : PathFollower {
     {
         StartCoroutine(fading(true, null));
         StartCoroutine(final.zombiesDepart());
+        final.detonator.SetActive(true);
         GetComponent<PlayerController>().hideWeapon(false);
         Debug.Log("Lets fight!");
     }

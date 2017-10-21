@@ -53,6 +53,10 @@ public class PlayerController : MonoBehaviour {
                         {
                             findZombieParent(hit.collider.transform.gameObject).takeDamage(20);
                         }
+                        if (hit.collider.tag.Equals("ExplosiveStuff"))
+                        {
+                            hit.collider.transform.gameObject.GetComponent<Detonator>().Explode();
+                        }
                         else
                         {
                             ParticleSystem dustObj = Instantiate(dust, hit.point, Quaternion.identity);

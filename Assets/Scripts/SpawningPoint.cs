@@ -10,7 +10,7 @@ public class SpawningPoint : MonoBehaviour {
 
     private ZombieController zombie = null;
 
-    public ZombieController Spawn(GameObject zombieObject, GameObject player, Transform parent, int index, bool activated)
+    public ZombieController Spawn(GameObject zombieObject, GameObject player, Transform parent, int index, bool activated, bool instantSpawn = true)
     {
         taken = true;
         StartCoroutine(waitForLeaving());
@@ -18,7 +18,7 @@ public class SpawningPoint : MonoBehaviour {
 
         //set the spawning animator which specify how the zombie spawns
         //the zombie will change it after he spawned
-        zombie.GetComponent<Animator>().runtimeAnimatorController = spawningAnimations; 
+        zombie.GetComponent<Animator>().runtimeAnimatorController = spawningAnimations;
         if (zombie == null)
         {
             Debug.LogError("Wtf it is not zombie..?");
@@ -36,6 +36,8 @@ public class SpawningPoint : MonoBehaviour {
         {
             zombie.setNextDestination(transform.GetChild(0));
         }
+
+        createdZomie.GetComponent<Animator>().SetBool("Block", !instantSpawn);
         return zombie;
     }
 
