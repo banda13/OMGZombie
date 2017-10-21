@@ -105,6 +105,15 @@ public class CamaraController : PathFollower {
         fadeTime = GetComponent<Fading>().BeginFade(-1);
         yield return new WaitForSeconds(fadeTime);
     }
+
+    public IEnumerator fadingWithSniperAction(SnippingMission.fadingActions f)
+    {
+        float fadeTime = GetComponent<Fading>().BeginFade(1);
+        yield return new WaitForSeconds(fadeTime);
+        f();
+        fadeTime = GetComponent<Fading>().BeginFade(-1);
+        yield return new WaitForSeconds(fadeTime);
+    }
     
     private IEnumerator sendTestData()
     {

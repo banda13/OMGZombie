@@ -28,9 +28,9 @@ public abstract class PathFollower : MonoBehaviour {
     public void move()
     {
         bool touching = GvrControllerInput.IsTouching;
-#if UNITY_EDITOR
+//#if UNITY_EDITOR
         touching = true;
-#endif
+//#endif
         if (!Wait && currentWaypoint < waypoints.Count && touching)
         {
             if (transform.position != waypoints[currentWaypoint].position)

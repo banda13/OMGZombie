@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SnippingMission : PathFollower {
+public class SnippingMission : PathFollower
+{
 
     public GameObject weaponHolder;
     private WeaponController weapon;
@@ -21,6 +22,7 @@ public class SnippingMission : PathFollower {
     private bool ended = false;
     private bool failed = false;
     private bool playerAcceptWinning = false;
+    public delegate void fadingActions();
 
     private List<Transform> spawningPoints;
 
@@ -32,7 +34,8 @@ public class SnippingMission : PathFollower {
     //for the test calls:
     public delegate void setBoolean();
 
-	void Start () {
+    void Start()
+    {
         shift = new Vector3(0, 0.5f, 0);
         init();
         Wait = true;
@@ -46,8 +49,9 @@ public class SnippingMission : PathFollower {
         }
         zombiesInGame = new List<ZombieController>();
     }
-	
-	void Update () {
+
+    void Update()
+    {
 
         move();
 
@@ -71,24 +75,24 @@ public class SnippingMission : PathFollower {
                     transform.root.gameObject.GetComponent<PlayerController>().weapon = weaponHolder.transform.GetChild(0).transform.gameObject;
                     StartCoroutine(createZombies());
                 }
-//#if UNITY_EDITOR
-//                StartCoroutine(delayedTestCall(onClickOnGun));
-//#endif
+                //#if UNITY_EDITOR
+                //                StartCoroutine(delayedTestCall(onClickOnGun));
+                //#endif
             }
             else
             {
                 StartMessage.SetActive(true);
-//#if UNITY_EDITOR
-//                StartCoroutine(delayedTestCall(startGame));
-//#endif
+                //#if UNITY_EDITOR
+                //                StartCoroutine(delayedTestCall(startGame));
+                //#endif
             }
-            }
+        }
         if (!ended && checkMissionEnded() && (playerAcceptWinning || failed))
         {
             Ended();
         }
 
-	}
+    }
     //it looks good
     IEnumerator delayedTestCall(setBoolean f)
     {
@@ -104,10 +108,10 @@ public class SnippingMission : PathFollower {
 
     public void onClickOnGun()
     {
-        if(playerStarted)
+        if (playerStarted)
             putUpGun = true;
     }
-    
+
     public void acceptWinning()
     {
         playerAcceptWinning = true;
@@ -126,7 +130,6 @@ public class SnippingMission : PathFollower {
 
     private void restartAfterZombiesKilled()
     {
-        factory.clearFactory();
         failed = false;
         transform.root.gameObject.GetComponent<PlayerController>().weapon = null;
         ended = false;
@@ -145,7 +148,7 @@ public class SnippingMission : PathFollower {
         setZombieSpeed(zombie);
 
         yield return new WaitForSeconds(timeBetweenSpawn);
-        if(zombiesInGame.Count < zombiesNumber)
+        if (zombiesInGame.Count < zombiesNumber)
         {
             StartCoroutine(createZombies());
         }
@@ -165,53 +168,58 @@ public class SnippingMission : PathFollower {
             zombie.speed_animationWalk = 0.9f;
         }
     }
-    
+
     private IEnumerator startZombieIfStuck(ZombieController zombie)
     {
         yield return new WaitForSeconds(5);
-        if(zombie.speed == 0 && !zombie.isDead()){
+        if (zombie.speed == 0 && !zombie.isDead())
+        {
             zombie.speed = 0.8f;
         }
+    }
+
+    public void fadingAction()
+    {
+        factory.clearFactory();
+        FailedMessage.SetActive(true);
+        StartCoroutine(putDownTheGun());
+        Debug.Log("Zombies reached the house..");
     }
 
     public bool checkMissionEnded()
     {
         bool noDeathButZombiesAlive = false;
-        if(zombiesInGame.Count == zombiesNumber)
+        foreach (ZombieController enemies in zombiesInGame)
         {
-            foreach(ZombieController enemies in zombiesInGame)
+            if (!enemies.isDead())
             {
-                if (!enemies.isDead())
-                {
-                    noDeathButZombiesAlive = true;
-                }
-                if (Vector3.Distance(enemies.transform.position, destination.position) < 0.8f)
-                {
-                    //Oh no, the zombies reached the house, u will die.. :'(
-                    PlayerController player = transform.root.gameObject.GetComponent<PlayerController>();
-                    player.TakeDamage(player.currentHealth/2);
-                    FailedMessage.SetActive(true);
-                    failed = true;
-                    Debug.Log("Zombies reached the house..");
-//#if UNITY_EDITOR
-                    //StartCoroutine(delayedTestCall(restartMission));
-//#endif
-                    return true;
-                }
+                noDeathButZombiesAlive = true;
             }
-            if (noDeathButZombiesAlive)
+            if (Vector3.Distance(enemies.transform.position, destination.position) < 2)
             {
-                return false;
+                //Oh no, the zombies reached the house, u will die.. :'(
+
+                failed = true;
+                StartCoroutine(transform.root.gameObject.GetComponent<CamaraController>().fadingWithSniperAction(fadingAction));
+                return true;
             }
+        }
+        if (noDeathButZombiesAlive)
+        {
+            return false;
+        }
+        else if (zombiesInGame.Count == zombiesNumber)
+        {
             Debug.Log("Oke, u killed " + zombiesInGame.Count + " zombies, the mission was completed");
             StartCoroutine(putDownTheGun());
             CompletedMessage.SetActive(true);
-//#if UNITY_EDITOR
-           // StartCoroutine(delayedTestCall(acceptWinning));
-//#endif
             return true;
         }
-        return false;
+        else
+        {
+            Debug.LogError("Undefined game state: no zombies alive, no one reached the house and zombies limit not reached..");
+            return false;
+        }
     }
 
     public override void Go()
@@ -234,12 +242,12 @@ public class SnippingMission : PathFollower {
         }
         else
         {
-//#if UNITY_EDITOR
+            //#if UNITY_EDITOR
             //StartCoroutine(delayedTestCall(restartMission));
-//#endif
+            //#endif
         }
         ended = true;
-       
+
     }
 
     public IEnumerator putDownTheGun()

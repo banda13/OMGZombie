@@ -272,7 +272,7 @@ MonoBehaviour:
   dummyWeapon: {fileID: 1637250743}
   points: {fileID: 458041139}
   factory: {fileID: 67454534}
-  destination: {fileID: 40527655}
+  destination: {fileID: 2057533077}
   StartMessage: {fileID: 1669981805}
   CompletedMessage: {fileID: 1373251436}
   FailedMessage: {fileID: 259332169}
@@ -788,7 +788,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 40527654}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -8.344, y: 0, z: -1.2332153}
+  m_LocalPosition: {x: -8.344, y: -0.239, z: -1.2332153}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 259332170}
@@ -14541,13 +14541,29 @@ GameObject:
   - component: {fileID: 1177702196}
   - component: {fileID: 1177702195}
   - component: {fileID: 1177702194}
+  - component: {fileID: 1177702193}
   m_Layer: 0
   m_Name: ExplosionPack
   m_TagString: ExplosiveStuff
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
+--- !u!54 &1177702193
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1177702192}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!114 &1177702194
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26614,6 +26630,34 @@ Prefab:
 Transform:
   m_PrefabParentObject: {fileID: 479512, guid: 32ec60437affc154daf6bbf3557b1fe3, type: 2}
   m_PrefabInternal: {fileID: 2053152734}
+--- !u!1 &2057533076
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 2057533077}
+  m_Layer: 0
+  m_Name: SniperMissionDestination
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2057533077
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2057533076}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 256.53, y: 0, z: 181.4}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 15
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &2058035519 stripped
 Transform:
   m_PrefabParentObject: {fileID: 452458, guid: f851628683e894140865f53c11ca3b26, type: 2}

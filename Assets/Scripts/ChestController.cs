@@ -56,7 +56,7 @@ public class ChestController : MonoBehaviour {
                     }
                     particlesPlayed = true;
                     raiseDuration -= Time.deltaTime;
-                    item.transform.position += new Vector3(0, 0.05f, 0);
+                    item.transform.position += new Vector3(0, 0.005f, 0);
 
                     if (raiseDuration < 0)
                     {
