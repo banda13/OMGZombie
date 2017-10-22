@@ -24,13 +24,23 @@ public class PlayerController : MonoBehaviour {
 
     private GameObject hidedWeapon;
     private Quaternion previosRotation;
-    public float maxRotation = 10;
 
     public CandleRespawning restart;
+
+    public float maxRotationForceAtLowFearLevel = .5f;
+    public float maxRotationForceAtNormalFearLevel = 1;
+    public float maxRotationForceAtHighFearLevel = 2;
+
+    public float currectRotationForce = .5f;
+
 
     void Start () {
         currentHealth = startingHealth;
         movement = GetComponent<CamaraController>();
+
+        AdaptedFearController.lowFearLevel += setLowFearLevelForce;
+        AdaptedFearController.normalFearLevel += setNormalFearLevelForce;
+        AdaptedFearController.highFearLevel += setHighFearLevelForce;
 	}
 	
 	void Update () {
@@ -69,7 +79,7 @@ public class PlayerController : MonoBehaviour {
                     }
                 }
             }
-        }
+        }/*
         if (weapon != null && weapon.GetComponent<GunController>() is AKController)
         {
             if(previosRotation != null)
@@ -83,7 +93,7 @@ public class PlayerController : MonoBehaviour {
                 }
             }
             previosRotation = GvrControllerInput.Orientation;
-        }
+        }*/
 
         if (damaged)
         {
@@ -96,6 +106,22 @@ public class PlayerController : MonoBehaviour {
 
         damaged = false;
 	}
+
+    private void setLowFearLevelForce()
+    {
+        currectRotationForce = maxRotationForceAtLowFearLevel;
+    }
+
+    private void setNormalFearLevelForce()
+    {
+        currectRotationForce = maxRotationForceAtNormalFearLevel;
+    }
+
+    private void setHighFearLevelForce()
+    {
+        currectRotationForce = maxRotationForceAtHighFearLevel;
+    }
+
     private ZombieController findZombieParent(GameObject child)
     {
         Transform t = child.transform;

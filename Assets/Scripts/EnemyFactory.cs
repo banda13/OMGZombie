@@ -20,8 +20,14 @@ public class EnemyFactory : MonoBehaviour {
     public int zombiesAtStart = 10;
 
     private int zombieCounter = 0;
-    public int minZombiesAlive = 5;
-    public int maxZombiesAlive = 15;
+    public int minZombiesAliveAtLowFearLevel = 7;
+    public int maxZombiesAliveAtLowFearLevel = 9;
+    public int minZombiesAliveAtNormalFearLevel = 5;
+    public int maxZombiesAliveAtNormalFearLevel = 7;
+    public int minZombiesAliveAtHightFearLevel = 3;
+    public int maxZombiesAliveAtHightFearLevel = 5;
+    public int minZombiesAlive = 3;
+    public int maxZombiesAlive = 5;
 
     public bool Active = false;
     public bool zombiesAttackActivated = false;
@@ -38,8 +44,12 @@ public class EnemyFactory : MonoBehaviour {
         SetRandomTime();
         currentTime = 0;
 
-        //setUpZombieVillage();
-	}
+        AdaptedFearController.lowFearLevel += syncZombiesToLowFearLevel;
+        AdaptedFearController.normalFearLevel += syncZombiesToNormalFearLevel;
+        AdaptedFearController.highFearLevel += syncZombiesToHighFearLevel;
+
+
+    }
 
     void FixedUpdate()
     {
@@ -69,6 +79,24 @@ public class EnemyFactory : MonoBehaviour {
                 Debug.Log("Zombies number is under " + minZombiesAlive + " so i created " + i + "zombies");
             }
         }
+    }
+
+    private void syncZombiesToLowFearLevel()
+    {
+        minZombiesAlive = minZombiesAliveAtLowFearLevel;
+        maxZombiesAlive = maxZombiesAliveAtLowFearLevel;
+    }
+
+    private void syncZombiesToNormalFearLevel()
+    {
+        minZombiesAlive = minZombiesAliveAtNormalFearLevel;
+        maxZombiesAlive = maxZombiesAliveAtNormalFearLevel;
+    }
+
+    private void syncZombiesToHighFearLevel()
+    {
+        minZombiesAlive = minZombiesAliveAtHightFearLevel;
+        maxZombiesAlive = maxZombiesAliveAtHightFearLevel;
     }
 
     public void setUpZombieVillage()

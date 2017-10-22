@@ -22,7 +22,13 @@ public class CamaraController : PathFollower {
         Wait = true;
         StartCoroutine(startFading());
 
-        AdaptedEventHandler.init();
+        AdaptedEventHandler.init(transform.GetComponent<AdaptedFearController>());
+    }
+
+    void OnApplicationClosed()
+    {
+        Debug.Log("off");
+        AdaptedEventHandler.timer.Enabled = false;
     }
 
     void Update()

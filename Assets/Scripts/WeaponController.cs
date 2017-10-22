@@ -17,8 +17,12 @@ public class WeaponController : MonoBehaviour {
 
     public bool Activated = false;
 
-    public float aimDisturbForce = 1;
+    public float aimDisturbanceAtLowFearLevel = 10;
+    public float aimDisturbanceAtNormalFearLevel = 15;
+    public float aimDisturbanceAtHighFearLevel = 20;
+    public float aimDisturbForce = 10;
     public float aimDisturbTime = 1;
+
     public float timeBetweenAttack = 2;
     private bool newDisturbDirection = true;
     private Quaternion destRot;
@@ -26,7 +30,10 @@ public class WeaponController : MonoBehaviour {
 
     void Start () {
         animator = GetComponent<Animator>();
-        //Gvr laser and end point fix
+
+        AdaptedFearController.lowFearLevel += setDisturbanceToLowLevel;
+        AdaptedFearController.normalFearLevel += setDisturbanceToNormalLevel;
+        AdaptedFearController.highFearLevel += setDisturbanceToHighLevel;
 	}
 	
 	void Update () {
@@ -56,7 +63,24 @@ public class WeaponController : MonoBehaviour {
             disturb();
         }
 	}
-    
+
+    private void setDisturbanceToLowLevel()
+    {
+        aimDisturbForce = aimDisturbanceAtLowFearLevel;
+        aimDisturbTime = aimDisturbanceAtLowFearLevel / 10;
+    }
+
+    private void setDisturbanceToNormalLevel()
+    {
+        aimDisturbForce = aimDisturbanceAtNormalFearLevel;
+        aimDisturbTime = aimDisturbanceAtNormalFearLevel / 10;
+    }
+
+    private void setDisturbanceToHighLevel()
+    {
+        aimDisturbForce = aimDisturbanceAtHighFearLevel;
+        aimDisturbTime = aimDisturbanceAtHighFearLevel / 10;
+    }
 
     private void disturb()
     {
@@ -84,8 +108,8 @@ public class WeaponController : MonoBehaviour {
         sniperView.SetActive(true);
         weaponCamera.SetActive(false);
 
-        normalFOV = mainCamera.fieldOfView;
-        mainCamera.fieldOfView = scopedFOV;
+        //normalFOV = mainCamera.fieldOfView;
+        //mainCamera.fieldOfView = scopedFOV;
 
         newDisturbDirection = true;
     }
@@ -95,6 +119,6 @@ public class WeaponController : MonoBehaviour {
         yield return new WaitForSeconds(.15f);
         sniperView.SetActive(false);
         weaponCamera.SetActive(true);
-        mainCamera.fieldOfView = normalFOV;
+        //mainCamera.fieldOfView = normalFOV;
     }
 }

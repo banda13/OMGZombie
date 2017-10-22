@@ -246,6 +246,7 @@ GameObject:
   - component: {fileID: 11990008}
   - component: {fileID: 11990007}
   - component: {fileID: 11990005}
+  - component: {fileID: 11990013}
   m_Layer: 2
   m_Name: Player
   m_TagString: Player
@@ -363,8 +364,11 @@ MonoBehaviour:
   weaponObject: {fileID: 1128825556559182, guid: b995a64f02dfa6642a7f559b17144cc3,
     type: 2}
   dust: {fileID: 198110534788076834, guid: 4dccceea7c84abf4281bbee548e5224a, type: 2}
-  maxRotation: 10
   restart: {fileID: 122024278}
+  maxRotationForceAtLowFearLevel: 0.5
+  maxRotationForceAtNormalFearLevel: 1
+  maxRotationForceAtHighFearLevel: 2
+  currectRotationForce: 0.5
 --- !u!143 &11990010
 CharacterController:
   m_ObjectHideFlags: 0
@@ -413,6 +417,18 @@ CapsuleCollider:
   m_Height: 1.1936135
   m_Direction: 1
   m_Center: {x: 0, y: -0.096806765, z: 0}
+--- !u!114 &11990013
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 11990004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6fec8bbbe33f241439b8b515aa66292f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fearLevel: 50
 --- !u!1 &16188554
 GameObject:
   m_ObjectHideFlags: 0
@@ -1001,6 +1017,12 @@ MonoBehaviour:
   player: {fileID: 11990004}
   activeSpawningPlaces: 5
   zombiesAtStart: 5
+  minZombiesAliveAtLowFearLevel: 7
+  maxZombiesAliveAtLowFearLevel: 9
+  minZombiesAliveAtNormalFearLevel: 5
+  maxZombiesAliveAtNormalFearLevel: 7
+  minZombiesAliveAtHightFearLevel: 3
+  maxZombiesAliveAtHightFearLevel: 5
   minZombiesAlive: 3
   maxZombiesAlive: 5
   Active: 0
@@ -8907,6 +8929,9 @@ MonoBehaviour:
   mainCamera: {fileID: 884449942}
   scopedFOV: 20
   Activated: 0
+  aimDisturbanceAtLowFearLevel: 10
+  aimDisturbanceAtNormalFearLevel: 15
+  aimDisturbanceAtHighFearLevel: 20
   aimDisturbForce: 10
   aimDisturbTime: 1
   timeBetweenAttack: 3

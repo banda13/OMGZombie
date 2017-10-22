@@ -217,7 +217,7 @@ public class SnippingMission : PathFollower
         }
         else
         {
-            Debug.LogError("Undefined game state: no zombies alive, no one reached the house and zombies limit not reached..");
+            //its ok, then mission not started
             return false;
         }
     }
