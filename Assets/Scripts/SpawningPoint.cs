@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,29 +19,38 @@ public class SpawningPoint : MonoBehaviour {
 
         //set the spawning animator which specify how the zombie spawns
         //the zombie will change it after he spawned
-        zombie.GetComponent<Animator>().runtimeAnimatorController = spawningAnimations;
-        if (zombie == null)
-        {
-            Debug.LogError("Wtf it is not zombie..?");
-            return null;
+        if (zombie != null) { 
+            zombie.GetComponent<Animator>().runtimeAnimatorController = spawningAnimations;
         }
-        var createdZomie = Instantiate(zombieObject, transform.position, Quaternion.Euler(new Vector3(0,  extraYRotation, 0)));
+        var createdZomie = Instantiate(zombieObject, transform.position, Quaternion.Euler(new Vector3(0, extraYRotation, 0)));
         createdZomie.transform.parent = parent;
         createdZomie.transform.name = "Zombie " + index;
-        zombie = createdZomie.GetComponent<ZombieController>();
-        zombie.player = player;
-        zombie.zombieIndex = index;
-        zombie.enableAttack(activated);
-        //try to help the zombie, and add the first detination to him!
-        if (transform.childCount > 0)
+        if (standingZombies(createdZomie))
         {
-            zombie.setNextDestination(transform.GetChild(0));
+            ZombieStandingBehavior fixedZombie = createdZomie.GetComponent<ZombieStandingBehavior>();
+            fixedZombie.player = player;
+            fixedZombie.animatorTriggers = new List<string>();
+            fixedZombie.animatorTriggers.Add("scream");
+            fixedZombie.animatorTriggers.Add("attack");
+            Debug.Log("Wtf it is not moving zombie..?");
         }
+        else
+        {
+            zombie = createdZomie.GetComponent<ZombieController>();
+            zombie.player = player;
+            zombie.zombieIndex = index;
+            zombie.enableAttack(activated);
 
+            //try to help the zombie, and add the first detination to him!
+            if (transform.childCount > 0)
+            {
+                zombie.setNextDestination(transform.GetChild(0));
+            }
+        }
         createdZomie.GetComponent<Animator>().SetBool("Block", !instantSpawn);
+        
         return zombie;
     }
-
     IEnumerator waitForLeaving()
     {
         yield return new WaitForSeconds(6.0f); //6sec spawning time
@@ -50,6 +60,24 @@ public class SpawningPoint : MonoBehaviour {
     public bool isTaken()
     {
         return taken;
+    }
+
+    private bool standingZombies(GameObject zombie)
+    {
+        try
+        {
+            if (transform.name.Contains("fixedPoint"))
+            {
+                DestroyImmediate(zombie.GetComponent<ZombieController>(), true);
+                zombie.AddComponent<ZombieStandingBehavior>();
+                return true;
+            }
+        } catch (Exception e)
+        {
+            Debug.Log("Cant change the zombie controller script, because it isnt exist");
+            return false;
+        }
+        return false;
     }
 
 }

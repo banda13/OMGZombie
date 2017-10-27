@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemyFactory : MonoBehaviour {
 
     private List<Transform> spawningPoints;
+    private List<Transform> fixedZombies;
 
     public List<GameObject> zombies;
 
@@ -36,10 +37,15 @@ public class EnemyFactory : MonoBehaviour {
     void Start () {
 
         spawningPoints = new List<Transform>();
+        fixedZombies = new List<Transform>();
 
 		foreach (Transform point in transform.GetChild(0))
         {
             spawningPoints.Add(point);
+        }
+        foreach(Transform p in transform.GetChild(2))
+        {
+            fixedZombies.Add(p);
         }
         SetRandomTime();
         currentTime = 0;
@@ -48,7 +54,7 @@ public class EnemyFactory : MonoBehaviour {
         AdaptedFearController.normalFearLevel += syncZombiesToNormalFearLevel;
         AdaptedFearController.highFearLevel += syncZombiesToHighFearLevel;
 
-
+        setUpZombiesEnviroment();
     }
 
     void FixedUpdate()
@@ -107,6 +113,14 @@ public class EnemyFactory : MonoBehaviour {
         }
     }
 
+    private void setUpZombiesEnviroment()
+    {
+        foreach(Transform t in fixedZombies)
+        {
+            createZombie(t.GetComponent<SpawningPoint>(), selectOneBeautifulZombie(), instant: false);
+        }
+    }
+
     public int aliveZombies()
     {
         int count = 0;
@@ -158,11 +172,11 @@ public class EnemyFactory : MonoBehaviour {
         Debug.Log("instant: " + instant);
         return pos.Spawn(zombie, player, transform.GetChild(1), zombieCounter, zombiesAttackActivated, instantSpawn:instant);
     }
-    
+
 
     public GameObject selectOneBeautifulZombie()
     {
-        if(zombies == null || zombies.Count == 0)
+        if (zombies == null || zombies.Count == 0)
         {
             Debug.Log("I don't know any zombie..");
             return null;
@@ -170,7 +184,7 @@ public class EnemyFactory : MonoBehaviour {
         int zombieIndex = Random.Range(0, zombies.Count);
         return zombies[zombieIndex];
     }
-
+    
     private void SetRandomTime()
     {
         spawnTime = Random.Range(minTime, maxTime);

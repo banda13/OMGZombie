@@ -10,4 +10,6 @@ public static class Paths{
 
     public static string WindowSpawnController = "Zombies/Animators/WindowSpawn";
 
+    public static string notMovingZombieController = "Zombies/Animators/DontMoveZombie";
+
 }
