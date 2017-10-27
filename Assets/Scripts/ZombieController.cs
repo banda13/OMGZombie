@@ -40,14 +40,35 @@ public class ZombieController : MonoBehaviour
     public float speed_animationInjured = 0.3f;
     public float speed_animationWalk = 0.6f;
     public float speed_animationRun = 0.9f;
+
+    public AudioSource spawningAudio;
+    public AudioSource randomAudio;
+    public AudioSource randomAudio2;
+    public AudioSource playerDetectionAudio;
+    public AudioSource attackAudio;
+    public AudioSource biteAudio;
+    public AudioSource injuringAudio;
+    public AudioSource injuringAudio2;
+    public AudioSource dyingAudio;
     
     void Start()
     {
         animator = GetComponent<Animator>();
         //controller = GetComponent<CharacterController>();
         attackTimer = 0;
+
+        spawningAudio = addAudioSouce(Paths.spawningAudio);
+        randomAudio = addAudioSouce(Paths.randomAudio);
+        randomAudio2 = addAudioSouce(Paths.randomAudio2);
+        playerDetectionAudio = addAudioSouce(Paths.detectionAudio);
+        attackAudio = addAudioSouce(Paths.attackAudio);
+        biteAudio = addAudioSouce(Paths.biteAudio);
+        injuringAudio = addAudioSouce(Paths.injuringAudio1);
+        injuringAudio2 = addAudioSouce(Paths.injuringAudio2);
+        dyingAudio = addAudioSouce(Paths.dieAudio);
     }
     
+
     void Update () {
         
         if (!Spawned() || dead)
@@ -64,12 +85,22 @@ public class ZombieController : MonoBehaviour
         attackTimer += Time.deltaTime;
     }
 
+    private AudioSource addAudioSouce(string clipUrl)
+    {
+        AudioSource audio = gameObject.AddComponent<AudioSource>();
+        audio.clip = Resources.Load(clipUrl) as AudioClip;
+        audio.volume = 0.9f;
+        audio.spatialBlend = 1;
+        audio.maxDistance = 5;
+        return audio;
+    }
     
     public IEnumerator Die()
     {
         dead = true;
         speed = 0;
         animator.SetInteger("Die", 1);
+        dyingAudio.Play();
         yield return new WaitForSeconds(1);
         dying = true;
         //for the worst case
@@ -102,13 +133,15 @@ public class ZombieController : MonoBehaviour
             collider.height = 2.0f;
             collider.material = zerofriction;
             spawned = true;
+            spawningAudio.Play();
+            StartCoroutine(randomVoice());
         }
         return false;
     }
 
     private void Move()
     {
-        if (detectPlayer() && rotateToDestination(300, new Vector3(player.transform.position.x, 0, player.transform.position.z)))
+        if (playerDetected || (detectPlayer() && rotateToDestination(300, new Vector3(player.transform.position.x, 0, player.transform.position.z))))
         {
             playerDetected = true;
             if(healt < 50)
@@ -153,6 +186,15 @@ public class ZombieController : MonoBehaviour
         }
     }
 
+    private IEnumerator randomVoice()
+    {
+        int random = Random.Range(5, 15);
+        yield return new WaitForSeconds(random);
+        AudioSource r = Random.Range(0, 100) > 50 ? randomAudio : randomAudio2;
+        r.Play();
+        StartCoroutine(randomVoice());
+    }
+
     private void changeDestination()
     {
         if(nextDestination != null && nextDestination != Vector3.zero)
@@ -192,11 +234,13 @@ public class ZombieController : MonoBehaviour
             {
                 animator.SetBool("Bite", true);
                 player.GetComponent<PlayerController>().TakeDamage(biteDamage);
+                biteAudio.Play();
             }
             else
             {
                 animator.SetBool("Attack", true);
                 player.GetComponent<PlayerController>().TakeDamage(attackDamage);
+                attackAudio.Play();
             }
             //Debug.Log("Zombie" + zombieIndex + "is attacking");
             attackTimer = 0;
@@ -259,6 +303,8 @@ public class ZombieController : MonoBehaviour
     {
         healt -= damage;
         animator.SetTrigger("Hit");
+        AudioSource r = Random.Range(0, 100) > 50 ? injuringAudio : injuringAudio2;
+        r.Play();
         if(healt <= 0)
         {
             StartCoroutine(Die());
@@ -292,6 +338,7 @@ public class ZombieController : MonoBehaviour
         }
         if(isDistanceSmaller(player.transform.position, transform.position, playerDetectionRange) || playerBeforeZombie())
         {
+            playerDetectionAudio.Play();
             return true;
         }
         else

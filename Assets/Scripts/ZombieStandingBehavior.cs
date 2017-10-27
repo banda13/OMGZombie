@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,8 +15,15 @@ public class ZombieStandingBehavior : MonoBehaviour {
     private int animationCounter = 0;
     public GameObject player;
 
+    //important to has every animation an audio => animationTriggers.Count == audios.Count
+    private List<AudioSource> audios;
+
 	void Start () {
         animator = GetComponent<Animator>();
+        audios = new List<AudioSource>();
+        audios.Add(addAudioSouce(Paths.screamAudio));
+        audios.Add(addAudioSouce(Paths.attackAudio));
+
 	}
 
     void Update() {
@@ -23,11 +31,20 @@ public class ZombieStandingBehavior : MonoBehaviour {
         Spawned();
         if (!activated && Vector3.Distance(transform.position, player.transform.position) < 12)
         {
-            Debug.Log("Spawning started");
             animator.SetBool("Block", false);
             activated = true;
         }
 	}
+
+    private AudioSource addAudioSouce(string clipUrl)
+    {
+        AudioSource audio = gameObject.AddComponent<AudioSource>();
+        audio.clip = Resources.Load(clipUrl) as AudioClip;
+        audio.volume = 0.9f;
+        audio.spatialBlend = 1;
+        audio.maxDistance = 5;
+        return audio;
+    }
 
     private bool Spawned()
     {
@@ -54,10 +71,18 @@ public class ZombieStandingBehavior : MonoBehaviour {
 
     private IEnumerator startDoingSomething()
     {
-        Debug.Log("Action " + animatorTriggers[animationCounter] + " started");
-        animator.SetTrigger(animatorTriggers[animationCounter]);
-        animationCounter = (animationCounter == animatorTriggers.Count-1  ? 0 : animationCounter+1 );
+        try
+        {
+            animator.SetTrigger(animatorTriggers[animationCounter]);
+            audios[animationCounter].Play();
+            animationCounter = (animationCounter == animatorTriggers.Count - 1 ? 0 : animationCounter + 1);
+        }
+        catch (IndexOutOfRangeException e)
+        {
+            Debug.Log("animationTriggers.Count == audios.Count !!!!!");
+        }
         yield return new WaitForSeconds(timeBetweenActions);
         StartCoroutine(startDoingSomething());
+        
     }
 }

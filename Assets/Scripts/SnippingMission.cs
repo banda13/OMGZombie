@@ -15,6 +15,7 @@ public class SnippingMission : PathFollower
     public GameObject CompletedMessage;
     public GameObject FailedMessage;
     public ChestController chest;
+    public AudioController audioController;
 
     private bool started = false;
     private bool playerStarted = false;
@@ -68,6 +69,7 @@ public class SnippingMission : PathFollower
             {
                 if (putUpGun)
                 {
+                    audioController.isSnippingMission = true;
                     started = true;
                     weaponHolder.SetActive(true);
                     weapon.Activated = true;
@@ -229,6 +231,7 @@ public class SnippingMission : PathFollower
 
     public void Ended()
     {
+        audioController.isSnippingMission = false;
         if (!failed)
         {
             chest.missionCompleted = true;

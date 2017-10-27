@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour {
     public GameObject weapon;
     public GameObject weaponObject;
     public ParticleSystem dust;
+    public AudioController audioController;
 
     private GameObject hidedWeapon;
     private Quaternion previosRotation;
@@ -32,7 +33,13 @@ public class PlayerController : MonoBehaviour {
     public float maxRotationForceAtHighFearLevel = 2;
 
     public float currectRotationForce = .5f;
+    
+    //countans low, mid and fast audio sources, order is important
+    public List<AudioSource> heartBeats;
 
+    private enum heartBeat { slow, mid, fast };
+
+    private heartBeat HeartBeat = heartBeat.mid;
 
     void Start () {
         currentHealth = startingHealth;
@@ -41,6 +48,7 @@ public class PlayerController : MonoBehaviour {
         AdaptedFearController.lowFearLevel += setLowFearLevelForce;
         AdaptedFearController.normalFearLevel += setNormalFearLevelForce;
         AdaptedFearController.highFearLevel += setHighFearLevelForce;
+        
 	}
 	
 	void Update () {
@@ -105,21 +113,59 @@ public class PlayerController : MonoBehaviour {
         }
 
         damaged = false;
+
+        if(HeartBeat == heartBeat.slow && heartBeats.Count > 0)
+        {   
+            setUpHeartBeatRate(heartBeats[0]);
+        }
+        else if(HeartBeat == heartBeat.mid && heartBeats.Count > 1)
+        {
+            setUpHeartBeatRate(heartBeats[1]);
+        }
+        else if(HeartBeat == heartBeat.fast && heartBeats.Count > 2)
+        {
+            setUpHeartBeatRate(heartBeats[2]);
+        }
 	}
+
+    private void setUpHeartBeatRate(AudioSource current)
+    {
+        if (isDead)
+        {
+            return;
+        }
+        for(int i= 0; i < heartBeats.Count; i++)
+        {
+            if(heartBeats[i] == current)
+            {
+                if (!heartBeats[i].isPlaying)
+                {
+                    heartBeats[i].Play();
+                }
+            }
+            else
+            {
+                heartBeats[i].Stop();
+            }
+        }
+    }
 
     private void setLowFearLevelForce()
     {
         currectRotationForce = maxRotationForceAtLowFearLevel;
+        HeartBeat = heartBeat.slow;
     }
 
     private void setNormalFearLevelForce()
     {
         currectRotationForce = maxRotationForceAtNormalFearLevel;
+        HeartBeat = heartBeat.mid;
     }
 
     private void setHighFearLevelForce()
     {
         currectRotationForce = maxRotationForceAtHighFearLevel;
+        HeartBeat = heartBeat.fast;
     }
 
     private ZombieController findZombieParent(GameObject child)
@@ -206,8 +252,9 @@ public class PlayerController : MonoBehaviour {
         isDead = true;
         movement.Wait = true;
         StartCoroutine(dying());
-        StartCoroutine(restart.delayedJump(5));
-           
+        StartCoroutine(restart.delayedJump(7));
+        StartCoroutine(audioController.turnDownMusic());
+        StartCoroutine(turnDownHeart(2));
         //restart.SetActive(true);
     }
 
@@ -222,6 +269,25 @@ public class PlayerController : MonoBehaviour {
         GetComponent<Fading>().BeginFade(1);
     }
 
+    public IEnumerator turnDownHeart(int value)
+    {
+        for(int i = 0; i < heartBeats.Count; i++)
+        {
+            if(i == value)
+            {
+                heartBeats[i].Play();
+            }
+            else
+            {
+                heartBeats[i].Stop();
+            }
+        }
+        yield return new WaitForSeconds(1);
+        if(value != -1)
+        {
+            StartCoroutine(turnDownHeart(value--));
+        }
+    }
 
     //only test call, i need more checkpoints!
     public void restartTestCall()

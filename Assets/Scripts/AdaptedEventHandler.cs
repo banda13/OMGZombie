@@ -46,7 +46,7 @@ public static class AdaptedEventHandler {
 
     private static void simulateFearFromUnity()
     {
-        timer.Interval = 3000;
+        timer.Interval = 5000;
         timer.Elapsed += OnTimedEvent;
         timer.AutoReset = true;
         timer.Enabled = true;
@@ -55,7 +55,6 @@ public static class AdaptedEventHandler {
 
     private static void OnTimedEvent(System.Object source, System.Timers.ElapsedEventArgs e)
     {
-        Debug.Log("Tick");
         System.Random r = new System.Random();
         setFearLevel(r.Next(0, 100));
     }

@@ -5,6 +5,7 @@ using UnityEngine;
 public class CandleRespawning : CandleToWalking {
 
     public PlayerController player;
+    public AudioController audioController;
 
     public override void fadingActions()
     {
@@ -32,6 +33,7 @@ public class CandleRespawning : CandleToWalking {
     {
         yield return new WaitForSeconds(wait);
         jumpTo();
+        StartCoroutine(audioController.turnUpMusic());
     }
 
 }

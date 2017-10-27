@@ -10,6 +10,7 @@ public class FinalBattle : PathFollower {
     public Transform points;
     public GameObject epicPortal;
     public Door door;
+    public AudioController audioController;
 
     private List<Transform> spawningPoints;
 
@@ -43,6 +44,7 @@ public class FinalBattle : PathFollower {
         if(currentWaypoint == waypoints.Count && !Wait)
         {
             Wait = true;
+
             controller.stopEpicFinalBattle();
             
         }
@@ -98,6 +100,7 @@ public class FinalBattle : PathFollower {
         }
         //start 30sec timer
         StartCoroutine(countDonw());
+        audioController.isFinalBattle = true;
     }
     private IEnumerator countDonw()
     {
@@ -112,6 +115,7 @@ public class FinalBattle : PathFollower {
             battleCompleted = true;
             StartCoroutine(door.Move());
             epicPortal.SetActive(true);
+            audioController.isFinalBattle = false;
         }
     }
 

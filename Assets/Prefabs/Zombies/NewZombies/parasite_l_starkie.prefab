@@ -2027,6 +2027,15 @@ MonoBehaviour:
   speed_animationInjured: 0.3
   speed_animationWalk: 0.6
   speed_animationRun: 0.9
+  spawningAudio: {fileID: 0}
+  randomAudio: {fileID: 0}
+  randomAudio2: {fileID: 0}
+  playerDetectionAudio: {fileID: 0}
+  attackAudio: {fileID: 0}
+  biteAudio: {fileID: 0}
+  injuringAudio: {fileID: 0}
+  injuringAudio2: {fileID: 0}
+  dyingAudio: {fileID: 0}
 --- !u!135 &135326539982072214
 SphereCollider:
   m_ObjectHideFlags: 1

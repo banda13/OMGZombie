@@ -130,7 +130,7 @@ public class EnemyFactory : MonoBehaviour {
         }
         foreach(Transform zombie in transform.GetChild(1))
         {
-            if (!zombie.GetComponent<ZombieController>().isDead())
+            if (zombie.GetComponent<ZombieController>() != null && !zombie.GetComponent<ZombieController>().isDead())
             {
                 count++;
             }
