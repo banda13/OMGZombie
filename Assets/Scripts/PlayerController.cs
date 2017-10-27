@@ -6,8 +6,8 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour {
 
-    public int startingHealth = 100;
-    public int currentHealth;
+    public float startingHealth = 100;
+    public float currentHealth;
     public Slider healthSlider;                                 
     public Image damageImage;
     public float flashSpeed = 5f;                               
@@ -125,6 +125,12 @@ public class PlayerController : MonoBehaviour {
         else if(HeartBeat == heartBeat.fast && heartBeats.Count > 2)
         {
             setUpHeartBeatRate(heartBeats[2]);
+        }
+
+        //healt regeneration
+        if (currentHealth != 0 && currentHealth < 100)
+        {
+            currentHealth += Time.deltaTime;
         }
 	}
 

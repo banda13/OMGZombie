@@ -236,8 +236,11 @@ public class EnemyFactory : MonoBehaviour {
         int count = 0;
         foreach(Transform zombie in transform.GetChild(1))
         {
-            StartCoroutine(zombie.GetComponent<ZombieController>().Die());
-            count++;
+            if (zombie.GetComponent<ZombieController>() != null)
+            {
+                StartCoroutine(zombie.GetComponent<ZombieController>().Die());
+                count++;
+            }
         }
         Debug.Log("I killed " + count + " zombies");
     }
