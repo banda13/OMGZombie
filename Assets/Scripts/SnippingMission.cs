@@ -134,6 +134,8 @@ public class SnippingMission : PathFollower
     {
         failed = false;
         transform.root.gameObject.GetComponent<PlayerController>().weapon = null;
+        weaponHolder.SetActive(false);
+        weapon.Activated = false;
         ended = false;
         putUpGun = false;
         started = false;
@@ -242,12 +244,6 @@ public class SnippingMission : PathFollower
             factory.Active = true;
             factory.setUpZombieVillage();
             Go();
-        }
-        else
-        {
-            //#if UNITY_EDITOR
-            //StartCoroutine(delayedTestCall(restartMission));
-            //#endif
         }
         ended = true;
 

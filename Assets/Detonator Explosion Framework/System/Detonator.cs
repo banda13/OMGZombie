@@ -262,6 +262,7 @@ public class Detonator : MonoBehaviour {
 	 public void Explode() 
 	{
 		_lastExplosionTime = Time.time;
+        GetComponent<AudioSource>().Play();
 	
 		foreach (DetonatorComponent component in components)
 		{

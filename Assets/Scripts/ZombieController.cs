@@ -103,8 +103,6 @@ public class ZombieController : MonoBehaviour
         dyingAudio.Play();
         yield return new WaitForSeconds(1);
         dying = true;
-        //for the worst case
-        Destroy(this.gameObject, 60);
     }
     
     public void setNextDestination(Transform dest)
@@ -141,9 +139,15 @@ public class ZombieController : MonoBehaviour
 
     private void Move()
     {
-        if (playerDetected || (detectPlayer() && rotateToDestination(300, new Vector3(player.transform.position.x, 0, player.transform.position.z))))
+        if ((detectPlayer() && rotateToDestination(300, new Vector3(player.transform.position.x, 0, player.transform.position.z))))
         {
-            playerDetected = true;
+            if (!playerDetected)
+            {
+                StartCoroutine(playerDetection());
+            }else
+            {
+                playerDetected = true;
+            } 
             if(healt < 50)
             {
                 speed = speed_animationInjured;
@@ -193,6 +197,13 @@ public class ZombieController : MonoBehaviour
         AudioSource r = Random.Range(0, 100) > 50 ? randomAudio : randomAudio2;
         r.Play();
         StartCoroutine(randomVoice());
+    }
+
+    private IEnumerator playerDetection()
+    {
+        playerDetectionAudio.Play();
+        yield return new WaitForSeconds(Random.Range(0, 5));
+        playerDetected = false;
     }
 
     private void changeDestination()
@@ -338,7 +349,6 @@ public class ZombieController : MonoBehaviour
         }
         if(isDistanceSmaller(player.transform.position, transform.position, playerDetectionRange) || playerBeforeZombie())
         {
-            playerDetectionAudio.Play();
             return true;
         }
         else

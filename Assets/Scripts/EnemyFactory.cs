@@ -249,7 +249,10 @@ public class EnemyFactory : MonoBehaviour {
     {
         foreach(Transform zombie in transform.GetChild(1))
         {
-            zombie.GetComponent<ZombieController>().enableAttack(true);
+            if (zombie.GetComponent<ZombieController>())
+            {
+                zombie.GetComponent<ZombieController>().enableAttack(true);
+            }
         }
         Debug.Log("Zombies attack activated!");
     }

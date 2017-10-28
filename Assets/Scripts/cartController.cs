@@ -67,11 +67,14 @@ public class cartController : PathFollower {
     
     public void getInCar()
     {
-        empty = false;
-        player.transform.position = this.transform.position + new Vector3(0, 2, 0);
-        player.transform.parent = this.transform;
-        Wait = false;
-        getNewShape();
+        if (empty)
+        {
+            empty = false;
+            player.transform.position = this.transform.position + new Vector3(0, 2, 0);
+            player.transform.parent = this.transform;
+            Wait = false;
+            getNewShape();
+        }
     }
 
     public void getOutOfCar()

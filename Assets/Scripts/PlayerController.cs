@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour {
     public Image damageImage;
     public float flashSpeed = 5f;                               
     public Color flashColour = new Color(1f, 0f, 0f, 0.1f);
+    public RawImage injurImage;
     
     public bool isDead;                                                
     public bool damaged;
@@ -52,7 +53,7 @@ public class PlayerController : MonoBehaviour {
 	}
 	
 	void Update () {
-        
+        //attacking
         if ((Input.GetMouseButtonDown(0) || GvrControllerInput.ClickButton) && weapon != null)
         {
             if (weapon.GetComponent<GunController>().Shoot())
@@ -87,22 +88,13 @@ public class PlayerController : MonoBehaviour {
                     }
                 }
             }
-        }/*
+        }
+        //weapon
         if (weapon != null && weapon.GetComponent<GunController>() is AKController)
         {
-            if(previosRotation != null)
-            {
-                Quaternion currentRotation = GvrControllerInput.Orientation;
-                if((Math.Abs(previosRotation.eulerAngles.x - currentRotation.eulerAngles.x) < maxRotation && 
-                    Math.Abs(previosRotation.eulerAngles.y - currentRotation.eulerAngles.y) < maxRotation && 
-                        Math.Abs(previosRotation.eulerAngles.z - currentRotation.eulerAngles.z) < maxRotation))
-                {
-                    weapon.transform.localRotation = GvrControllerInput.Orientation;
-                }
-            }
-            previosRotation = GvrControllerInput.Orientation;
-        }*/
-
+            weapon.transform.localRotation = GvrControllerInput.Orientation;
+        }
+        //damage image
         if (damaged)
         {
             damageImage.color = flashColour;
@@ -114,24 +106,40 @@ public class PlayerController : MonoBehaviour {
 
         damaged = false;
 
-        if(HeartBeat == heartBeat.slow && heartBeats.Count > 0)
-        {   
+        //heartBeat
+        if (HeartBeat == heartBeat.slow && heartBeats.Count > 0)
+        {
             setUpHeartBeatRate(heartBeats[0]);
         }
-        else if(HeartBeat == heartBeat.mid && heartBeats.Count > 1)
+        else if (HeartBeat == heartBeat.mid && heartBeats.Count > 1)
         {
             setUpHeartBeatRate(heartBeats[1]);
         }
-        else if(HeartBeat == heartBeat.fast && heartBeats.Count > 2)
+        else if (HeartBeat == heartBeat.fast && heartBeats.Count > 2)
         {
             setUpHeartBeatRate(heartBeats[2]);
         }
 
-        //healt regeneration
+
+        //healt
         if (currentHealth != 0 && currentHealth < 100)
         {
-            currentHealth += Time.deltaTime;
+            currentHealth += Time.deltaTime * 1.1f;
         }
+
+        if(currentHealth > 0)
+        {
+            injurImage.color = new Color(injurImage.color.r, injurImage.color.g, injurImage.color.b, 1 - (currentHealth / 100));
+        }
+        else if(currentHealth < 0)
+        {
+            injurImage.color = new Color(injurImage.color.r, injurImage.color.g, injurImage.color.b, 0);
+        }
+        else
+        {
+            injurImage.color = new Color(injurImage.color.r, injurImage.color.g, injurImage.color.b, 1);
+        }
+        
 	}
 
     private void setUpHeartBeatRate(AudioSource current)
