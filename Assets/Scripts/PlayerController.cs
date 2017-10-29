@@ -49,6 +49,10 @@ public class PlayerController : MonoBehaviour {
         AdaptedFearController.lowFearLevel += setLowFearLevelForce;
         AdaptedFearController.normalFearLevel += setNormalFearLevelForce;
         AdaptedFearController.highFearLevel += setHighFearLevelForce;
+
+        AdaptedFearController.lowHeartRate += setLowHeartRate;
+        AdaptedFearController.normalFearLevel += setNormalHeartRate;
+        AdaptedFearController.highHeartRate += setFastHeartRate;
         
 	}
 	
@@ -167,18 +171,29 @@ public class PlayerController : MonoBehaviour {
     private void setLowFearLevelForce()
     {
         currectRotationForce = maxRotationForceAtLowFearLevel;
-        HeartBeat = heartBeat.slow;
     }
 
     private void setNormalFearLevelForce()
     {
         currectRotationForce = maxRotationForceAtNormalFearLevel;
-        HeartBeat = heartBeat.mid;
     }
 
     private void setHighFearLevelForce()
     {
         currectRotationForce = maxRotationForceAtHighFearLevel;
+    }
+
+    private void setLowHeartRate()
+    {
+        HeartBeat = heartBeat.slow;
+    }
+
+    private void setNormalHeartRate()
+    {
+        HeartBeat = heartBeat.mid;
+    }
+    private void setFastHeartRate()
+    {
         HeartBeat = heartBeat.fast;
     }
 
@@ -220,7 +235,7 @@ public class PlayerController : MonoBehaviour {
         damaged = true;
         currentHealth -= amount;
         healthSlider.value = currentHealth;
-        
+        AdaptedEventHandler.playerDamaged(amount, currentHealth);
         if (currentHealth <= 0 && !isDead)
         {
             Death();
@@ -265,6 +280,7 @@ public class PlayerController : MonoBehaviour {
     {
         isDead = true;
         movement.Wait = true;
+        AdaptedEventHandler.playerDead(movement.getCurrentWaypointPosition(), movement.getCurrentWaypointName());
         StartCoroutine(dying());
         StartCoroutine(restart.delayedJump(7));
         StartCoroutine(audioController.turnDownMusic());

@@ -183,6 +183,7 @@ MonoBehaviour:
   spawningAnimations: {fileID: 9100000, guid: d44aa66638498f045b5a94b226a16880, type: 2}
   extraYRotation: 90
   taken: 0
+  mineMap: 0
 --- !u!1 &9373987
 GameObject:
   m_ObjectHideFlags: 0
@@ -230,6 +231,7 @@ MonoBehaviour:
   spawningAnimations: {fileID: 9100000, guid: d44aa66638498f045b5a94b226a16880, type: 2}
   extraYRotation: 0
   taken: 0
+  mineMap: 0
 --- !u!1 &11990004
 GameObject:
   m_ObjectHideFlags: 0
@@ -440,6 +442,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fearLevel: 50
+  heartRate: 50
+  attantion: 50
+  pointerClicksDetectionDuration: 2
+  pointerClickLimit: 5
 --- !u!82 &11990014
 AudioSource:
   m_ObjectHideFlags: 0
@@ -726,6 +732,7 @@ MonoBehaviour:
   spawningAnimations: {fileID: 9100000, guid: d44aa66638498f045b5a94b226a16880, type: 2}
   extraYRotation: 0
   taken: 0
+  mineMap: 0
 --- !u!4 &17206934 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400000, guid: 1e5c742accdc1824fb01f98f446fa63c, type: 2}
@@ -1107,6 +1114,7 @@ MonoBehaviour:
   spawningAnimations: {fileID: 9100000, guid: d44aa66638498f045b5a94b226a16880, type: 2}
   extraYRotation: 0
   taken: 0
+  mineMap: 0
 --- !u!1 &49635161
 GameObject:
   m_ObjectHideFlags: 0
@@ -1346,6 +1354,7 @@ MonoBehaviour:
   spawningAnimations: {fileID: 9100000, guid: a88b020eb10c52a499ba02ca80dd4069, type: 2}
   extraYRotation: 90
   taken: 0
+  mineMap: 0
 --- !u!1 &82194469
 GameObject:
   m_ObjectHideFlags: 0
@@ -1389,6 +1398,7 @@ MonoBehaviour:
   spawningAnimations: {fileID: 9100000, guid: d44aa66638498f045b5a94b226a16880, type: 2}
   extraYRotation: 0
   taken: 0
+  mineMap: 0
 --- !u!1001 &90467151
 Prefab:
   m_ObjectHideFlags: 0
@@ -2886,6 +2896,7 @@ MonoBehaviour:
   spawningAnimations: {fileID: 9100000, guid: a88b020eb10c52a499ba02ca80dd4069, type: 2}
   extraYRotation: -90
   taken: 0
+  mineMap: 0
 --- !u!1001 &235427320
 Prefab:
   m_ObjectHideFlags: 0
@@ -3630,6 +3641,7 @@ MonoBehaviour:
   spawningAnimations: {fileID: 9100000, guid: d44aa66638498f045b5a94b226a16880, type: 2}
   extraYRotation: 0
   taken: 0
+  mineMap: 0
 --- !u!1 &273195050
 GameObject:
   m_ObjectHideFlags: 0
@@ -4200,6 +4212,7 @@ MonoBehaviour:
   spawningAnimations: {fileID: 9100000, guid: d44aa66638498f045b5a94b226a16880, type: 2}
   extraYRotation: -90
   taken: 0
+  mineMap: 0
 --- !u!1 &324216511
 GameObject:
   m_ObjectHideFlags: 0
@@ -4683,6 +4696,7 @@ MonoBehaviour:
   spawningAnimations: {fileID: 9100000, guid: d44aa66638498f045b5a94b226a16880, type: 2}
   extraYRotation: 0
   taken: 0
+  mineMap: 0
 --- !u!1001 &348525369
 Prefab:
   m_ObjectHideFlags: 0
@@ -4903,6 +4917,7 @@ MonoBehaviour:
   spawningAnimations: {fileID: 9100000, guid: d44aa66638498f045b5a94b226a16880, type: 2}
   extraYRotation: 0
   taken: 0
+  mineMap: 0
 --- !u!1001 &369358713
 Prefab:
   m_ObjectHideFlags: 0
@@ -6131,6 +6146,7 @@ MonoBehaviour:
   spawningAnimations: {fileID: 9100000, guid: d44aa66638498f045b5a94b226a16880, type: 2}
   extraYRotation: 0
   taken: 0
+  mineMap: 0
 --- !u!1 &449378243
 GameObject:
   m_ObjectHideFlags: 0
@@ -7288,6 +7304,7 @@ MonoBehaviour:
   spawningAnimations: {fileID: 9100000, guid: d44aa66638498f045b5a94b226a16880, type: 2}
   extraYRotation: 0
   taken: 0
+  mineMap: 0
 --- !u!1 &534589992
 GameObject:
   m_ObjectHideFlags: 0
@@ -8984,6 +9001,7 @@ MonoBehaviour:
   spawningAnimations: {fileID: 9100000, guid: a88b020eb10c52a499ba02ca80dd4069, type: 2}
   extraYRotation: 0
   taken: 0
+  mineMap: 0
 --- !u!4 &646987299 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400250, guid: 97318fbbd96e1824c9f8390c74e20ed3, type: 2}
@@ -9190,6 +9208,7 @@ MonoBehaviour:
   spawningAnimations: {fileID: 9100000, guid: d44aa66638498f045b5a94b226a16880, type: 2}
   extraYRotation: 0
   taken: 0
+  mineMap: 0
 --- !u!1 &668287871
 GameObject:
   m_ObjectHideFlags: 0
@@ -9310,6 +9329,7 @@ MonoBehaviour:
   spawningAnimations: {fileID: 9100000, guid: d44aa66638498f045b5a94b226a16880, type: 2}
   extraYRotation: 0
   taken: 0
+  mineMap: 0
 --- !u!1001 &685800582
 Prefab:
   m_ObjectHideFlags: 0
@@ -9404,6 +9424,7 @@ MonoBehaviour:
   spawningAnimations: {fileID: 9100000, guid: d44aa66638498f045b5a94b226a16880, type: 2}
   extraYRotation: 0
   taken: 0
+  mineMap: 0
 --- !u!4 &686871852 stripped
 Transform:
   m_PrefabParentObject: {fileID: 415900, guid: 9e666367a3dab8e4d8eef4f84354e177, type: 2}
@@ -10179,6 +10200,7 @@ MonoBehaviour:
   spawningAnimations: {fileID: 9100000, guid: d44aa66638498f045b5a94b226a16880, type: 2}
   extraYRotation: 0
   taken: 0
+  mineMap: 0
 --- !u!1001 &738959282
 Prefab:
   m_ObjectHideFlags: 0
@@ -10987,6 +11009,7 @@ MonoBehaviour:
   spawningAnimations: {fileID: 9100000, guid: d44aa66638498f045b5a94b226a16880, type: 2}
   extraYRotation: 0
   taken: 0
+  mineMap: 0
 --- !u!1001 &792711567
 Prefab:
   m_ObjectHideFlags: 0
@@ -11530,6 +11553,7 @@ MonoBehaviour:
   spawningAnimations: {fileID: 9100000, guid: d44aa66638498f045b5a94b226a16880, type: 2}
   extraYRotation: 0
   taken: 0
+  mineMap: 0
 --- !u!1001 &853955672
 Prefab:
   m_ObjectHideFlags: 0
@@ -12262,6 +12286,7 @@ MonoBehaviour:
   spawningAnimations: {fileID: 9100000, guid: d44aa66638498f045b5a94b226a16880, type: 2}
   extraYRotation: 0
   taken: 0
+  mineMap: 0
 --- !u!21 &910362192
 Material:
   serializedVersion: 6
@@ -12468,6 +12493,63 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: baff10b8e1a024d41b45733d378107c9, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &937343013 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 761381335, guid: 463285ecd6702471a909ba810832bf0e,
+    type: 2}
+  m_PrefabInternal: {fileID: 1622232053}
+--- !u!114 &937343016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 937343013}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca0157c63fb794df89c6735fc602eca2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnPointerClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11990013}
+        m_MethodName: pointerClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: GvrAllEventsTrigger+TriggerEvent, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnPointerDown:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: GvrAllEventsTrigger+TriggerEvent, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnPointerUp:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: GvrAllEventsTrigger+TriggerEvent, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnPointerEnter:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: GvrAllEventsTrigger+TriggerEvent, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnPointerExit:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: GvrAllEventsTrigger+TriggerEvent, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnScroll:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: GvrAllEventsTrigger+TriggerEvent, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!4 &944213121 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400250, guid: 97318fbbd96e1824c9f8390c74e20ed3, type: 2}
@@ -12612,6 +12694,7 @@ MonoBehaviour:
   spawningAnimations: {fileID: 9100000, guid: d44aa66638498f045b5a94b226a16880, type: 2}
   extraYRotation: 0
   taken: 0
+  mineMap: 0
 --- !u!1 &966024523
 GameObject:
   m_ObjectHideFlags: 0
@@ -13228,6 +13311,7 @@ MonoBehaviour:
   spawningAnimations: {fileID: 9100000, guid: d44aa66638498f045b5a94b226a16880, type: 2}
   extraYRotation: 0
   taken: 0
+  mineMap: 0
 --- !u!4 &999423654 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400000, guid: 1e5c742accdc1824fb01f98f446fa63c, type: 2}
@@ -13538,6 +13622,7 @@ MonoBehaviour:
   spawningAnimations: {fileID: 9100000, guid: d44aa66638498f045b5a94b226a16880, type: 2}
   extraYRotation: 0
   taken: 0
+  mineMap: 0
 --- !u!1 &1053656221
 GameObject:
   m_ObjectHideFlags: 0
@@ -15544,6 +15629,7 @@ MonoBehaviour:
   spawningAnimations: {fileID: 9100000, guid: d44aa66638498f045b5a94b226a16880, type: 2}
   extraYRotation: 0
   taken: 0
+  mineMap: 0
 --- !u!4 &1223456514 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400000, guid: 88324f760c579473199bfbc4f1073097, type: 2}
@@ -15594,6 +15680,7 @@ MonoBehaviour:
   spawningAnimations: {fileID: 9100000, guid: d44aa66638498f045b5a94b226a16880, type: 2}
   extraYRotation: 0
   taken: 0
+  mineMap: 0
 --- !u!1 &1231853708
 GameObject:
   m_ObjectHideFlags: 0
@@ -16094,6 +16181,7 @@ MonoBehaviour:
   spawningAnimations: {fileID: 9100000, guid: d44aa66638498f045b5a94b226a16880, type: 2}
   extraYRotation: 0
   taken: 0
+  mineMap: 0
 --- !u!1001 &1301708065
 Prefab:
   m_ObjectHideFlags: 0
@@ -16377,6 +16465,7 @@ MonoBehaviour:
   spawningAnimations: {fileID: 9100000, guid: d44aa66638498f045b5a94b226a16880, type: 2}
   extraYRotation: 0
   taken: 0
+  mineMap: 0
 --- !u!1001 &1328573333
 Prefab:
   m_ObjectHideFlags: 0
@@ -16477,6 +16566,7 @@ MonoBehaviour:
   spawningAnimations: {fileID: 9100000, guid: d44aa66638498f045b5a94b226a16880, type: 2}
   extraYRotation: 0
   taken: 0
+  mineMap: 0
 --- !u!21 &1341242580
 Material:
   serializedVersion: 6
@@ -17179,6 +17269,7 @@ MonoBehaviour:
   spawningAnimations: {fileID: 9100000, guid: d44aa66638498f045b5a94b226a16880, type: 2}
   extraYRotation: 0
   taken: 0
+  mineMap: 0
 --- !u!1001 &1362096386
 Prefab:
   m_ObjectHideFlags: 0
@@ -18819,6 +18910,7 @@ MonoBehaviour:
   spawningAnimations: {fileID: 9100000, guid: d44aa66638498f045b5a94b226a16880, type: 2}
   extraYRotation: 0
   taken: 0
+  mineMap: 0
 --- !u!1001 &1430442598
 Prefab:
   m_ObjectHideFlags: 0
@@ -19443,6 +19535,7 @@ MonoBehaviour:
   spawningAnimations: {fileID: 9100000, guid: d44aa66638498f045b5a94b226a16880, type: 2}
   extraYRotation: -90
   taken: 0
+  mineMap: 0
 --- !u!1001 &1460026123
 Prefab:
   m_ObjectHideFlags: 0
@@ -21299,6 +21392,7 @@ MonoBehaviour:
   spawningAnimations: {fileID: 9100000, guid: d44aa66638498f045b5a94b226a16880, type: 2}
   extraYRotation: 0
   taken: 0
+  mineMap: 0
 --- !u!1 &1609095581
 GameObject:
   m_ObjectHideFlags: 0
@@ -21346,6 +21440,7 @@ MonoBehaviour:
   spawningAnimations: {fileID: 9100000, guid: d44aa66638498f045b5a94b226a16880, type: 2}
   extraYRotation: 0
   taken: 0
+  mineMap: 0
 --- !u!1 &1610151710
 GameObject:
   m_ObjectHideFlags: 0
@@ -22827,6 +22922,7 @@ MonoBehaviour:
   spawningAnimations: {fileID: 9100000, guid: d44aa66638498f045b5a94b226a16880, type: 2}
   extraYRotation: 0
   taken: 0
+  mineMap: 0
 --- !u!4 &1691750434 stripped
 Transform:
   m_PrefabParentObject: {fileID: 498412, guid: 970dd4b9371394fb4890965f608d46fd, type: 2}
@@ -23309,6 +23405,7 @@ MonoBehaviour:
   spawningAnimations: {fileID: 9100000, guid: d44aa66638498f045b5a94b226a16880, type: 2}
   extraYRotation: 0
   taken: 0
+  mineMap: 0
 --- !u!1 &1758542347
 GameObject:
   m_ObjectHideFlags: 0
@@ -23552,6 +23649,7 @@ MonoBehaviour:
   spawningAnimations: {fileID: 9100000, guid: d44aa66638498f045b5a94b226a16880, type: 2}
   extraYRotation: 0
   taken: 0
+  mineMap: 0
 --- !u!1 &1765653827
 GameObject:
   m_ObjectHideFlags: 0
@@ -23745,6 +23843,7 @@ MonoBehaviour:
   spawningAnimations: {fileID: 9100000, guid: a88b020eb10c52a499ba02ca80dd4069, type: 2}
   extraYRotation: -90
   taken: 0
+  mineMap: 0
 --- !u!4 &1781254265 stripped
 Transform:
   m_PrefabParentObject: {fileID: 482608, guid: d24cbc466424f71408559463ee47e0cf, type: 2}
@@ -23793,6 +23892,7 @@ MonoBehaviour:
   spawningAnimations: {fileID: 9100000, guid: d44aa66638498f045b5a94b226a16880, type: 2}
   extraYRotation: 0
   taken: 0
+  mineMap: 0
 --- !u!1001 &1785528125
 Prefab:
   m_ObjectHideFlags: 0
@@ -23989,6 +24089,7 @@ MonoBehaviour:
   spawningAnimations: {fileID: 9100000, guid: d44aa66638498f045b5a94b226a16880, type: 2}
   extraYRotation: 0
   taken: 0
+  mineMap: 0
 --- !u!1 &1795344613
 GameObject:
   m_ObjectHideFlags: 0
@@ -24182,6 +24283,7 @@ MonoBehaviour:
   spawningAnimations: {fileID: 9100000, guid: d44aa66638498f045b5a94b226a16880, type: 2}
   extraYRotation: -45
   taken: 0
+  mineMap: 0
 --- !u!1001 &1816257921
 Prefab:
   m_ObjectHideFlags: 0
@@ -24279,6 +24381,7 @@ MonoBehaviour:
   spawningAnimations: {fileID: 9100000, guid: d44aa66638498f045b5a94b226a16880, type: 2}
   extraYRotation: 0
   taken: 0
+  mineMap: 0
 --- !u!4 &1824114636 stripped
 Transform:
   m_PrefabParentObject: {fileID: 435648, guid: 187270ca2fe18a94cab577d45457fcef, type: 2}
@@ -24507,6 +24610,7 @@ MonoBehaviour:
   spawningAnimations: {fileID: 9100000, guid: d44aa66638498f045b5a94b226a16880, type: 2}
   extraYRotation: 0
   taken: 0
+  mineMap: 0
 --- !u!1 &1864461312
 GameObject:
   m_ObjectHideFlags: 0
@@ -24682,6 +24786,7 @@ MonoBehaviour:
   spawningAnimations: {fileID: 9100000, guid: d44aa66638498f045b5a94b226a16880, type: 2}
   extraYRotation: 0
   taken: 0
+  mineMap: 0
 --- !u!1001 &1872976322
 Prefab:
   m_ObjectHideFlags: 0
@@ -25065,6 +25170,7 @@ MonoBehaviour:
   spawningAnimations: {fileID: 9100000, guid: d44aa66638498f045b5a94b226a16880, type: 2}
   extraYRotation: 0
   taken: 0
+  mineMap: 0
 --- !u!1001 &1899165844
 Prefab:
   m_ObjectHideFlags: 0
@@ -25357,6 +25463,7 @@ MonoBehaviour:
   spawningAnimations: {fileID: 9100000, guid: a88b020eb10c52a499ba02ca80dd4069, type: 2}
   extraYRotation: 0
   taken: 0
+  mineMap: 0
 --- !u!1 &1915578733
 GameObject:
   m_ObjectHideFlags: 0
@@ -25547,6 +25654,7 @@ MonoBehaviour:
   spawningAnimations: {fileID: 9100000, guid: d44aa66638498f045b5a94b226a16880, type: 2}
   extraYRotation: 0
   taken: 0
+  mineMap: 0
 --- !u!4 &1922977579 stripped
 Transform:
   m_PrefabParentObject: {fileID: 417994, guid: eefa18c7aee7d324eb1d4af38eafc25a, type: 2}
@@ -25947,6 +26055,7 @@ MonoBehaviour:
   spawningAnimations: {fileID: 9100000, guid: d44aa66638498f045b5a94b226a16880, type: 2}
   extraYRotation: 0
   taken: 0
+  mineMap: 0
 --- !u!1 &1966956095
 GameObject:
   m_ObjectHideFlags: 0
@@ -26022,6 +26131,7 @@ MonoBehaviour:
   spawningAnimations: {fileID: 9100000, guid: d44aa66638498f045b5a94b226a16880, type: 2}
   extraYRotation: -90
   taken: 0
+  mineMap: 0
 --- !u!1 &1975690294
 GameObject:
   m_ObjectHideFlags: 0
@@ -26155,6 +26265,7 @@ MonoBehaviour:
   spawningAnimations: {fileID: 9100000, guid: d44aa66638498f045b5a94b226a16880, type: 2}
   extraYRotation: 0
   taken: 0
+  mineMap: 0
 --- !u!4 &1986793447 stripped
 Transform:
   m_PrefabParentObject: {fileID: 433090, guid: baff10b8e1a024d41b45733d378107c9, type: 2}
@@ -26480,6 +26591,7 @@ MonoBehaviour:
   spawningAnimations: {fileID: 9100000, guid: d44aa66638498f045b5a94b226a16880, type: 2}
   extraYRotation: 0
   taken: 0
+  mineMap: 0
 --- !u!1 &2005571600
 GameObject:
   m_ObjectHideFlags: 0
@@ -26527,6 +26639,7 @@ MonoBehaviour:
   spawningAnimations: {fileID: 9100000, guid: d44aa66638498f045b5a94b226a16880, type: 2}
   extraYRotation: 0
   taken: 0
+  mineMap: 0
 --- !u!1001 &2009806947
 Prefab:
   m_ObjectHideFlags: 0
@@ -26682,6 +26795,7 @@ MonoBehaviour:
   spawningAnimations: {fileID: 9100000, guid: a88b020eb10c52a499ba02ca80dd4069, type: 2}
   extraYRotation: 180
   taken: 0
+  mineMap: 0
 --- !u!1001 &2021234081
 Prefab:
   m_ObjectHideFlags: 0
@@ -27119,6 +27233,7 @@ MonoBehaviour:
   spawningAnimations: {fileID: 9100000, guid: d44aa66638498f045b5a94b226a16880, type: 2}
   extraYRotation: 0
   taken: 0
+  mineMap: 0
 --- !u!1 &2066082135
 GameObject:
   m_ObjectHideFlags: 0
@@ -27254,6 +27369,7 @@ MonoBehaviour:
   spawningAnimations: {fileID: 9100000, guid: d44aa66638498f045b5a94b226a16880, type: 2}
   extraYRotation: 0
   taken: 0
+  mineMap: 0
 --- !u!4 &2069025840 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4126478076771634, guid: b5e010d301ae2f24fb26199ac2b2802d,
@@ -27306,6 +27422,7 @@ MonoBehaviour:
   spawningAnimations: {fileID: 9100000, guid: d44aa66638498f045b5a94b226a16880, type: 2}
   extraYRotation: 0
   taken: 0
+  mineMap: 0
 --- !u!4 &2078626244 stripped
 Transform:
   m_PrefabParentObject: {fileID: 431594, guid: 9067651dcf99b9f4e96b878d0ab98445, type: 2}

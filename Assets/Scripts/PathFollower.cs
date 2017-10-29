@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -39,7 +40,7 @@ public abstract class PathFollower : MonoBehaviour {
             }
             else
             {
-                AdaptedEventHandler.wayPointReached(transform.position);
+                AdaptedEventHandler.wayPointReached(getCurrentWaypointPosition(), getCurrentWaypointName());
                 currentWaypoint++;
             }
         }
@@ -69,6 +70,28 @@ public abstract class PathFollower : MonoBehaviour {
             return waypoints[currentWaypoint + 1];
         else
             return waypoints[currentWaypoint - 1];
+    }
+
+    public Vector3 getCurrentWaypointPosition()
+    {
+        try
+        {
+            return waypoints[currentWaypoint].position;
+        } catch (IndexOutOfRangeException e)
+        {
+            return Vector3.zero;
+        }
+    }
+
+    public string getCurrentWaypointName()
+    {
+        try
+        {
+            return waypoints[currentWaypoint].name;
+        }catch(IndexOutOfRangeException e)
+        {
+            return "Unknown";
+        } 
     }
 }
 

@@ -16,6 +16,12 @@ public class AudioController : MonoBehaviour {
 
     public float minScaringDuration = 5;
     public float maxScaringDuration = 20;
+    public float minScareAtLowAttention = 5;
+    public float maxScareAtLowAttention = 20;
+    public float minScareAtNormalAttention = 8;
+    public float maxScareAtNormalAttention = 30;
+    public float minScareAtHighAttention = 10;
+    public float maxScareAtHighAttention = 40;
 
     public enum fearLevel { low, normal, high};
     public fearLevel fear;
@@ -32,6 +38,10 @@ public class AudioController : MonoBehaviour {
         AdaptedFearController.lowFearLevel += lowFearLevel;
         AdaptedFearController.normalFearLevel += midFearLevel;
         AdaptedFearController.highFearLevel += highFearLevel;
+
+        AdaptedFearController.lowAttention += lowAttention;
+        AdaptedFearController.normalAttention += normalAttention;
+        AdaptedFearController.highAttention += highAttention;
 
         fear = fearLevel.normal; //default
         currentAudio = midAudio;
@@ -81,6 +91,7 @@ public class AudioController : MonoBehaviour {
         yield return new WaitForSeconds(Random.Range(minScaringDuration, maxScaringDuration));
         AudioSource audio = jumpScarAudios[Random.Range(0, jumpScarAudios.Count)];
         audio.Play();
+        AdaptedEventHandler.jumpScareVoice(audio.name);
         StartCoroutine(jumpScare());
     }
 
@@ -97,6 +108,24 @@ public class AudioController : MonoBehaviour {
     private void highFearLevel()
     {
         fear = fearLevel.high;
+    }
+
+    private void lowAttention()
+    {
+        minScaringDuration = minScareAtLowAttention;
+        maxScaringDuration = maxScareAtLowAttention;
+    }
+
+    private void normalAttention()
+    {
+        minScaringDuration = minScareAtNormalAttention;
+        maxScaringDuration = maxScareAtNormalAttention;
+    }
+
+    private void highAttention()
+    {
+        minScaringDuration = minScareAtHighAttention;
+        maxScaringDuration = maxScareAtHighAttention;
     }
 
     public IEnumerator turnDownMusic()

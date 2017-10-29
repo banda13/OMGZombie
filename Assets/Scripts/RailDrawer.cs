@@ -198,10 +198,23 @@ public class RailDrawer : MonoBehaviour {
     {
         maxFail--;
         destroyPartice();
-        Debug.Log("Hiba");
-        if(maxFail <= 0)
+        if (isLeaningLeft)
+        {
+            AdaptedEventHandler.drawingFault("left", transform.name);
+        }
+        else if (isLeaningRight)
+        {
+            AdaptedEventHandler.drawingFault("right", transform.name);
+        }
+        else
+        {
+            AdaptedEventHandler.drawingFault("unknown", transform.name);
+        }
+
+        if (maxFail <= 0)
         {
             StartCoroutine(cart.failed(this.gameObject));
+            AdaptedEventHandler.playerDead(cart.getCurrentWaypointPosition(), cart.getCurrentWaypointName());
         }
     }
 

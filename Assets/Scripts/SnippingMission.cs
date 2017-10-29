@@ -76,6 +76,7 @@ public class SnippingMission : PathFollower
                     dummyWeapon.SetActive(false);
                     transform.root.gameObject.GetComponent<PlayerController>().weapon = weaponHolder.transform.GetChild(0).transform.gameObject;
                     StartCoroutine(createZombies());
+                    AdaptedEventHandler.missionStarted("Sniper mission");
                 }
                 //#if UNITY_EDITOR
                 //                StartCoroutine(delayedTestCall(onClickOnGun));
@@ -204,6 +205,7 @@ public class SnippingMission : PathFollower
                 //Oh no, the zombies reached the house, u will die.. :'(
 
                 failed = true;
+                AdaptedEventHandler.missionFailed("Sniper mission", getKilledZombies());
                 StartCoroutine(transform.root.gameObject.GetComponent<CamaraController>().fadingWithSniperAction(fadingAction));
                 return true;
             }
@@ -215,6 +217,7 @@ public class SnippingMission : PathFollower
         else if (zombiesInGame.Count == zombiesNumber)
         {
             Debug.Log("Oke, u killed " + zombiesInGame.Count + " zombies, the mission was completed");
+            AdaptedEventHandler.missionCompleted("Sniper mission");
             StartCoroutine(putDownTheGun());
             CompletedMessage.SetActive(true);
             return true;
@@ -224,6 +227,19 @@ public class SnippingMission : PathFollower
             //its ok, then mission not started
             return false;
         }
+    }
+
+    private int getKilledZombies()
+    {
+        int count = 0;
+        foreach (ZombieController enemies in zombiesInGame)
+        {
+            if (enemies.isDead())
+            {
+                count++;
+            }
+        }
+        return count;
     }
 
     public override void Go()

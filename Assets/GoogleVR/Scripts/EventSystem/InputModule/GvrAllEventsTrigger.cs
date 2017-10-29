@@ -34,7 +34,7 @@ public class GvrAllEventsTrigger : MonoBehaviour {
   public TriggerEvent OnScroll;
 
   private bool listenersAdded;
-
+    
   void OnEnable() {
     AddListeners();
   }
@@ -89,7 +89,8 @@ public class GvrAllEventsTrigger : MonoBehaviour {
   }
 
   private void OnPointerClickHandler(GameObject target, PointerEventData eventData) {
-    OnPointerClick.Invoke(target, eventData);
+
+        OnPointerClick.Invoke(target, eventData);
   }
 
   private void OnPointerDownHandler(GameObject target, PointerEventData eventData) {

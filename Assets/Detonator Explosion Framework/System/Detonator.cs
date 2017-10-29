@@ -270,7 +270,7 @@ public class Detonator : MonoBehaviour {
 			component.Explode();
 		}
         destoryCustomGameObjects();
-
+        AdaptedEventHandler.uniqueEvent("Detonator exploded");
     }
 	
 	public void Reset() 

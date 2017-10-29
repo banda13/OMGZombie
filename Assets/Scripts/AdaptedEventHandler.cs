@@ -21,27 +21,144 @@ public static class AdaptedEventHandler {
         }
 
         fear = f;
-        simulateFearFromUnity();
+        //simulateFearFromUnity();
         Debug.Log("Adapted event handler ready");
 
     }
 
-    public static void wayPointReached(Vector3 position)
+    public static void wayPointReached(Vector3 position, string waypointName)
     {
-        Debug.Log("Waypoint reached event send! Position " + position);
+        Debug.Log("Sending AdaptedEvent"+ waypointName + " reached at position " + position);
         try
         {
-            currentActivity.Call("wayPointReached", position);
-        }
-        catch(NullReferenceException e)
+            currentActivity.Call("wayPointReached", position, waypointName);
+        } catch(NullReferenceException e)
         {
-            //its ok in editor mode!
+            //its ok in editor
+        }
+    }
+
+    public static void jumpScareVoice(string jumpScareName)
+    {
+        Debug.Log("Sending AdaptedEvent: jumpscare: " + jumpScareName);
+        try
+        {
+            currentActivity.Call("jumpScareVoice", jumpScareName);
+        } catch(NullReferenceException e)
+        {
+
+        }
+    }
+
+    public static void playerDamaged(float healtLoss, float healtLeft)
+    {
+        Debug.Log("Sending AdaptedEvent: Player healt change from " + healtLeft + healtLoss + " to " + healtLeft);
+        try
+        {
+            currentActivity.Call("playerDamaged", healtLoss, healtLeft);
+        } catch(NullReferenceException e)
+        {
+
+        }
+    }
+
+    public static void playerDead(Vector3 position, string waypointName)
+    {
+        Debug.Log("Sending AdaptedEvent: player died at " + waypointName);
+        try
+        {
+            currentActivity.Call("playerDead", position, waypointName);
+        } catch(NullReferenceException e)
+        {
+
+        }
+    }
+
+    public static void drawingFault(string direction, string shapeForm)
+    {
+        Debug.Log("Sending AdaptedEvent: drawing fault to " + direction + " in shape " + shapeForm);
+        try
+        {
+            currentActivity.Call("drawingFault", direction, shapeForm);
+        } catch(NullReferenceException e)
+        {
+
+        }
+    }
+
+    public static void missionStarted(string missionName)
+    {
+        Debug.Log("Sending AdaptedEvent: " + missionName + " started");
+        try
+        {
+            currentActivity.Call("missionStarted", missionName);
+        } catch(NullReferenceException e)
+        {
+
+        }
+    }
+
+    public static void missionCompleted(string missionName)
+    {
+        Debug.Log("Sending AdaptedEvent: " + missionName + " completed");
+        try
+        {
+            currentActivity.Call("missionCompleted", missionName);
+        } catch(NullReferenceException e)
+        {
+
+        }
+    }
+
+    public static void missionFailed(string missionName, int zombiesKilled)
+    {
+        Debug.Log("Sending AdaptedEvent: " + missionName + " failed, killed" + zombiesKilled + " zombies");
+        try
+        {
+            currentActivity.Call("missionFailed", missionName, zombiesKilled);
+        } catch(NullReferenceException e)
+        {
+
+        }
+    }
+
+    public static void frequentPointerClick()
+    {
+        Debug.Log("Sending AdaptedEvent: frequent pointer click");
+        try
+        {
+            currentActivity.Call("frequentPointerClick");
+        } catch(NullReferenceException e)
+        {
+
+        }
+    }
+
+    public static void uniqueEvent(string eventName)
+    {
+        Debug.Log("Sending AdaptedEvent: " + eventName);
+        try
+        {
+            currentActivity.Call("uniqueEvent", eventName);
+        } catch(NullReferenceException e)
+        {
+
         }
     }
 
     public static void setFearLevel(float fearLevel)
     {
         fear.FearLevel = fearLevel;
+    }
+
+    public static void setHeartRate(float heartRate)
+    {
+        fear.HeartRate = heartRate;
+    }
+
+    public static void setAttention(float attention)
+    {
+        fear.Attention = attention;
     }
 
     private static void simulateFearFromUnity()

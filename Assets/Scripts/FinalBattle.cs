@@ -52,7 +52,7 @@ public class FinalBattle : PathFollower {
 
     public override void Go()
     {
-        
+        AdaptedEventHandler.missionStarted("Final battle trailer");
         Wait = false;
         controller = transform.root.GetComponent<CamaraController>();
         factory.killAll();
@@ -88,7 +88,7 @@ public class FinalBattle : PathFollower {
     public IEnumerator zombiesDepart()
     {
         yield return new WaitForSeconds(3);
-        Debug.Log("Zombies starting");
+        AdaptedEventHandler.missionCompleted("Final battle trailer");
 
         foreach(ZombieController zombie in zombiesInBattle)
         {
@@ -101,6 +101,7 @@ public class FinalBattle : PathFollower {
         //start 30sec timer
         StartCoroutine(countDonw());
         audioController.isFinalBattle = true;
+        AdaptedEventHandler.missionStarted("Final battle fight");
     }
     private IEnumerator countDonw()
     {
@@ -116,6 +117,7 @@ public class FinalBattle : PathFollower {
             StartCoroutine(door.Move());
             epicPortal.SetActive(true);
             audioController.isFinalBattle = false;
+            AdaptedEventHandler.missionCompleted("Final Battle");
         }
     }
 
