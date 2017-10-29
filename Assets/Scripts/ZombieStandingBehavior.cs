@@ -10,10 +10,12 @@ public class ZombieStandingBehavior : MonoBehaviour {
     private bool spawned = false;
     private bool dead = false;
     private bool activated = false;
-    
+
     public List<string> animatorTriggers;
     private int animationCounter = 0;
     public GameObject player;
+
+    public float activationDistence  = 12;
 
     //important to has every animation an audio => animationTriggers.Count == audios.Count
     private List<AudioSource> audios;
@@ -28,8 +30,12 @@ public class ZombieStandingBehavior : MonoBehaviour {
 
     void Update() {
 
-        Spawned();
-        if (!activated && Vector3.Distance(transform.position, player.transform.position) < 12)
+        if (Spawned())
+        {
+            Quaternion q = Quaternion.LookRotation(new Vector3(player.transform.position.x, 0, player.transform.position.z) - transform.position);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, q, 30 *Time.deltaTime);
+        }
+        if (!activated && Vector3.Distance(transform.position, player.transform.position) < activationDistence)
         {
             animator.SetBool("Block", false);
             activated = true;

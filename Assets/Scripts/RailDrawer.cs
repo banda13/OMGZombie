@@ -57,7 +57,7 @@ public class RailDrawer : MonoBehaviour {
         isPointerOnObject = false;
         if(isPointerDown && isDragging)
         {
-
+            checkPointMissed();
         }
     }
     public void startDragging(BaseEventData e)
@@ -189,7 +189,7 @@ public class RailDrawer : MonoBehaviour {
     private void missionCompleted()
     {
         cart.getNewShape();
-        cart.speed = 1;
+        cart.speed = 2;
         Destroy(this.gameObject);
         Destroy(particle);
     }
@@ -201,7 +201,7 @@ public class RailDrawer : MonoBehaviour {
         Debug.Log("Hiba");
         if(maxFail <= 0)
         {
-            Debug.Log("Meghaltál");
+            StartCoroutine(cart.failed(this.gameObject));
         }
     }
 

@@ -32,7 +32,6 @@ public class EnemyFactory : MonoBehaviour {
 
     public bool Active = false;
     public bool zombiesAttackActivated = false;
-    
 
     void Start () {
 

@@ -13,6 +13,11 @@ public class AdaptedFearController : MonoBehaviour {
     public static event fearLevelChange normalFearLevel;
     public static event fearLevelChange highFearLevel;
     
+    void Start()
+    {
+        AdaptedEventHandler.init(this);
+    }
+
     public float FearLevel
     {
         get { return fearLevel; }

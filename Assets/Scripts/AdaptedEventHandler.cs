@@ -14,7 +14,7 @@ public static class AdaptedEventHandler {
 
     public static void init(AdaptedFearController f) {
 
-        if (Application.platform == RuntimePlatform.Android)
+        if (Application.platform == RuntimePlatform.Android && (jc == null || currentActivity == null))
         {
             jc = new AndroidJavaClass("com.andy.omg.UnityPlayerActivity");
             currentActivity = jc.GetStatic<AndroidJavaObject>("UnityPlayerActivity");

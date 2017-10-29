@@ -21,8 +21,7 @@ public class CamaraController : PathFollower {
         factory = final.factory;
         Wait = true;
         StartCoroutine(startFading());
-
-        AdaptedEventHandler.init(transform.GetComponent<AdaptedFearController>());
+        
     }
 
     void OnApplicationClosed()
@@ -102,7 +101,7 @@ public class CamaraController : PathFollower {
         if(follow != null)
             follow.Go();
     }
-
+    //cause static delegates not supported in c# 4.. :/
     public IEnumerator fadingWithAction(CandleBase.actionBetweenFadeing f)
     {
         float fadeTime = GetComponent<Fading>().BeginFade(1);

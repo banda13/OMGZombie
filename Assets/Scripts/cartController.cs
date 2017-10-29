@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class cartController : PathFollower {
 
@@ -17,7 +18,10 @@ public class cartController : PathFollower {
 
     public float rotationLimit = 30;
     public float rotationSpeed = 10;
-	
+    public bool dying = false;
+
+    public delegate void fadingAction();
+
 	void Start () {
         Wait = true;
         init();
@@ -27,26 +31,33 @@ public class cartController : PathFollower {
 	
 	void Update () {
 
-        if (Input.GetKeyDown("space") && Vector3.Distance(transform.position, player.transform.position) < 4)
+        if (!dying)
         {
-            if (empty)
+            if (Input.GetKeyDown("space") && Vector3.Distance(transform.position, player.transform.position) < 4)
             {
-                getInCar();
+                if (empty)
+                {
+                    getInCar();
+                }
+                else
+                {
+                    getOutOfCar();
+                }
             }
-            else
-            {
-                getOutOfCar();
-            }
-        }
 
-        if(!empty && prevWaypoint < currentWaypoint)
+            if (!empty && prevWaypoint < currentWaypoint)
+            {
+                prevWaypoint++;
+            }
+
+            rotate();
+            move();
+        }
+        else
         {
-            prevWaypoint++;
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, 45), Time.deltaTime * rotationSpeed *2 );
+            transform.position = Vector3.MoveTowards(transform.position, new Vector3(transform.position.x, -1, transform.position.z), Time.deltaTime * rotationSpeed/2);
         }
-
-        rotate();
-        move();
-        
 
 	}
 
@@ -95,6 +106,8 @@ public class cartController : PathFollower {
         StartCoroutine(spawnNewShape());
     }
 
+
+
     private IEnumerator spawnNewShape()
     {
         yield return new WaitForSeconds(3);
@@ -112,5 +125,19 @@ public class cartController : PathFollower {
             GameObject shape = Instantiate(shapeObject, playerCam.transform.position + (Quaternion.Euler(0, -90, 0) * transform.forward ) * shapeObject.GetComponent<RailDrawer>().distanceFromCamera, Quaternion.identity);
             //return shape;(
         }
+    }
+
+    public IEnumerator failed(GameObject rail)
+    {
+        dying = true;
+        yield return new WaitForSeconds(2);
+        Destroy(rail);
+        StartCoroutine(player.GetComponent<MineCamaraController>().fadingWithCartActions(failedActions));
+        Debug.Log("end");
+    }
+
+    public void failedActions()
+    {
+        SceneManager.LoadScene("mine", LoadSceneMode.Single);
     }
 }

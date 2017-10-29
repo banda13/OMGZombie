@@ -8,6 +8,7 @@ public class SpawningPoint : MonoBehaviour {
     public RuntimeAnimatorController spawningAnimations;
     public float extraYRotation = 0;
     public bool taken = false;
+    public bool mineMap = false;
 
     private ZombieController zombie = null;
 
@@ -32,7 +33,11 @@ public class SpawningPoint : MonoBehaviour {
             fixedZombie.animatorTriggers = new List<string>();
             fixedZombie.animatorTriggers.Add("scream");
             fixedZombie.animatorTriggers.Add("attack");
-            Debug.Log("Wtf it is not moving zombie..?");
+            if (mineMap)
+            {
+                fixedZombie.activationDistence = 20;
+                fixedZombie.transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
+            }
         }
         else
         {
