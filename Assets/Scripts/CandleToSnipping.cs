@@ -9,6 +9,7 @@ public class CandleToSnipping : CandleBase {
 
     public override void fadingActions()
     {
+        AdaptedEventHandler.uniqueEvent("Jumped to sniper mission");
         camara.jump("startFight", camara.transform);
     }
 

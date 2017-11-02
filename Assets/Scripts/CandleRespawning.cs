@@ -17,6 +17,7 @@ public class CandleRespawning : CandleToWalking {
         factory.clearFactory();
         factory.setUpZombieVillage();
         camara.Wait = false;
+        AdaptedEventHandler.uniqueEvent("Player respawning");
     }
 
     private IEnumerator Undying()

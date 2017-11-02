@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Timers;
 using UnityEngine;
 
-public static class AdaptedEventHandler {
+public class AdaptedEventHandler : MonoBehaviour{
 
     static AndroidJavaClass jc;
     static AndroidJavaObject currentActivity;
@@ -12,18 +12,9 @@ public static class AdaptedEventHandler {
     public static AdaptedFearController fear;
     public static Timer timer = new Timer();
 
-    public static void init(AdaptedFearController f) {
-
-        if (Application.platform == RuntimePlatform.Android && (jc == null || currentActivity == null))
-        {
-            jc = new AndroidJavaClass("com.andy.omg.UnityPlayerActivity");
-            currentActivity = jc.GetStatic<AndroidJavaObject>("UnityPlayerActivity");
-        }
-
-        fear = f;
-        //simulateFearFromUnity();
-        Debug.Log("Adapted event handler ready");
-
+    void Start()
+    {
+        fear = GameObject.Find("AdaptedEventHandler").GetComponent<AdaptedFearController>();
     }
 
     public static void wayPointReached(Vector3 position, string waypointName)
@@ -31,10 +22,15 @@ public static class AdaptedEventHandler {
         Debug.Log("Sending AdaptedEvent"+ waypointName + " reached at position " + position);
         try
         {
-            currentActivity.Call("wayPointReached", position, waypointName);
+            if (Application.platform == RuntimePlatform.Android)
+            {
+                jc = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+                currentActivity = jc.GetStatic<AndroidJavaObject>("currentActivity");
+            }
+            currentActivity.Call("wayPointReached", new object[] { position.ToString(), waypointName});
         } catch(NullReferenceException e)
         {
-            //its ok in editor
+            Debug.Log("Currentactivity null" + e);
         }
     }
 
@@ -43,9 +39,15 @@ public static class AdaptedEventHandler {
         Debug.Log("Sending AdaptedEvent: jumpscare: " + jumpScareName);
         try
         {
-            currentActivity.Call("jumpScareVoice", jumpScareName);
+            if (Application.platform == RuntimePlatform.Android)
+            {
+                jc = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+                currentActivity = jc.GetStatic<AndroidJavaObject>("currentActivity");
+            }
+            currentActivity.Call("jumpScareVoice", new object[] { jumpScareName});
         } catch(NullReferenceException e)
         {
+            Debug.Log("Currentactivity null" + e);
 
         }
     }
@@ -55,10 +57,15 @@ public static class AdaptedEventHandler {
         Debug.Log("Sending AdaptedEvent: Player healt change from " + healtLeft + healtLoss + " to " + healtLeft);
         try
         {
-            currentActivity.Call("playerDamaged", healtLoss, healtLeft);
+            if (Application.platform == RuntimePlatform.Android)
+            {
+                jc = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+                currentActivity = jc.GetStatic<AndroidJavaObject>("currentActivity");
+            }
+            currentActivity.Call("playerDamaged", new object[] { healtLoss, healtLeft});
         } catch(NullReferenceException e)
         {
-
+            Debug.Log("Currentactivity null" + e);
         }
     }
 
@@ -67,9 +74,15 @@ public static class AdaptedEventHandler {
         Debug.Log("Sending AdaptedEvent: player died at " + waypointName);
         try
         {
-            currentActivity.Call("playerDead", position, waypointName);
+            if (Application.platform == RuntimePlatform.Android)
+            {
+                jc = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+                currentActivity = jc.GetStatic<AndroidJavaObject>("currentActivity");
+            }
+            currentActivity.Call("playerDead", position, new object[] { position.ToString(), waypointName});
         } catch(NullReferenceException e)
         {
+            Debug.Log("Currentactivity null" + e);
 
         }
     }
@@ -79,9 +92,15 @@ public static class AdaptedEventHandler {
         Debug.Log("Sending AdaptedEvent: drawing fault to " + direction + " in shape " + shapeForm);
         try
         {
-            currentActivity.Call("drawingFault", direction, shapeForm);
+            if (Application.platform == RuntimePlatform.Android)
+            {
+                jc = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+                currentActivity = jc.GetStatic<AndroidJavaObject>("currentActivity");
+            }
+            currentActivity.Call("drawingFault", new object[] { direction, shapeForm});
         } catch(NullReferenceException e)
         {
+            Debug.Log("Currentactivity null" + e);
 
         }
     }
@@ -91,9 +110,15 @@ public static class AdaptedEventHandler {
         Debug.Log("Sending AdaptedEvent: " + missionName + " started");
         try
         {
-            currentActivity.Call("missionStarted", missionName);
+            if (Application.platform == RuntimePlatform.Android)
+            {
+                jc = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+                currentActivity = jc.GetStatic<AndroidJavaObject>("currentActivity");
+            }
+            currentActivity.Call("missionStarted", new object[] { missionName});
         } catch(NullReferenceException e)
         {
+            Debug.Log("Currentactivity null" + e);
 
         }
     }
@@ -103,9 +128,15 @@ public static class AdaptedEventHandler {
         Debug.Log("Sending AdaptedEvent: " + missionName + " completed");
         try
         {
-            currentActivity.Call("missionCompleted", missionName);
+            if (Application.platform == RuntimePlatform.Android)
+            {
+                jc = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+                currentActivity = jc.GetStatic<AndroidJavaObject>("currentActivity");
+            }
+            currentActivity.Call("missionCompleted", new object[] { missionName});
         } catch(NullReferenceException e)
         {
+            Debug.Log("Currentactivity null" + e);
 
         }
     }
@@ -115,21 +146,33 @@ public static class AdaptedEventHandler {
         Debug.Log("Sending AdaptedEvent: " + missionName + " failed, killed" + zombiesKilled + " zombies");
         try
         {
-            currentActivity.Call("missionFailed", missionName, zombiesKilled);
+            if (Application.platform == RuntimePlatform.Android)
+            {
+                jc = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+                currentActivity = jc.GetStatic<AndroidJavaObject>("currentActivity");
+            }
+            currentActivity.Call("missionFailed",new object[] { missionName, zombiesKilled});
         } catch(NullReferenceException e)
         {
+            Debug.Log("Currentactivity null" + e);
 
         }
     }
 
-    public static void frequentPointerClick()
+    public static void frequentPointerClick(int limit, int duration)
     {
         Debug.Log("Sending AdaptedEvent: frequent pointer click");
         try
         {
-            currentActivity.Call("frequentPointerClick");
+            if (Application.platform == RuntimePlatform.Android)
+            {
+                jc = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+                currentActivity = jc.GetStatic<AndroidJavaObject>("currentActivity");
+            }
+            currentActivity.Call("frequentPointerClick", new object[] {limit, duration });
         } catch(NullReferenceException e)
         {
+            Debug.Log("Currentactivity null" + e);
 
         }
     }
@@ -139,29 +182,35 @@ public static class AdaptedEventHandler {
         Debug.Log("Sending AdaptedEvent: " + eventName);
         try
         {
-            currentActivity.Call("uniqueEvent", eventName);
+            if (Application.platform == RuntimePlatform.Android)
+            {
+                jc = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+                currentActivity = jc.GetStatic<AndroidJavaObject>("currentActivity");
+            }
+            currentActivity.Call("uniqueEvent", new object[] { eventName});
         } catch(NullReferenceException e)
         {
+            Debug.Log("Currentactivity null" + e);
 
         }
     }
 
-    public static void setFearLevel(float fearLevel)
+    public void setFearLevel(float fearLevel)
     {
         fear.FearLevel = fearLevel;
     }
 
-    public static void setHeartRate(float heartRate)
+    public void setHeartRate(float heartRate)
     {
         fear.HeartRate = heartRate;
     }
 
-    public static void setAttention(float attention)
+    public void setAttention(float attention)
     {
         fear.Attention = attention;
     }
-
-    private static void simulateFearFromUnity()
+    //for testing in Unity
+    private void simulateFearFromUnity()
     {
         timer.Interval = 5000;
         timer.Elapsed += OnTimedEvent;
@@ -170,7 +219,7 @@ public static class AdaptedEventHandler {
         timer.Start();
     }
 
-    private static void OnTimedEvent(System.Object source, System.Timers.ElapsedEventArgs e)
+    private void OnTimedEvent(System.Object source, System.Timers.ElapsedEventArgs e)
     {
         System.Random r = new System.Random();
         setFearLevel(r.Next(0, 100));

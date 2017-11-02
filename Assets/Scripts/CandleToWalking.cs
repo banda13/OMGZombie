@@ -10,7 +10,6 @@ public class CandleToWalking : CandleBase {
 
     public override void fadingActions()
     {
-
         camara.jump("startFight", camara.transform);
         chest.missionCompleted = true;
         chest.missionStarted = true;
@@ -21,6 +20,7 @@ public class CandleToWalking : CandleBase {
         }
         misson.Wait = true;
         StartCoroutine(misson.putDownTheGun());
+        AdaptedEventHandler.uniqueEvent("Jumped to escaping");
     }
 
     void Update()

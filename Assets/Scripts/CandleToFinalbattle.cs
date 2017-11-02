@@ -14,6 +14,7 @@ public class CandleToFinalbattle : CandleBase {
         camara.Wait = false;
         factory.Active = true;
         factory.zombiesAttackActivated = true;
+        AdaptedEventHandler.uniqueEvent("Jumped to final battle");
     }
 
     void Update()

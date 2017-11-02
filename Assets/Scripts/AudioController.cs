@@ -91,7 +91,7 @@ public class AudioController : MonoBehaviour {
         yield return new WaitForSeconds(Random.Range(minScaringDuration, maxScaringDuration));
         AudioSource audio = jumpScarAudios[Random.Range(0, jumpScarAudios.Count)];
         audio.Play();
-        AdaptedEventHandler.jumpScareVoice(audio.name);
+        AdaptedEventHandler.jumpScareVoice(audio.clip.name);
         StartCoroutine(jumpScare());
     }
 

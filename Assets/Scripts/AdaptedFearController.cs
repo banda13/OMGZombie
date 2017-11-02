@@ -35,10 +35,6 @@ public class AdaptedFearController : MonoBehaviour {
     public int pointerClickLimit = 5;
     private IEnumerator pointerClickEnumerator;
 
-    void Start()
-    {
-        AdaptedEventHandler.init(this);
-    }
 
     public float FearLevel
     {
@@ -120,7 +116,7 @@ public class AdaptedFearController : MonoBehaviour {
         }
         if (pointerClicks > pointerClickLimit)
         {
-            AdaptedEventHandler.frequentPointerClick();
+            AdaptedEventHandler.frequentPointerClick(pointerClickLimit, pointerClicksDetectionDuration);
             if(pointerClickEnumerator != null)
             {
                 StopCoroutine(pointerClickEnumerator);
@@ -136,7 +132,7 @@ public class AdaptedFearController : MonoBehaviour {
         yield return new WaitForSeconds(pointerClicksDetectionDuration);
         if(pointerClicks > pointerClickLimit)
         {
-            AdaptedEventHandler.frequentPointerClick();
+            AdaptedEventHandler.frequentPointerClick(pointerClickLimit, pointerClicksDetectionDuration);
         }
         detectingPointerClicks = false;
         pointerClicks = 0;

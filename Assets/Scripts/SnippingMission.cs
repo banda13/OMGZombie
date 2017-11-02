@@ -217,7 +217,6 @@ public class SnippingMission : PathFollower
         else if (zombiesInGame.Count == zombiesNumber)
         {
             Debug.Log("Oke, u killed " + zombiesInGame.Count + " zombies, the mission was completed");
-            AdaptedEventHandler.missionCompleted("Sniper mission");
             StartCoroutine(putDownTheGun());
             CompletedMessage.SetActive(true);
             return true;
@@ -260,6 +259,7 @@ public class SnippingMission : PathFollower
             factory.Active = true;
             factory.setUpZombieVillage();
             Go();
+            AdaptedEventHandler.missionCompleted("Sniper mission");
         }
         ended = true;
 

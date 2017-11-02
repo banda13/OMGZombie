@@ -133,7 +133,7 @@ public class cartController : PathFollower {
         yield return new WaitForSeconds(2);
         Destroy(rail);
         StartCoroutine(player.GetComponent<MineCamaraController>().fadingWithCartActions(failedActions));
-        Debug.Log("end");
+        AdaptedEventHandler.playerDead(getCurrentWaypointPosition(), getCurrentWaypointName());
     }
 
     public void failedActions()

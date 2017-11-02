@@ -7,6 +7,7 @@ public class CandleToMine : CandleBase {
 
     public override void fadingActions()
     {
+        AdaptedEventHandler.uniqueEvent("Jumped to Mine");
         SceneManager.LoadScene("mine", LoadSceneMode.Single);
     }
 
