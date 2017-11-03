@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AdaptedFearController : MonoBehaviour {
 
@@ -13,6 +14,20 @@ public class AdaptedFearController : MonoBehaviour {
 
     [Range(0.0f, 100.0f)]
     public float attantion = 50f;
+
+    private float avgFearLevel = 50f;
+    private float avgHeartRate = 50f;
+    private float avgAttention = 50f;
+
+    private int fearEventCounter = 0;
+    private int heartEventCounter = 0;
+    private int attentionEventCounter = 0;
+    
+    public Slider fearSlider;
+    public Slider healtSlider;
+    public Slider attentionSlider;
+    public GameObject panel;
+    public GameObject camera;
 
     public delegate void fearLevelChange();
     public static event fearLevelChange lowFearLevel;
@@ -45,6 +60,8 @@ public class AdaptedFearController : MonoBehaviour {
             if (!isPaused)
             {
                 fearLevel = value;
+                fearEventCounter++;
+                avgFearLevel += (fearLevel / fearEventCounter);
                 if (value < 30)
                 {
                     lowFearLevel();
@@ -69,6 +86,8 @@ public class AdaptedFearController : MonoBehaviour {
             if (!isPaused)
             {
                 heartRate = value;
+                heartEventCounter++;
+                avgHeartRate += (heartRate / heartEventCounter);
                 if (value < 30)
                 {
                     lowHeartRate();
@@ -93,6 +112,8 @@ public class AdaptedFearController : MonoBehaviour {
             if (!isPaused)
             {
                 attantion = value;
+                attentionEventCounter++;
+                avgAttention += (attantion / attentionEventCounter);
                 if (value < 30)
                 {
                     lowAttention();
@@ -151,11 +172,18 @@ public class AdaptedFearController : MonoBehaviour {
     void OnPauseGame()
     {
         isPaused = true;
+        panel.SetActive(true);
+        panel.transform.position = camera.transform.position + camera.transform.forward * 0.5f;
+        panel.transform.LookAt(camera.transform.position);
+        fearSlider.value = avgFearLevel;
+        healtSlider.value = avgHeartRate;
+        attentionSlider.value = avgAttention;
     }
 
     void OnResumeGame()
     {
         isPaused = false;
+        panel.SetActive(false);
     }
 
 }

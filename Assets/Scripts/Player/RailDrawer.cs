@@ -49,8 +49,6 @@ public class RailDrawer : MonoBehaviour {
     public void pointerEnter(BaseEventData e)
     {
         isPointerOnObject = true;
-
-
     }
 
     public void pointerExit(BaseEventData e)
@@ -119,7 +117,7 @@ public class RailDrawer : MonoBehaviour {
             return;
         }
         //set Shape
-        transform.position = playerCamera.transform.position + playerCamera.transform.forward * distanceFromCamera;
+        transform.position = cart.transform.position + (Quaternion.Euler(0, -90, 35) * cart.transform.forward) * distanceFromCamera;
         transform.LookAt(playerCamera.transform.position);
 
         //set particle

@@ -141,7 +141,7 @@ MonoBehaviour:
   speedMultiplier: 200
   breakingSpeed: 0.005
   maxCarSpeed: 3
-  distanceFromCamera: 4
+  distanceFromCamera: 5
 --- !u!114 &114059028745560416
 MonoBehaviour:
   m_ObjectHideFlags: 1
