@@ -15,6 +15,10 @@ public class AdaptedEventHandler : MonoBehaviour{
     void Start()
     {
         fear = GameObject.Find("AdaptedEventHandler").GetComponent<AdaptedController>();
+        StartCoroutine(simulateAttentionLevel());
+        StartCoroutine(simulateFearLevel());
+        StartCoroutine(simulateHeartLevel());
+        StartCoroutine(simulateSensor());
     }
 
     public static void wayPointReached(Vector3 position, string waypointName)
@@ -195,33 +199,56 @@ public class AdaptedEventHandler : MonoBehaviour{
         }
     }
 
-    public void setFearLevel(float fearLevel)
+    public void setFearLevel(string fearLevel)
     {
-        fear.FearLevel = fearLevel;
+        fear.FearLevel = float.Parse(fearLevel);
     }
 
-    public void setHeartRate(float heartRate)
+    public void setHeartRate(string heartRate)
     {
-        fear.HeartRate = heartRate;
+        fear.HeartRate = float.Parse(heartRate);
     }
 
-    public void setAttention(float attention)
+    public void setAttention(string attention)
     {
-        fear.Attention = attention;
-    }
-    //for testing in Unity
-    private void simulateFearFromUnity()
-    {
-        timer.Interval = 5000;
-        timer.Elapsed += OnTimedEvent;
-        timer.AutoReset = true;
-        timer.Enabled = true;
-        timer.Start();
+        fear.Attention = float.Parse(attention);
     }
 
-    private void OnTimedEvent(System.Object source, System.Timers.ElapsedEventArgs e)
+    public void setSensorStatus(string status)
     {
-        System.Random r = new System.Random();
-        setFearLevel(r.Next(0, 100));
+        fear.SensorStatus = (AdaptedController.Status)Enum.Parse(typeof(AdaptedController.Status), status);
+    }
+
+    //for testing from Unity
+    private IEnumerator simulateFearLevel()
+    {
+        System.Random r = new System.Random(System.DateTime.Now.Millisecond);
+        setFearLevel(r.Next(0, 100).ToString());
+        yield return new WaitForSeconds(r.Next(2, 20));
+        StartCoroutine(simulateFearLevel());
+    }
+
+    private IEnumerator simulateAttentionLevel()
+    {
+        System.Random r = new System.Random(System.DateTime.Now.Millisecond);
+        setAttention(r.Next(0, 100).ToString());
+        yield return new WaitForSeconds(r.Next(2, 20));
+        StartCoroutine(simulateAttentionLevel());
+    }
+
+    private IEnumerator simulateHeartLevel()
+    {
+        System.Random r = new System.Random(System.DateTime.Now.Millisecond);
+        setHeartRate(r.Next(0, 100).ToString());
+        yield return new WaitForSeconds(r.Next(2, 20));
+        StartCoroutine(simulateHeartLevel());
+    }
+
+    private IEnumerator simulateSensor()
+    {
+        System.Random r = new System.Random(System.DateTime.Now.Millisecond);
+        setSensorStatus(((AdaptedController.Status)r.Next(0, 5)).ToString());
+        yield return new WaitForSeconds(r.Next(1, 5));
+        StartCoroutine(simulateSensor());
     }
 }

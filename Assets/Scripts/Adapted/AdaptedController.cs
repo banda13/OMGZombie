@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -28,6 +29,14 @@ public class AdaptedController : MonoBehaviour {
     public Slider attentionSlider;
     public GameObject panel;
     public GameObject camera;
+
+    public enum Status
+    {
+        OFFLINE, UNRESPONSIVE, LOW_BATTERY, BAD_SIGNAL, CONNECTING, ONLINE
+    }
+
+    private Status sensorStatus = Status.OFFLINE;
+    public Text sensorText;
 
     public delegate void fearLevelChange();
     public static event fearLevelChange lowFearLevel;
@@ -61,16 +70,17 @@ public class AdaptedController : MonoBehaviour {
             {
                 fearLevel = value;
                 fearEventCounter++;
-                avgFearLevel += (fearLevel / fearEventCounter);
-                if (value < 30)
+                avgFearLevel = (avgFearLevel + fearLevel) / fearEventCounter;
+                fearSlider.value = (int) Math.Round(avgFearLevel);
+                if (value < 30  && lowFearLevel != null)
                 {
                     lowFearLevel();
                 }
-                else if (value > 70)
+                else if (value > 70  && highFearLevel != null)
                 {
                     highFearLevel();
                 }
-                else
+                else if(normalFearLevel != null)
                 {
                     normalFearLevel();
                 }
@@ -87,16 +97,17 @@ public class AdaptedController : MonoBehaviour {
             {
                 heartRate = value;
                 heartEventCounter++;
-                avgHeartRate += (heartRate / heartEventCounter);
-                if (value < 30)
+                avgHeartRate = (avgHeartRate + heartRate) / heartEventCounter;
+                healtSlider.value = (int)Math.Round(avgHeartRate);
+                if (value < 30 && lowHeartRate != null)
                 {
                     lowHeartRate();
                 }
-                else if (value > 70)
+                else if (value > 70 && highHeartRate != null)
                 {
                     highHeartRate();
                 }
-                else
+                else if(normalHeartRate != null)
                 {
                     normalHeartRate();
                 }
@@ -113,20 +124,30 @@ public class AdaptedController : MonoBehaviour {
             {
                 attantion = value;
                 attentionEventCounter++;
-                avgAttention += (attantion / attentionEventCounter);
-                if (value < 30)
+                avgAttention = (avgAttention + attantion) / attentionEventCounter;
+                attentionSlider.value = (int) Math.Round(avgAttention);
+                if (value < 30 && lowAttention != null)
                 {
                     lowAttention();
                 }
-                else if (value > 70)
+                else if (value > 70 && highAttention != null)
                 {
                     highAttention();
                 }
-                else
+                else if(normalAttention != null)
                 {
                     normalAttention();
                 }
             }
+        }
+    }
+
+    public Status SensorStatus
+    {
+        get { return sensorStatus; }
+        set {
+            sensorStatus = value;
+            sensorText.text = sensorStatus.ToString();
         }
     }
 
