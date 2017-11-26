@@ -9,12 +9,12 @@ public class AdaptedEventHandler : MonoBehaviour{
     static AndroidJavaClass jc;
     static AndroidJavaObject currentActivity;
 
-    public static AdaptedFearController fear;
+    public static AdaptedController fear;
     public static Timer timer = new Timer();
 
     void Start()
     {
-        fear = GameObject.Find("AdaptedEventHandler").GetComponent<AdaptedFearController>();
+        fear = GameObject.Find("AdaptedEventHandler").GetComponent<AdaptedController>();
     }
 
     public static void wayPointReached(Vector3 position, string waypointName)

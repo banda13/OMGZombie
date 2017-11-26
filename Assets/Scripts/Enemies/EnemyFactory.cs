@@ -50,9 +50,9 @@ public class EnemyFactory : MonoBehaviour {
         SetRandomTime();
         currentTime = 0;
 
-        AdaptedFearController.lowFearLevel += syncZombiesToLowFearLevel;
-        AdaptedFearController.normalFearLevel += syncZombiesToNormalFearLevel;
-        AdaptedFearController.highFearLevel += syncZombiesToHighFearLevel;
+        AdaptedController.lowFearLevel += syncZombiesToLowFearLevel;
+        AdaptedController.normalFearLevel += syncZombiesToNormalFearLevel;
+        AdaptedController.highFearLevel += syncZombiesToHighFearLevel;
 
         setUpZombiesEnviroment();
     }
@@ -138,9 +138,9 @@ public class EnemyFactory : MonoBehaviour {
         return count;
     }
 
-    public ZombieController cleverZombieCreation(List<Transform> spawnPoints)
+    public ZombieController cleverZombieCreation(List<Transform> nearestPoints)
     {
-        if (spawnPoints.Count > 0)
+        if (nearestPoints.Count > 0)
         {
             SpawningPoint emptyPoint = null;
             int iterCounter = 0;
@@ -149,13 +149,13 @@ public class EnemyFactory : MonoBehaviour {
             while (iterCounter < spawningPoints.Count)
             {
                 iterCounter++;
-                int spawnIndex = Random.Range(0, spawnPoints.Count);
-                if (!spawnPoints[spawnIndex].GetComponent<SpawningPoint>().taken)
+                int spawnIndex = Random.Range(0, nearestPoints.Count);
+                if (!nearestPoints[spawnIndex].GetComponent<SpawningPoint>().taken)
                 {
                     //we found and empty, yee!
-                    emptyPoint = spawnPoints[spawnIndex].GetComponent<SpawningPoint>();
+                    emptyPoint = nearestPoints[spawnIndex].GetComponent<SpawningPoint>();
                     ZombieController created = createZombie(emptyPoint, selectOneBeautifulZombie());
-                    Debug.Log("Enemy Spawned at: " + spawnPoints[spawnIndex].name + " Index: " + zombieCounter);
+                    Debug.Log("Enemy Spawned at: " + nearestPoints[spawnIndex].name + " Index: " + zombieCounter);
                     return created;
                 }
             }

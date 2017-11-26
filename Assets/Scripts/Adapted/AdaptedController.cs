@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class AdaptedFearController : MonoBehaviour {
+public class AdaptedController : MonoBehaviour {
 
 
     [Range(0.0f, 100.0f)]

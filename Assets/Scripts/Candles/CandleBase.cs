@@ -12,7 +12,6 @@ public abstract class CandleBase : MonoBehaviour {
     {
         if (!isPaused)
         {
-            Debug.Log("Teleporting started");
             StartCoroutine(camara.fadingWithAction(fadingActions));
         }
     }

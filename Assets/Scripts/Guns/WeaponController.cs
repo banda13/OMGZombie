@@ -31,9 +31,9 @@ public class WeaponController : MonoBehaviour {
     void Start () {
         animator = GetComponent<Animator>();
 
-        AdaptedFearController.lowFearLevel += setDisturbanceToLowLevel;
-        AdaptedFearController.normalFearLevel += setDisturbanceToNormalLevel;
-        AdaptedFearController.highFearLevel += setDisturbanceToHighLevel;
+        AdaptedController.lowFearLevel += setDisturbanceToLowLevel;
+        AdaptedController.normalFearLevel += setDisturbanceToNormalLevel;
+        AdaptedController.highFearLevel += setDisturbanceToHighLevel;
 	}
 	
 	void Update () {

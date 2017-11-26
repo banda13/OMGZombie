@@ -21,6 +21,10 @@ public class cartController : PathFollower {
     public bool dying = false;
     private bool isPaused = false;
 
+    private float maxLeftRotation = 330;
+    private float maxRightRotation = 30;
+    private float normalRotation = 0;
+
     public delegate void fadingAction();
 
 	void Start () {
@@ -64,17 +68,17 @@ public class cartController : PathFollower {
 
     public void rotateLeft()
     {
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(330, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z), Time.deltaTime * rotationSpeed);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(maxLeftRotation, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z), Time.deltaTime * rotationSpeed);
 
     }
     public void rotateRight()
     {
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(30, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z), Time.deltaTime * rotationSpeed);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(maxRightRotation, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z), Time.deltaTime * rotationSpeed);
         
     }
     public void stabilaze()
     { 
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z), Time.deltaTime * rotationSpeed);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(normalRotation, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z), Time.deltaTime * rotationSpeed);
     }
     
     public void getInCar()

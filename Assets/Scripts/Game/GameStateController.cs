@@ -6,6 +6,9 @@ public class GameStateController : MonoBehaviour {
 
     private GameObject player;
     private bool isPaused;
+    private float gamePauseDelay = 0.5f;
+    private float pauseTimeScale = 0.0000001f;
+    private float normalTimeScale = 1;
     
 	void Start () {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -27,8 +30,6 @@ public class GameStateController : MonoBehaviour {
         GameObject[] objects = FindObjectsOfType(typeof(GameObject)) as GameObject[];
         foreach (GameObject go in objects)
         {
-            //foreach (Component go in obj.GetComponents<Component>())
-            //{
             if (go && go.transform.parent == null)
             {
                 if (isPaused)
@@ -39,19 +40,17 @@ public class GameStateController : MonoBehaviour {
                 {
                     go.BroadcastMessage("OnResumeGame", SendMessageOptions.DontRequireReceiver);
                 }
-                //}
             }
         }
         if (!isPaused)
         {
-            Time.timeScale = 1;
+            Time.timeScale = normalTimeScale;
         }
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(gamePauseDelay);
 
         if (isPaused)
         {
-            Time.timeScale = 0.000001f;
+            Time.timeScale = pauseTimeScale;
         }
-        
     }
 }

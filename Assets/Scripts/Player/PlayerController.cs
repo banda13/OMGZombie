@@ -47,13 +47,13 @@ public class PlayerController : MonoBehaviour {
         currentHealth = startingHealth;
         movement = GetComponent<CamaraController>();
 
-        AdaptedFearController.lowFearLevel += setLowFearLevelForce;
-        AdaptedFearController.normalFearLevel += setNormalFearLevelForce;
-        AdaptedFearController.highFearLevel += setHighFearLevelForce;
+        AdaptedController.lowFearLevel += setLowFearLevelForce;
+        AdaptedController.normalFearLevel += setNormalFearLevelForce;
+        AdaptedController.highFearLevel += setHighFearLevelForce;
 
-        AdaptedFearController.lowHeartRate += setLowHeartRate;
-        AdaptedFearController.normalFearLevel += setNormalHeartRate;
-        AdaptedFearController.highHeartRate += setFastHeartRate;
+        AdaptedController.lowHeartRate += setLowHeartRate;
+        AdaptedController.normalFearLevel += setNormalHeartRate;
+        AdaptedController.highHeartRate += setFastHeartRate;
         
 	}
 	

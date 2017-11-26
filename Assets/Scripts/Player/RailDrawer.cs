@@ -176,8 +176,8 @@ public class RailDrawer : MonoBehaviour {
     {
         if(previousDraggingPosition != null && draggingPosition!= null)
         {
-            float pos = Math.Abs(draggingPosition.y) * 200;
-            float prevPos = Math.Abs(previousDraggingPosition.y) * 200;
+            float pos = Math.Abs(draggingPosition.y) * speedMultiplier;
+            float prevPos = Math.Abs(previousDraggingPosition.y) * speedMultiplier;
             if (pos - prevPos > 0)
             {
                 float newSpeed = (pos - prevPos) * 2;

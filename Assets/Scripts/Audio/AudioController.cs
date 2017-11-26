@@ -36,13 +36,13 @@ public class AudioController : MonoBehaviour {
 	void Start () {
         StartCoroutine(jumpScare());
 
-        AdaptedFearController.lowFearLevel += lowFearLevel;
-        AdaptedFearController.normalFearLevel += midFearLevel;
-        AdaptedFearController.highFearLevel += highFearLevel;
+        AdaptedController.lowFearLevel += lowFearLevel;
+        AdaptedController.normalFearLevel += midFearLevel;
+        AdaptedController.highFearLevel += highFearLevel;
 
-        AdaptedFearController.lowAttention += lowAttention;
-        AdaptedFearController.normalAttention += normalAttention;
-        AdaptedFearController.highAttention += highAttention;
+        AdaptedController.lowAttention += lowAttention;
+        AdaptedController.normalAttention += normalAttention;
+        AdaptedController.highAttention += highAttention;
 
         fear = fearLevel.normal; //default
         currentAudio = midAudio;

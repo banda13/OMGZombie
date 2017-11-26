@@ -301,13 +301,11 @@ public class ZombieController : MonoBehaviour
     {
         RaycastHit hit;
         Ray eye = new Ray(transform.position+ new Vector3(0, 1.6f, 0), transform.forward);
-
-        //Debug.DrawRay(transform.position + new Vector3(0, 1.6f, 0), transform.forward, Color.red, eyeShot);
+        
         if (Physics.Raycast(eye, out hit, eyeShot))
         {
             if (hit.collider.tag.Equals("Player"))
             {
-                //Debug.Log("Zombie" + zombieIndex + ": The lunch is before me. Distance :" + Vector3.Distance(transform.position, new Vector3(hit.point.x, 0, hit.point.z)));
                 return true;
             }
         }
@@ -328,7 +326,6 @@ public class ZombieController : MonoBehaviour
 
     private bool zombieStuck()
     {
-        
         //have we move since our last know destination? 
         //is there any obstacle before us?
         RaycastHit hit;
